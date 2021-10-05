@@ -118,10 +118,9 @@ out
 .pnp.*
 
 # custom
-
-!dist/frontend
-!dist/backend
 dist/frontend/*
+!dist/frontend/.gitkeep
 dist/backend/*
+!dist/backend/.gitkeep
 dist/index.js
 .idea/
