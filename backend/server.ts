@@ -1,15 +1,28 @@
-import {Express, Request, Response} from "express";
+import {Express, Request, Response, Router} from "express";
+import bodyParser from "body-parser";
+
+// import routers
+const publicRouter: Router = require('./api/controllers/api.controller.public');
+const userRouter: Router = require('./api/controllers/api.controller.user')
+
 
 export class Server {
 
 	private app: Express;
 
 	constructor(app: Express) {
-		this.app = app;
 
-		this.app.get("/api", (req: Request, res: Response): void => {
-			res.send("You have reached the API!");
-		})
+		// CREATE APP AND USE MIDDLEWARE
+		this.app = app;
+		this.app.use(bodyParser.json());
+		this.app.use(bodyParser.urlencoded({extended: false}));
+
+		// Public routes
+		this.app.use('/api/public', publicRouter);
+
+		// Private routes
+		this.app.use('/user', userRouter);
+
 	}
 
 	public start(port: number): void {
