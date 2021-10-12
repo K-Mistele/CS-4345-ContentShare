@@ -2,7 +2,7 @@ import {Request, Response, Router, NextFunction} from "express";
 
 const router: Router = Router();
 
-router.get('/test', (request: Request, response: Response, next: NextFunction) => {
+router.get('/register', (request: Request, response: Response, next: NextFunction) => {
 	return response.send("hello, world");
 })
 
