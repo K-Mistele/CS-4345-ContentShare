@@ -1,8 +1,6 @@
 const OrientDB = require('orientjs');
-const dotenv = require('dotenv');
-dotenv.config();
+import {ORIENTDB_ROOT_PASSWORD} from "./secrets.service";
 
-const ORIENTDB_ROOT_PASSWORD = process.env.ORIENTDB_ROOT_PASSWORD;
 if (!ORIENTDB_ROOT_PASSWORD) {
 	throw new Error("Missing OrientDB Password!");
 }
