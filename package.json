@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc && cd dist && node index.js",
     "dev-backend-server": "nodemon ./index.ts",
-    "dev-frontend-server": "cd frontend && yarn start"
+    "dev-frontend-server": "cd frontend && yarn start",
+    "example": "ts-node backend/example.ts"
   },
   "keywords": [],
   "author": "",

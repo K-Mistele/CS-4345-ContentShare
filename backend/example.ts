@@ -25,25 +25,25 @@ async function main() {
 
 	// ADD TWO USERS
 	const firstUser: User = await database.create('VERTEX', 'user').set({
-		name: 'Kyle Mistele',
-		sex: 'male',
-		id: 1
+		fullName: 'Kyle Mistele',
+		username: 'kmistele',
+		guid: 1
 	}).one()
-	console.log(`created user ${firstUser.name}`)
+	console.log(`created user ${firstUser.fullName}`)
 
 	const secondUser: User = await database.create('VERTEX', 'user').set({
-		name: 'Andrew Mistele',
-		sex: 'male',
-		id: 2
+		fullName: 'Andrew Mistele',
+		username: 'amistele',
+		guid: 2
 	}).one()
-	console.log(`created user ${secondUser.name}`)
+	console.log(`created user ${secondUser.fullName}`)
 
 	const thirdUser: User = await database.create('VERTEX', 'user').set({
-		name: 'Joshua Mistele',
-		sex: 'male',
-		id: 3
+		fullName: 'Joshua Mistele',
+		username: 'jmistele',
+		guid: 3
 	}).one()
-	console.log(`created user ${thirdUser.name}`)
+	console.log(`created user ${thirdUser.fullName}`)
 
 
 	// Create a link
@@ -60,6 +60,8 @@ async function main() {
 		.to(thirdUser['@rid'])
 		.one();
 
+	console.dir(thirdLink)
+
 
 
 	// retrieve users by links
@@ -69,7 +71,7 @@ async function main() {
 	const linkedUsers: User[] = await database.query(
 		`select expand(inV()) from friend_link where out = ${firstUser['@rid']};`
 	).all();
-	console.log(`friends of ${firstUser.name}`)
+	console.log(`friends of ${firstUser.fullName}`)
 	console.dir(linkedUsers);
 
 	// Teardown
@@ -90,14 +92,14 @@ async function main() {
 	// delete users
 	del = await database.delete('VERTEX', 'user')
 		.where({
-			id: firstUser.id
+			id: firstUser.guid
 		})
 		.all();
 	console.log(`deleted ${del} vertices`);
 
 	del2 = await database.delete('VERTEX', 'user')
 		.where({
-			id: secondUser.id
+			id: secondUser.guid
 		})
 		.all()
 	console.log(`deleted ${del2} vertices`)
@@ -109,4 +111,7 @@ async function main() {
 
 	server.close();
 }
-main();
+
+if (require.main == module) {
+	main();
+}

@@ -1,11 +1,10 @@
-export interface User {
-	name: string,
-	id: number,
-	sex: string
+import {IVertex} from "./_vertex";
 
-	// properties that are only present when the user has been retrieved from the database
-	'@class'?: string,
-	'@type'?: string,
-	'@rid'?: string | object,
-	'@version'?: number
+export interface IUser extends IVertex {
+	email: string
+	username: string
+	fullName: string
+	hash: string
+	guid: string
+	profilePictureUrl: string
 }
