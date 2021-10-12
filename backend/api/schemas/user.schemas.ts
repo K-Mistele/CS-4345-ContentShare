@@ -27,3 +27,9 @@ export interface IUserLogin {
 	username: string
 	password: string
 }
+
+export const userMeSchema = Joi.object({});
+
+export interface IUserMe {
+
+}

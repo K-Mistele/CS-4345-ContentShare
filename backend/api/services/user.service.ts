@@ -2,7 +2,7 @@ import {IUser} from "../../interfaces/user";
 import {IUserRegistration, IUserLogin} from "../schemas/user.schemas";
 import {getDatabase} from "./orientdb.service";
 import {v4 as uuidv4} from 'uuid';
-import {JWT_SECRET} from "./secrets.service";
+import * as jwtService from './jwt.service';
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -77,16 +77,7 @@ export async function loginUser(loginData: IUserLogin) {
 	console.log(`login attempt for ${user.username} should succeed!`)
 
 	// Generate a JWT
-	return jwt.sign({
-			uuid: user.uuid,
-			fullName: user.fullName,
-			username: user.username
-		},
-		JWT_SECRET,
-		{
-			expiresIn: "2h"
-		}
-	);
+	return jwtService.issueJWT(user);
 
 }
 

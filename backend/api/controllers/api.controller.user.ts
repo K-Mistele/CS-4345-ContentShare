@@ -1,14 +1,16 @@
 import {Request, Response, Router, NextFunction} from "express";
-import {userRegistrationSchema, userLoginSchema} from "../schemas/user.schemas";
+import {userRegistrationSchema, userLoginSchema, userMeSchema} from "../schemas/user.schemas";
 import { IUser } from '../../interfaces/user';
 import {validateSchema} from "../services/requestValidation.service";
 import * as userService from "../services/user.service";
+import * as jwtService from '../services/jwt.service';
 
 const router: Router = Router();
 
 // POST /user/register
 router.post('/register', validateSchema(userRegistrationSchema), registerUser);
 router.post('/login', validateSchema(userLoginSchema), loginUser);
+router.get('/me', validateSchema(userMeSchema), jwtService.requireJWT, getMe);
 
 module.exports = router;
 
@@ -55,4 +57,11 @@ async function loginUser(request: Request, response: Response, next: NextFunctio
 			message: err.message
 		})
 	}
+}
+
+async function getMe(request: Request, response: Response, next: NextFunction) {
+	console.dir(request.user);
+	response.status(200).json({
+		message: 'ok'
+	})
 }
