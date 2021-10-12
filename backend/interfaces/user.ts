@@ -5,6 +5,6 @@ export interface IUser extends IVertex {
 	username: string
 	fullName: string
 	hash: string
-	guid: string
+	uuid: string
 	profilePictureUrl: string
 }

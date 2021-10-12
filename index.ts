@@ -3,7 +3,7 @@ import express from 'express';
 import bodyParser from "body-parser";
 
 const app = express();
-app.use(express.static('frontend'));
+app.use(express.static('dist/frontend'));
 app.use(bodyParser.json())
 
 const port = 8080;
