@@ -1,8 +1,10 @@
 import {IUser} from "../../interfaces/user";
-import {IUserRegistration} from "../schemas/user.schemas";
+import {IUserRegistration, IUserLogin} from "../schemas/user.schemas";
 import {getDatabase} from "./orientdb.service";
 import {v4 as uuidv4} from 'uuid';
+import * as jwtService from './jwt.service';
 
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const saltRounds: number = 10;
 
@@ -50,11 +52,32 @@ export async function getUserByEmail(email: string): Promise<IUser> {
 }
 
 /** retrieveUserByUUID gets the use with the given uuid */
-export async function getUserByUUID(uuid: string): Promise<IUser> {
+export async function getUserByUsername(username: string): Promise<IUser>{
 	const database = await getDatabase();
 	return await database.select().from('user')
 		.where({
-			uuid: uuid
+			username: username
 		}).one();
+}
+
+export async function loginUser(loginData: IUserLogin) {
+
+	// Try to get the user by username, and failing that by email
+	let user: IUser = await getUserByUsername(loginData.username) || await getUserByEmail(loginData.username);
+	if (!user) {
+		throw new Error("invalid credentials!");
+	}
+
+	// Compare
+	const match = await bcrypt.compare(loginData.password, user.hash);
+	if (!match) {
+		//console.log(`Login attempt for ${user.username} failed!`);
+		throw new Error("invalid credentials!");
+	}
+	console.log(`login attempt for ${user.username} should succeed!`)
+
+	// Generate a JWT
+	return jwtService.issueJWT(user);
+
 }
 

@@ -17,3 +17,19 @@ export interface IUserRegistration {
 	confirmPassword: string
 	profilePictureUrl: string
 }
+
+export const userLoginSchema = Joi.object({
+	username: Joi.string().required(),
+	password: Joi.string().required()
+})
+
+export interface IUserLogin {
+	username: string
+	password: string
+}
+
+export const userMeSchema = Joi.object({});
+
+export interface IUserMe {
+
+}
