@@ -1,6 +1,6 @@
 import React from "react"
 import MovieReview from "./MovieReview"
-import movieReviewsData from "./temp_data//movieReviewsData"
+import movieReviewsData from "../../temp_data//movieReviewsData"
 
 class MovieReviewsList extends React.Component{
 

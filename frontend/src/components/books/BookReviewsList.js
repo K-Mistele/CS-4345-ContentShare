@@ -1,6 +1,6 @@
 import React from "react"
 import BookReview from "./BookReview"
-import bookReviewsData from "./temp_data/bookReviewsData"
+import bookReviewsData from "../../temp_data/bookReviewsData"
 
 class BookReviewsList extends React.Component{
 

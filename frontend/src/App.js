@@ -1,8 +1,8 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 
-import MovieReviewsList from "./MovieReviewsList"
-import BookReviewsList from "./BookReviewsList"
+import MovieReviewsList from "./components/movies/MovieReviewsList"
+import BookReviewsList from "./components/books/BookReviewsList"
 import Login from "./Login"
 
 function App(){
