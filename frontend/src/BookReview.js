@@ -1,6 +1,6 @@
 import React from "react"
 
-function MovieReview(props){
+function BookReview(props){
 
     return(
         <div>
@@ -10,4 +10,4 @@ function MovieReview(props){
         </div>
     )
 }
-export default MovieReview; 
+export default BookReview;
