@@ -1,6 +1,8 @@
 import React from "react"
 import MovieReview from "./MovieReview"
-import movieReviewsData from "../../temp_data//movieReviewsData"
+import movieReviewsData from "../../temp_data/movieReviewsData"
+
+import NavigationBar from "../NavigationBar/NavigationBar"
 
 class MovieReviewsList extends React.Component{
 
@@ -25,6 +27,7 @@ class MovieReviewsList extends React.Component{
         return (
 
             <div>
+            <NavigationBar page = "Movies"/> 
                 <div className = "rowCHANGELATER">
                     { movieReviews }
                 </div> 
