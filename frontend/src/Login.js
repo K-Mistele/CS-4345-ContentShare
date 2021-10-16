@@ -13,6 +13,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Redirect } from 'react-router-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import {TestRepository} from './api/testRepository'
 
 function Copyright(props) {
     return (
@@ -30,19 +36,27 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function LogIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    window.location.href = window.location.href+'homepage';
+export class Login extends React.Component {
+  testRepository = new TestRepository();
+
+  state = {
+    username: '',
+    password: '',
+    openDialog: false
+  }
+  handleSubmit(){
+    console.log('username:'+this.state.username)
+    console.log('password:'+this.state.password)
+
+    this.setState({redirect: `/homepage`})
+    // window.location.href = window.location.href+'homepage';
   };
 
-  return (
+  render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect}></Redirect>;
+    }
+    return <>
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -58,19 +72,22 @@ export default function LogIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            ContentShare
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form"  noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
               variant="standard"
+              onChange={(e) => 
+                this.setState({ username: e.target.value })
+              }
             />
             <TextField
               margin="normal"
@@ -82,16 +99,16 @@ export default function LogIn() {
               id="password"
               autoComplete="current-password"
               variant="standard"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              onChange={(e) => 
+                this.setState({ password: e.target.value })
+              }
             />
             <Button
-              type="submit"
+              // type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={() => {this.handleSubmit()}}
             >
               Sign In
             </Button>
@@ -99,9 +116,37 @@ export default function LogIn() {
               <Grid item xs>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link onClick={() => {this.setState({openDialog: true})}} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
+                <Dialog open={this.state.openDialog} onClose={() => {this.setState({openDialog: false})}}>
+                  <DialogTitle>Sign up</DialogTitle>
+                  <DialogContent>
+
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="newUsername"
+                      label="Username"
+                      type="newUsername"
+                      fullWidth
+                      variant="standard"
+                    />
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="newPassword"
+                      label="Password"
+                      type="newPassword"
+                      fullWidth
+                      variant="standard"
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={() => {this.setState({openDialog: false})}}>Cancel</Button>
+                    <Button onClick={() => {this.setState({openDialog: false})}}>Sign Up</Button>
+                  </DialogActions>
+                </Dialog>
               </Grid>
             </Grid>
           </Box>
@@ -109,5 +154,12 @@ export default function LogIn() {
         <Copyright sx={{ mt: 8, mb: 4 }}/>
       </Container>
     </ThemeProvider>
-  );
+    </>
+  }
+  
+  componentDidMount() {
+    // error
+    // this.testRepository.helloWorld()
+    //       .then(t => console.log(t))
+  }
 }
