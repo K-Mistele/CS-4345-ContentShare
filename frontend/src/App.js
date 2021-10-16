@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 
 import MovieReviewsList from "./components/movies/MovieReviewsList"
 import BookReviewsList from "./components/books/BookReviewsList"
+import FriendsList from "./components/friends/FriendsList"
 import Login from "./Login"
 import HomePage from "./HomePage"
 function App(){
@@ -14,6 +15,7 @@ function App(){
         <Route exact path = "/" component = { Login } />
         <Route exact path = "/movies" component = { MovieReviewsList } />
         <Route exact path = "/books" component = { BookReviewsList } />
+        <Route exact path = "/friends" component = { FriendsList } />
         <Route exact path = "/homepage" component = { HomePage } />
         </Switch> 
       </Router>

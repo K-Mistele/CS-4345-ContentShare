@@ -2,6 +2,9 @@ import React from "react"
 import BookReview from "./BookReview"
 import bookReviewsData from "../../temp_data/bookReviewsData"
 
+import NavigationBar from "../NavigationBar/NavigationBar"
+
+
 class BookReviewsList extends React.Component{
 
     constructor(){
@@ -25,6 +28,7 @@ class BookReviewsList extends React.Component{
         return (
 
             <div>
+            <NavigationBar page = "Books"/>
                 <div className = "rowCHANGELATER">
                     { bookReviews }
                 </div> 
