@@ -39,7 +39,7 @@ export default function LogIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    window.location.href = window.location.href+'homepage';
+    window.location.href = window.location.href+'movies';
   };
 
   return (
