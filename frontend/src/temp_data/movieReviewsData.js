@@ -14,7 +14,7 @@ const movieReviews = [
     {
         id: 3,
         'reviewTitle': "School of Rock",
-        'reviewText': "Jack Black is an amazing actor!!! Honestly, WOW. I felt like I laughed the whole time I was watching this.",
+        'reviewText': "Jack Black is dgsadsahgsdfh sdgfsdfhgwrdsf hwrygtrsf hyywrsht w r thwtrfhterdhetrfjrgjksdaorti ygqeriltuof5uiaq g an amazing actor!!! Honestly, WOW. I felt like I laughed the whole time I was watching this.",
         'rating': 5       
     }
     
