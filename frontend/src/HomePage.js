@@ -1,4 +1,7 @@
 import * as React from 'react';
+
+import NavigationBar from "./components/NavigationBar/NavigationBar";
+
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -125,19 +128,7 @@ export class HomePage extends React.Component {
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               A little bit of intro of my homepage. The three buttons below should change dynamically.
             </Typography>
-            <Stack
-              sx={{ pt: 2 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button onClick={() => { this.handleChangeView('movie') }} 
-                      variant={this.state.movieView ? "contained" : "outlined"}>Movies</Button>
-              <Button onClick={() => { this.handleChangeView('book') }} 
-                      variant={this.state.bookView ? "contained" : "outlined"}>Books</Button>
-              <Button onClick={() => { this.handleChangeView('friend') }} 
-                      variant={this.state.friendView ? "contained" : "outlined"}>Friends</Button>
-            </Stack>
+            <NavigationBar/> 
             <Stack
               sx={{ pt: 2 }}
               direction="row"

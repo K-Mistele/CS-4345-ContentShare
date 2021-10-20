@@ -7,6 +7,7 @@ import BookReviewsList from "./components/books/BookReviewsList"
 
 import { Login } from "./Login"
 import { HomePage } from "./HomePage"
+import MyMoviePage from "./MyMoviePage";
 import FriendsList from "./components/friends/FriendsList"
 
 function App(){
@@ -20,7 +21,8 @@ function App(){
         <Route exact path = "/movies" component = { MovieReviewsList } />
         <Route exact path = "/books" component = { BookReviewsList } />
         <Route exact path = "/friends" component = { FriendsList } />
-        <Route exact path = "/homepage" component = { HomePage } />
+        <Route exact path = "/home" component = { HomePage } />
+        <Route exact path = "/mymovies" component = { MyMoviePage } />
         </Switch> 
       </Router>
     </div> 
