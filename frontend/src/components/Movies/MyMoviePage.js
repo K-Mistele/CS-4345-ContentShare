@@ -9,10 +9,10 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import Header from "./Header"
-import NavigationBar from "./components/NavigationBar/NavigationBar"
+import Header from "../Header/Header"
+import NavigationBar from "../NavigationBar/NavigationBar"
 
-import movieReviewsData from "./temp_data/movieReviewsData"
+import movieReviewsData from "../../temp_data/movieReviewsData"
 
 
 class MyMoviePage extends React.Component{

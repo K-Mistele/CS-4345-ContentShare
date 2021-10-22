@@ -5,10 +5,10 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 // import MovieReviewsList from "./components/movies/MovieReviewsList"
 // import BookReviewsList from "./components/books/BookReviewsList"
 
-import { Login } from "./Login"
+import { Login } from "./components/Login/Login"
 import { HomePage } from "./HomePage"
-import MyMoviePage from "./MyMoviePage";
-import MyBookPage from "./MyBookPage";
+import MyMoviePage from "./components/Movies/MyMoviePage";
+import MyBookPage from "./components/Books/MyBookPage";
 import FriendsList from "./components/friends/FriendsList"
 
 import CssBaseline from '@mui/material/CssBaseline';
