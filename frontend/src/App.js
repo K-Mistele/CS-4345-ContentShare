@@ -10,6 +10,7 @@ import { HomePage } from "./HomePage"
 import MyMoviePage from "./components/Movies/MyMoviePage";
 import MyBookPage from "./components/Books/MyBookPage";
 import FriendsList from "./components/friends/FriendsList"
+import ViewMovie from "./components/Movies/ViewMovie";
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -30,6 +31,9 @@ function App(){
         <Route exact path = "/home" component = { MyMoviePage } />
         <Route exact path = "/books" component = { MyBookPage } />
         <Route exact path = "/friends" component = { FriendsList } />
+
+        <Route exact path = "/movies/:id" component = { ViewMovie } />
+        
         </Switch> 
       </Router>
     </ThemeProvider>
