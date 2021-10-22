@@ -9,10 +9,10 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import NavigationBar from "./components/NavigationBar/NavigationBar"
-import Header from "./Header"
+import NavigationBar from "../NavigationBar/NavigationBar"
+import Header from "../Header/Header"
 
-import bookReviewsData from "./temp_data/bookReviewsData"
+import bookReviewsData from "../../temp_data/bookReviewsData"
 
 
 class MyBookPage extends React.Component{

@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -9,10 +10,10 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import Header from "./Header"
-import NavigationBar from "./components/NavigationBar/NavigationBar"
+import Header from "../Header/Header"
+import NavigationBar from "../NavigationBar/NavigationBar"
 
-import movieReviewsData from "./temp_data/movieReviewsData"
+import movieReviewsData from "../../temp_data/movieReviewsData"
 
 
 class MyMoviePage extends React.Component{
@@ -32,7 +33,7 @@ class MyMoviePage extends React.Component{
     }
 
     render(){
-
+  
         const movieReviews = this.state.allMovieReviews.map((review) => {
             return(
             <Grid item key={review.id} xs={12} sm={6} md={4}>
@@ -51,7 +52,7 @@ class MyMoviePage extends React.Component{
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
+                    <Button component = { Link } size = "small" to = {`/movies/${review.id}`} state={{ title: review.reviewTitle }}>View</Button>
                     <Button size="small">Edit</Button>
                   </CardActions>
                 </Card>

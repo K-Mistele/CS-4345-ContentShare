@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
 import NavigationBar from "../NavigationBar/NavigationBar"
-import Header from "../../Header"
+import Header from "../Header/Header"
 
 import friendData from "../../temp_data/friendData"
 
