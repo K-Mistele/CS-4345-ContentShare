@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import NavigationBar from "./components/NavigationBar/NavigationBar"
+import Header from "./Header"
 
 import bookReviewsData from "./temp_data/bookReviewsData"
 
@@ -59,6 +60,7 @@ class MyBookPage extends React.Component{
 
         return(
             <div>
+            <Header/> 
             <NavigationBar page = "Books"/> 
             <Container maxWidth="md">
                 {/* End hero unit */}

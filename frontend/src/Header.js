@@ -35,7 +35,7 @@ class Header extends React.Component{
             <Toolbar>
             {/* <CameraIcon sx={{ mr: 2 }} /> */}
             <Typography variant="h6" color="inherit" style={{ flex: 1 }} noWrap>
-            <Button variant="contained" startIcon={<AccountCircleIcon/>} style={{boxShadow: "none"}} onClick = {() => this.handlePageChange("/profile")}>
+            <Button variant="contained" startIcon={<AccountCircleIcon/>} style={{boxShadow: "none"}} onClick = {() => this.handlePageChange("/profileTEST")}>
                 Profile
             </Button>
             </Typography>
