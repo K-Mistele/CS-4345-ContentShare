@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
 import NavigationBar from "../NavigationBar/NavigationBar"
+import Header from "../../Header"
 
 import friendData from "../../temp_data/friendData"
 
@@ -33,6 +34,7 @@ class FriendsList extends React.Component{
 
         return (
             <div className = "changeLATER">
+            <Header/> 
             <NavigationBar page = "Friends"/> 
             <Typography sx={{ fontSize: 20, mt:4 }} color="text.primary" gutterBottom variant = "h1">
                         Friends

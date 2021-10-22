@@ -49,7 +49,7 @@ export class Login extends React.Component {
     console.log('username:'+this.state.username)
     console.log('password:'+this.state.password)
 
-    this.setState({redirect: `/homepage`})
+    this.setState({redirect: `/home`})
     // window.location.href = window.location.href+'homepage';
   };
 
