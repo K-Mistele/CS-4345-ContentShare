@@ -1,18 +1,21 @@
 import React from "react"
 
-// we might need to make this a class and call the backend to get the title, review, etc even though all the info should be in MyMoviePage 
-
-// import { useLocation } from 'react-router-dom'
+ import { useLocation } from 'react-router-dom'
 
 
 function ViewMovie(props){
 
-
+    const location = useLocation();
+    const title = location.state?.title
+    const rating = location.state?.rating
+    const text = location.state?.text
+    
     return(
         <div>
-            { props.match.params.id}
-            {//state.title
-            }
+            <p> { props.match.params.id} </p> 
+            <p> { title } </p> 
+            <p> { rating } </p> 
+            <p> { text } </p> 
         </div> 
 
     )

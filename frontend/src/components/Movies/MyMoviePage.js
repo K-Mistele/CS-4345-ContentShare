@@ -52,7 +52,11 @@ class MyMoviePage extends React.Component{
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button component = { Link } size = "small" to = {`/movies/${review.id}`} state={{ title: review.reviewTitle }}>View</Button>
+                    <Button component = { Link } size = "small" to = {{ pathname:`/movies/${review.id}`, 
+                      state: {
+                        title: review.reviewTitle,
+                        rating: review.reviewRating,
+                        text: review.reviewText},}} >View</Button>
                     <Button size="small">Edit</Button>
                   </CardActions>
                 </Card>
