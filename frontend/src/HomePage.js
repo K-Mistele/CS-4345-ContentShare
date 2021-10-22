@@ -28,20 +28,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
@@ -59,32 +45,7 @@ export class HomePage extends React.Component {
   logOut() {
     this.setState({ redirect: `/` });
   }
-  handleChangeView(view) {
-    if (view == 'movie') {
-      this.setState({movieView: true}); 
-      this.setState({bookView: false}); 
-      this.setState({friendView: false});
-      // get movie data from db - album view
-      this.setState({testHeading: 'movie'});
-      this.setState({albumView: true});
-    }
-    else if (view == 'book') {
-      this.setState({movieView: false}); 
-      this.setState({bookView: true}); 
-      this.setState({friendView: false});
-      // get book data from db - album view
-      this.setState({testHeading: 'book'});
-      this.setState({albumView: true});
 
-    }
-    else if (view == 'friend') {
-      this.setState({movieView: false}); 
-      this.setState({bookView: false}); 
-      this.setState({friendView: true});
-      // get friends list
-      this.setState({albumView: false});
-    }
-  }
   render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect}></Redirect>;
@@ -126,122 +87,12 @@ export class HomePage extends React.Component {
               My Homepage
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              A little bit of intro of my homepage. The three buttons below should change dynamically.
+              A little bit of intro of my homepage. 
             </Typography>
             <NavigationBar/> 
-            <Stack
-              sx={{ pt: 2 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-            {
-              this.state.movieView && <><Button onClick={() => {this.setState({openAddMovieDialog: true})}} color="primary" startIcon={<AddCircleOutlineIcon/>}
-              variant="text">Add a New Movie</Button>
-              <Dialog fullWidth={true} open={this.state.openAddMovieDialog} onClose={() => {this.setState({openAddMovieDialog: false})}}>
-                  <DialogTitle>Add a New Movie</DialogTitle>
-                  <DialogContent>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      label="Movie Title"
-                      type="movie"
-                      fullWidth
-                      variant="standard"
-                    />
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={() => {this.setState({openAddMovieDialog: false})}}>Cancel</Button>
-                    <Button onClick={() => {this.setState({openAddMovieDialog: false})}}>Add new movie</Button>
-                  </DialogActions>
-                </Dialog>
-              </>
-            }
-
-            {
-              this.state.bookView && <><Button onClick={() => {this.setState({openAddBookDialog: true})}} color="primary" startIcon={<AddCircleOutlineIcon/>}
-              variant="text">Add a New Book</Button>
-              <Dialog fullWidth={true} open={this.state.openAddBookDialog} onClose={() => {this.setState({openAddBookDialog: false})}}>
-                  <DialogTitle>Add a New Book</DialogTitle>
-                  <DialogContent>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      label="Movie Title"
-                      type="movie"
-                      fullWidth
-                      variant="standard"
-                    />
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={() => {this.setState({openAddBookDialog: false})}}>Cancel</Button>
-                    <Button onClick={() => {this.setState({openAddBookDialog: false})}}>Add new book</Button>
-                  </DialogActions>
-                </Dialog>
-              </>
-            }
-            
-
-            </Stack>
           </Container>
         </Box>
-        <Container maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {
-              !this.state.albumView && <p>this will be all of my friends we could have a table view here??</p>
-            }
-            {this.state.albumView && cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {this.state.testHeading}
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
       </main>
-      {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </Box>
-      {/* End footer */}
     </ThemeProvider>
   </>
   }

@@ -9,31 +9,30 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import Header from "./Header"
 import NavigationBar from "./components/NavigationBar/NavigationBar"
 
-import movieReviewsData from "./temp_data/movieReviewsData"
+import bookReviewsData from "./temp_data/bookReviewsData"
 
 
-class MyMoviePage extends React.Component{
+class MyBookPage extends React.Component{
 
     constructor(){
         super();
         this.state = {
-            allMovieReviews: []
+            allBookReviews: []
         }
     } 
 
     componentDidMount(){
         this.setState({
-            allMovieReviews: movieReviewsData,
-            openAddMovieDialog: true,
+            allBookReviews: bookReviewsData,
+            openAddBookDialog: true,
         })
     }
 
     render(){
 
-        const movieReviews = this.state.allMovieReviews.map((review) => {
+        const BookReviews = this.state.allBookReviews.map((review) => {
             return(
             <Grid item key={review.id} xs={12} sm={6} md={4}>
                 <Card
@@ -60,13 +59,12 @@ class MyMoviePage extends React.Component{
 
         return(
             <div>
-            <Header/> 
-            <NavigationBar page = "Movies"/> 
+            <NavigationBar page = "Books"/> 
             <Container maxWidth="md">
                 {/* End hero unit */}
                 <Grid container spacing={4}>
                     
-                    { movieReviews }
+                    { BookReviews }
                           
                 </Grid>
             </Container>
@@ -74,4 +72,4 @@ class MyMoviePage extends React.Component{
         )
     }
 }
-export default MyMoviePage; 
+export default MyBookPage; 
