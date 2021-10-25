@@ -3,7 +3,8 @@ import bodyParser from "body-parser";
 
 // import routers
 const publicRouter: Router = require('./api/controllers/api.controller.public');
-const userRouter: Router = require('./api/controllers/api.controller.user')
+const userRouter: Router = require('./api/controllers/api.controller.user');
+const reviewRouter: Router = require('./api/controllers/api.controller.review');
 
 
 export class Server {
@@ -22,6 +23,7 @@ export class Server {
 
 		// Private routes
 		this.app.use('/user', userRouter);
+		this.app.use('/review', reviewRouter);
 
 	}
 

@@ -1,8 +1,9 @@
-import {IUser} from "../../interfaces/user";
+import {IAuthUser, IUser} from "../../interfaces/user";
 import {IUserRegistration, IUserLogin} from "../schemas/user.schemas";
 import {getDatabase} from "./orientdb.service";
 import {v4 as uuidv4} from 'uuid';
 import * as jwtService from './jwt.service';
+import { Request } from 'express';
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -51,7 +52,7 @@ export async function getUserByEmail(email: string): Promise<IUser> {
 		}).one();
 }
 
-/** retrieveUserByUUID gets the use with the given uuid */
+/** getUserByUsername gets the use with the given uuid */
 export async function getUserByUsername(username: string): Promise<IUser>{
 	const database = await getDatabase();
 	return await database.select().from('user')
@@ -60,7 +61,24 @@ export async function getUserByUsername(username: string): Promise<IUser>{
 		}).one();
 }
 
-export async function loginUser(loginData: IUserLogin) {
+/** getUserByUUID retrieves a user by the given uuid */
+export async function getUserByUUID(uuid: string): Promise<IUser> {
+	const database = await getDatabase();
+	return await database.select().from('user')
+		.where({
+			uuid: uuid
+		}).one();
+
+}
+
+/** get an IUser from an Express.Request object by parsing request.user */
+export async function getUserFromRequest(request: Request): Promise<IUser> {
+	const user: IAuthUser = <IAuthUser> request.user;
+	return await getUserByUUID(user.uuid);
+}
+
+/** login a user given login data and return jwt token string */
+export async function loginUser(loginData: IUserLogin): Promise<string> {
 
 	// Try to get the user by username, and failing that by email
 	let user: IUser = await getUserByUsername(loginData.username) || await getUserByEmail(loginData.username);
@@ -74,7 +92,7 @@ export async function loginUser(loginData: IUserLogin) {
 		//console.log(`Login attempt for ${user.username} failed!`);
 		throw new Error("invalid credentials!");
 	}
-	console.log(`login attempt for ${user.username} should succeed!`)
+	//console.log(`login attempt for ${user.username} should succeed!`)
 
 	// Generate a JWT
 	return jwtService.issueJWT(user);

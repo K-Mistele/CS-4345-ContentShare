@@ -10,6 +10,7 @@ function validateRequest(request: Request, response: Response, next: NextFunctio
 	}
 	const { error, value } = schema.validate(request.body, options)
 	if (error) {
+		console.log(request.body);
 		console.log(`Validation error! ${error.message}`)
 		response.status(400);
 		return response.json({

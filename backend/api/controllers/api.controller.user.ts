@@ -4,6 +4,7 @@ import { IUser } from '../../interfaces/user';
 import {validateSchema} from "../services/requestValidation.service";
 import * as userService from "../services/user.service";
 import * as jwtService from '../services/jwt.service';
+import { IAuthUser } from '../../interfaces/user';
 
 const router: Router = Router();
 
@@ -14,6 +15,7 @@ router.get('/me', validateSchema(userMeSchema), jwtService.requireJWT, getMe);
 
 module.exports = router;
 
+/** create a new user */
 async function registerUser(request: Request, response: Response, next: NextFunction) {
 
 	// make sure that the user doesn't exist
@@ -42,6 +44,7 @@ async function registerUser(request: Request, response: Response, next: NextFunc
 
 }
 
+/** authenticate a user and return a jwt */
 async function loginUser(request: Request, response: Response, next: NextFunction) {
 
 	try {
@@ -59,9 +62,20 @@ async function loginUser(request: Request, response: Response, next: NextFunctio
 	}
 }
 
+/** return my user information */
 async function getMe(request: Request, response: Response, next: NextFunction) {
-	console.dir(request.user);
-	response.status(200).json({
-		message: 'ok'
-	})
+
+	try {
+		const authUser: IAuthUser = <IAuthUser> request.user;
+		const uuid: string = authUser.uuid;
+		const user: IUser = await userService.getUserByUUID(uuid);
+		delete user.hash;
+		return response.status(200).json(user);
+	}
+	catch (err) {
+		return response.status(400).json({message: 'bad JWT JSON payload'})
+	}
+
+
+
 }
