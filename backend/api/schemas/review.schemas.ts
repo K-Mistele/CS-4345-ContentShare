@@ -23,9 +23,17 @@ export const movieReviewCreationSchema = Joi.object({
 
 /** the schema for deleting a book review */
 export const bookReviewDeletionSchema = Joi.object({
-	bookTitle: Joi.string().required()
+	reviewTitle: Joi.string().required()
 })
 
 export interface IBookDeletionRequest {
-	bookTitle: string
+	reviewTitle: string
+}
+
+/** the schema for deleting a movie review */
+export const movieReviewDeletionSchema = Joi.object({
+	reviewTitle: Joi.string().required()
+})
+export interface IMovieDeletionRequest {
+	reviewTitle: string
 }

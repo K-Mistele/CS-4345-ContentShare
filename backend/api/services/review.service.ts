@@ -13,28 +13,36 @@ const MOVIE_REVIEW = 'MovieReview';
 export async function createBookReview(review: IBookReview): Promise<IBookReview> {
 
 	const database = await getDatabase();
-	const newBookReview: IBookReview =  await database.create('VERTEX', BOOK_REVIEW)
+	return <IBookReview> await database.create('VERTEX', BOOK_REVIEW)
 		.set(review).one();
-	console.log(`Created new book review:`);
-	console.log(newBookReview);
-	return newBookReview;
+
 }
 
 /** given the title of a book review, delete the book review */
-export async function deleteBookReview(userUUID: string, bookTitle: string) {
+export async function deleteBookReview(userUUID: string, reviewTitle: string): Promise<number> {
 	const database = await getDatabase();
 	return await database.delete('VERTEX', BOOK_REVIEW)
 		.where({
 			reviewAuthorUUID: userUUID,
-			bookTitle: bookTitle
+			reviewTitle: reviewTitle
 		}).one();
 }
 
 /** create a movie review */
 export async function createMovieReview(review: IMovieReview): Promise<IMovieReview> {
 	const database = await getDatabase();
-	return <IMovieReview> await database.create('VERTEX', BOOK_REVIEW)
+	return <IMovieReview> await database.create('VERTEX', MOVIE_REVIEW)
 		.set(review).one();
+}
+
+/** delete a moview review */
+export async function deleteMovieReview(userUUID: string, reviewTitle: string): Promise<number> {
+	const database = await getDatabase();
+	return await database.delete('VERTEX', MOVIE_REVIEW)
+		.where({
+			reviewAuthorUUID: userUUID,
+			reviewTitle: reviewTitle
+		}).one();
 }
 
 /** check if a book review exists */
