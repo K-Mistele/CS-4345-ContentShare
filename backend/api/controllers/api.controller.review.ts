@@ -48,7 +48,6 @@ async function createBookReview(request: Request, response: Response, next: Next
 async function deleteBookReview(request: Request, response: Response, next: NextFunction) {
 
 	const userUUID = (<IAuthUser> request.user).uuid;
-	const bookDeletionRequest: IBookDeletionRequest = <IBookDeletionRequest> request.body;
 	const numDeleted = await reviewService.deleteBookReview(userUUID, request.body.reviewTitle);
 	if (numDeleted == 0) {
 		return response.sendStatus(404);
@@ -83,8 +82,7 @@ async function createMovieReview(request: Request, response: Response, next: Nex
 async function deleteMovieReview(request: Request, response: Response, next: NextFunction) {
 
 	const userUUID = (<IAuthUser> request.user).uuid;
-	const movieDeletionRequest: IMovieDeletionRequest = <IMovieDeletionRequest> request.body;
-	const numDeleted = await reviewService.deleteBookReview(userUUID, request.body.reviewTitle);
+	const numDeleted = await reviewService.deleteMovieReview(userUUID, request.body.reviewTitle);
 	if (numDeleted == 0) {
 		return response.sendStatus(404);
 	}

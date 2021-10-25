@@ -15,7 +15,7 @@ export const bookReviewCreationSchema = Joi.object({
 export const movieReviewCreationSchema = Joi.object({
 	movieTitle: Joi.string().required(),
 	reviewTitle: Joi.string().required(),
-	reviewBody: Joi.string().required(),
+	reviewText: Joi.string().required(),
 	reviewRating: Joi.number().min(0).max(5).required(),
 	reviewImgUrl: Joi.string()
 	//reviewAuthorUUID: Joi.string().required()
