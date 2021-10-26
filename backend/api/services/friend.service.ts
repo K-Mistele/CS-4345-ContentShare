@@ -116,8 +116,16 @@ export async function denyFriendRequest(sender: IUser, recipient: IUser) {
 }
 
 /** get a list of friends for a user */
-export async function getUserFriends(userUUID: string) {
-
+export async function getUserFriends(user: IUser): Promise<IUser[]> {
+	const database = await getDatabase();
+	const friends: IUser[] = <IUser[]> await database.query(
+		`Select expand(in) from ${FRIEND} where out = ${user['@rid']}`
+	).all();
+	// remove hashes
+	for (let i = 0; i < friends.length; i++) {
+		delete friends[i].hash;
+	}
+	return friends
 }
 
 /** helper function to delete a friend link */

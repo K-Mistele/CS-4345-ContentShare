@@ -13,7 +13,8 @@ import {validateSchema} from "../services/requestValidation.service";
 
 const router: Router = Router();
 
-// /friend/request
+// /friend
+router.get('/', jwtService.requireJWT, getFriends);
 router.post('/request', validateSchema(friendRequestCreationSchema), jwtService.requireJWT, createFriendRequest);
 router.get('/request', jwtService.requireJWT, getFriendRequests);
 router.get('/request/sent', jwtService.requireJWT, getSentFriendRequests);
@@ -22,6 +23,14 @@ router.post('/request/accept', jwtService.requireJWT, validateSchema(friendReque
 router.post('/request/deny', jwtService.requireJWT, validateSchema(friendRequestDenialSchema), denyFriendRequest)
 
 module.exports = router;
+
+/** get a use's friends */
+async function getFriends(request: Request, response: Response, next: NextFunction) {
+	const user: IUser = await getUserFromRequest(request);
+	const friends = <IUser[]> await friendService.getUserFriends(user);
+	return response.status(200).json(friends);
+
+}
 
 /** create a friend request */
 async function createFriendRequest(request: Request, response: Response, next: NextFunction) {
