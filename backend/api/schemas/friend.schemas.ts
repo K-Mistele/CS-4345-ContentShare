@@ -1,5 +1,6 @@
 import * as Joi from 'joi';
 import { IUser} from "../../interfaces/user";
+import { IFriendRequest } from '../../interfaces/friendRequest'
 
 export const friendRequestCreationSchema = Joi.object({
 	destinationUserEmail: Joi.string().required()
@@ -13,3 +14,11 @@ export interface IUserFriendRequests {
 	sentRequests: IUser[],
 	receivedRequests: IUser[]
 }
+
+export const friendRequestAcceptanceSchema = Joi.object({
+	email: Joi.string().required(),
+	username: Joi.string().required(),
+	fullName: Joi.string().required(),
+	uuid: Joi.string().required(),
+	profilePictureUrl: Joi.string()
+})

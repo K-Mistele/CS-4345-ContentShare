@@ -1,5 +1,6 @@
 import { IAuthUser, IUser } from "../../interfaces/user";
 import { getDatabase, FRIEND, FRIEND_REQUEST, VERTEX, EDGE} from "./orientdb.service";
+import { IFriend } from '../../interfaces/friend';
 import { IFriendRequest} from "../../interfaces/friendRequest";
 import * as userService from './user.service';
 import { IUserFriendRequests } from "../schemas/friend.schemas";
@@ -21,7 +22,7 @@ export async function createFriendRequest(sourceUser: IUser, destinationUser: IU
 	const requestExists: boolean = await friendRequestExists(sourceUser, destinationUser);
 	if (requestExists) throw new Error("This friend request already exists!");
 
-	return <IFriendRequest> await database.create('EDGE', FRIEND_REQUEST)
+	return <IFriendRequest> await database.create(EDGE, FRIEND_REQUEST)
 		.from(sourceUser['@rid'])
 		.to(destinationUser['@rid'])
 		.one();
@@ -49,7 +50,7 @@ export async function getSentFriendRequests(user: IUser): Promise<IUser[]> {
 
 	const database = await getDatabase();
 	const sentRequests = <IUser[]> await database.query(
-		`select expand(inV()) from ${FRIEND_REQUEST} where out = ${user['@rid']};`
+		`select expand(in) from ${FRIEND_REQUEST} where out = ${user['@rid']};`
 	).all();
 
 	// remove hashes
@@ -83,16 +84,52 @@ export async function friendRequestExists(sourceUser: IUser, destinationUser: IU
 }
 
 /** accept a friend request */
-export function acceptFriendRequest(currentUser: IUser, requestingUserEmail: string) {
+export async function acceptFriendRequest(currentUser: IUser, requestingUser: IUser) {
+
+	if (! await friendRequestExists(requestingUser, currentUser)) throw new Error('Unable to accept a friend request that does not exist!');
+
+	const database = await getDatabase();
+	// First, create a friend link from sender to recipient
+	const firstLink: IFriend = <IFriend> await database.create(EDGE, FRIEND)
+		.from(requestingUser['@rid'])
+		.to(currentUser['@rid'])
+		.one();
+	console.log(`Created friend link from ${requestingUser.username} to ${currentUser.username}`)
+
+	// Second, create a friend link from recipient to sender
+	const secondLink: IFriend = <IFriend> await database.create(EDGE, FRIEND)
+		.from(currentUser['@rid'])
+		.to(requestingUser['@rid'])
+		.one();
+	console.log(`Created friend link from ${currentUser.username} to ${requestingUser.username}`)
+
+
+	if (!firstLink || !secondLink) throw new Error('unable to add friend: link could not be created. Are both users valid?');
+
+	const numLinksDeleted = await deleteFriendLink(requestingUser, currentUser);
+	console.log(`Deleted ${numLinksDeleted} friend requests while adding friend`)
+
+
 
 }
 
 /** deny a friend request */
-export function denyFriendRequest(userUUID: string, requestingUserEmail: string) {
-
+export async function denyFriendRequest(userUUID: string, requestingUserEmail: string) {
+	// delete the friend request
 }
 
 /** get a list of friends for a user */
-export function getUserFriends(userUUID: string) {
+export async function getUserFriends(userUUID: string) {
 
+}
+
+/** helper function to delete a friend link */
+async function deleteFriendLink(sender: IUser, recipient: IUser): Promise<number> {
+	const database = await getDatabase();
+	console.log(`deleting requests from ${sender['@rid']} to ${recipient['@rid']}`)
+	return <number> await database.delete(EDGE, FRIEND_REQUEST)
+		.where({
+			out: sender['@rid'],
+			in: recipient['@rid']
+		}).all();
 }

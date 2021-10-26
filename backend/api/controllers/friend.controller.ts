@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction, Router} from 'express';
 import {IAuthUser} from '../../interfaces/user';
 import {IFriendRequest} from "../../interfaces/friendRequest";
-import {IUserFriendRequests} from "../schemas/friend.schemas";
+import {friendRequestAcceptanceSchema, IUserFriendRequests} from "../schemas/friend.schemas";
 import {IFriend} from '../../interfaces/friend';
 import {IUser} from '../../interfaces/user';
 import * as userService from '../services/user.service';
@@ -18,6 +18,7 @@ router.post('/request', validateSchema(friendRequestCreationSchema), jwtService.
 router.get('/request', jwtService.requireJWT, getFriendRequests);
 router.get('/request/sent', jwtService.requireJWT, getSentFriendRequests);
 router.get('/request/received', jwtService.requireJWT, getReceivedFriendRequests);
+router.post('/request/accept', jwtService.requireJWT, validateSchema(friendRequestAcceptanceSchema), acceptFriendRequest);
 
 module.exports = router;
 
@@ -80,4 +81,20 @@ async function getReceivedFriendRequests(request: Request, response: Response, n
 	const user: IUser = await getUserFromRequest(request);
 	const receivedFriendRequests: IUser[] = await friendService.getReceivedFriendRequests(user);
 	return response.status(200).json(receivedFriendRequests);
+}
+
+/** accept a received friend request */
+async function acceptFriendRequest(request: Request, response: Response, next: NextFunction) {
+	const currentUser: IUser = await getUserFromRequest(request);
+	const requestUser: IUser = <IFriendRequest> request.body;
+
+	try {
+		await friendService.acceptFriendRequest(currentUser, requestUser);
+		return response.sendStatus(200);
+	}
+	catch (err: any) {
+		return response.sendStatus(400).json({
+			message: err.message
+		})
+	}
 }
