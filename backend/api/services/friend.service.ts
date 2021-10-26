@@ -17,6 +17,11 @@ export async function createFriendRequest(sourceUser: IUser, destinationUserEmai
 	}
 
 	const database = await getDatabase();
+
+	// make sure that there are not any existing friend requests
+	const requestExists: boolean = await friendRequestExists(sourceUser, destinationUser);
+	if (requestExists) throw new Error("This friend request already exists!");
+
 	return <IFriendRequest> await database.create('EDGE', FRIEND_REQUEST)
 		.from(sourceUser['@rid'])
 		.to(destinationUser['@rid'])
@@ -25,33 +30,58 @@ export async function createFriendRequest(sourceUser: IUser, destinationUserEmai
 }
 
 /** get all of my friend requests, both sent and pending approval */
-export async function getFriendRequests(user: IUser): Promise<IUserFriendRequests>{
+export async function getAllFriendRequests(user: IUser): Promise<IUserFriendRequests>{
 
 	const database = await getDatabase();
-	const friendRequests: IUserFriendRequests = <IUserFriendRequests> {
+	return <IUserFriendRequests> {
 
 		// get friend requests originating from the user
-		sentRequests: <IUser[]> await database.query(
-			`select expand(inV()) from ${FRIEND_REQUEST} where out = ${user['@rid']};`
-		).all(),
+		sentRequests: await getSentFriendRequests(user),
 
 		// get friend requests targeted to the user
-		receivedRequests: <IUser[]> await database.query(
-			`select expand(inV()) from ${FRIEND_REQUEST} where in = ${user['@rid']};`
-		).all(),
+		receivedRequests: await getReceivedFriendRequests(user),
 	};
-
-	// remove hashes from expanded users
-	for (let i = 0; i < friendRequests.sentRequests.length; i++) {
-		delete friendRequests.sentRequests[i].hash;
-	}
-	for (let i = 0; i < friendRequests.receivedRequests.length; i++) {
-		delete friendRequests.receivedRequests[i].hash;
-	}
-	return friendRequests;
 
 }
 
+/** get all of a user's sent friend requests */
+export async function getSentFriendRequests(user: IUser): Promise<IUser[]> {
+
+
+	const database = await getDatabase();
+	const sentRequests = <IUser[]> await database.query(
+		`select expand(inV()) from ${FRIEND_REQUEST} where out = ${user['@rid']};`
+	).all();
+
+	// remove hashes
+	for (let i = 0; i < sentRequests.length; i++) {
+		delete sentRequests[i].hash;
+	}
+	return sentRequests;
+}
+
+/** get all of a user's received friend requests */
+export async function getReceivedFriendRequests(user: IUser): Promise<IUser[]> {
+	const database = await getDatabase();
+	const receivedRequests = <IUser[]> await database.query(
+		`select expand(out) from ${FRIEND_REQUEST} where in = ${user['@rid']};`
+	).all();
+
+	// remove hashes
+	for (let i = 0; i < receivedRequests.length; i++) {
+		delete receivedRequests[i].hash;
+	}
+	return receivedRequests;
+}
+
+/** get a specific friend request */
+export async function friendRequestExists(sourceUser: IUser, destinationUser: IUser): Promise<boolean> {
+	const database = await getDatabase();
+	const requests = <IUser[]> await database.query(
+		`select expand(in) from ${FRIEND_REQUEST} where out = ${sourceUser['@rid']} and in = ${destinationUser['@rid']};`
+	).all();
+	return requests.length > 0;
+}
 /** accept a friend request */
 export function acceptFriendRequest(currentUserEmail: string, requestingUserEmail: string) {
 
