@@ -11,8 +11,8 @@ export interface IFriendRequestCreation {
 }
 
 export interface IUserFriendRequests {
-	sentRequests: IUser[],
-	receivedRequests: IUser[]
+	sentRequests: IFriendRequest[],
+	receivedRequests: IFriendRequest[]
 }
 
 export const friendRequestAcceptanceSchema = Joi.object({
