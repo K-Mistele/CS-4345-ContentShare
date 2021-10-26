@@ -1,19 +1,13 @@
-import { IReview } from '../../interfaces/review';
 import { IBookReview } from '../../interfaces/bookReview';
 import { IMovieReview } from "../../interfaces/movieReview";
-import { getDatabase } from './orientdb.service';
+import { getDatabase, BOOK_REVIEW, MOVIE_REVIEW, VERTEX } from './orientdb.service';
 
-/** Table name for book review */
-const BOOK_REVIEW = 'BookReview';
-
-/** Table name for movie reviews */
-const MOVIE_REVIEW = 'MovieReview';
 
 /** create a book review */
 export async function createBookReview(review: IBookReview): Promise<IBookReview> {
 
 	const database = await getDatabase();
-	return <IBookReview> await database.create('VERTEX', BOOK_REVIEW)
+	return <IBookReview> await database.create(VERTEX, BOOK_REVIEW)
 		.set(review).one();
 
 }
@@ -21,7 +15,7 @@ export async function createBookReview(review: IBookReview): Promise<IBookReview
 /** given the title of a book review, delete the book review */
 export async function deleteBookReview(userUUID: string, reviewTitle: string): Promise<number> {
 	const database = await getDatabase();
-	return await database.delete('VERTEX', BOOK_REVIEW)
+	return await database.delete(VERTEX, BOOK_REVIEW)
 		.where({
 			reviewAuthorUUID: userUUID,
 			reviewTitle: reviewTitle
@@ -31,14 +25,14 @@ export async function deleteBookReview(userUUID: string, reviewTitle: string): P
 /** create a movie review */
 export async function createMovieReview(review: IMovieReview): Promise<IMovieReview> {
 	const database = await getDatabase();
-	return <IMovieReview> await database.create('VERTEX', MOVIE_REVIEW)
+	return <IMovieReview> await database.create(VERTEX, MOVIE_REVIEW)
 		.set(review).one();
 }
 
 /** delete a moview review */
 export async function deleteMovieReview(userUUID: string, reviewTitle: string): Promise<number> {
 	const database = await getDatabase();
-	return await database.delete('VERTEX', MOVIE_REVIEW)
+	return await database.delete(VERTEX, MOVIE_REVIEW)
 		.where({
 			reviewAuthorUUID: userUUID,
 			reviewTitle: reviewTitle

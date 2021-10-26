@@ -1,6 +1,6 @@
 import {IAuthUser, IUser} from "../../interfaces/user";
 import {IUserRegistration, IUserLogin} from "../schemas/user.schemas";
-import {getDatabase} from "./orientdb.service";
+import {getDatabase, USER, VERTEX} from "./orientdb.service";
 import {v4 as uuidv4} from 'uuid';
 import * as jwtService from './jwt.service';
 import { Request } from 'express';
@@ -38,7 +38,7 @@ export async function registerUser(registerUserData: IUserRegistration): Promise
 
 	// Insert into the database
 	const database = await getDatabase();
-	newUser = await database.create('VERTEX', 'User').set(newUser).one()
+	newUser = await database.create(VERTEX, USER).set(newUser).one()
 	return newUser;
 
 }
@@ -46,7 +46,7 @@ export async function registerUser(registerUserData: IUserRegistration): Promise
 /** getUserByEmail gets the user with a given email */
 export async function getUserByEmail(email: string): Promise<IUser> {
 	const database = await getDatabase();
-	return await database.select().from('user')
+	return await database.select().from(USER)
 		.where({
 			email: email
 		}).one();
@@ -55,7 +55,7 @@ export async function getUserByEmail(email: string): Promise<IUser> {
 /** getUserByUsername gets the use with the given uuid */
 export async function getUserByUsername(username: string): Promise<IUser>{
 	const database = await getDatabase();
-	return await database.select().from('user')
+	return await database.select().from(USER)
 		.where({
 			username: username
 		}).one();
@@ -64,7 +64,7 @@ export async function getUserByUsername(username: string): Promise<IUser>{
 /** getUserByUUID retrieves a user by the given uuid */
 export async function getUserByUUID(uuid: string): Promise<IUser> {
 	const database = await getDatabase();
-	return await database.select().from('user')
+	return await database.select().from(USER)
 		.where({
 			uuid: uuid
 		}).one();
