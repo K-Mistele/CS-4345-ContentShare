@@ -26,17 +26,20 @@ async function createFriendRequest(request: Request, response: Response, next: N
 
 	// get the user from the request, which is the requesting/source user
 	const sourceUser: IUser = await getUserFromRequest(request);
-	const friendCreationRequest: IFriendRequestCreation = <IFriendRequestCreation>request.body;
+	const destinationUserEmail: string = (<IFriendRequestCreation>request.body).destinationUserEmail;
+	const destinationUser: IUser = await userService.getUserByEmail(destinationUserEmail);
+	if (!destinationUser) return response.status(404).json({
+		message: 'Unable to find the specified user!'
+	})
+
+	// Build the friend request
 	let friendRequest: IFriendRequest
 	try {
-		friendRequest = await friendService.createFriendRequest(
-			sourceUser,
-			friendCreationRequest.destinationUserEmail
-		);
+		friendRequest = await friendService.createFriendRequest(sourceUser, destinationUser);
 	}
-	catch (err) {
+	catch (err: any) {
 		return response.status(403).json({
-			message: 'this friend request already exists!'
+			message: err.message
 		})
 	}
 	if (friendRequest) {
@@ -44,7 +47,7 @@ async function createFriendRequest(request: Request, response: Response, next: N
 	}
 	else {
 		return response.status(404).json({
-			message: `Unable to find a user with the specified email ${friendCreationRequest.destinationUserEmail}`
+			message: `Unable to find a user with the specified email ${destinationUserEmail}`
 		});
 	}
 }

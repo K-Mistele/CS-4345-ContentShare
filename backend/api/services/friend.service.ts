@@ -5,13 +5,12 @@ import * as userService from './user.service';
 import { IUserFriendRequests } from "../schemas/friend.schemas";
 
 /** Create a friend request from source user to request user */
-export async function createFriendRequest(sourceUser: IUser, destinationUserEmail: string): Promise<IFriendRequest>{
+export async function createFriendRequest(sourceUser: IUser, destinationUser: IUser): Promise<IFriendRequest>{
 
 	// make sure that the source user has an RID for building the link
 	if (!sourceUser['@rid']) throw new Error("sourceUser is missing @rid property! Did you fetch this user from the database?");
 
 	// get the destination user, and make sure that they exist or else throw an error
-	const destinationUser: IUser = await userService.getUserByEmail(destinationUserEmail);
 	if (!destinationUser) {
 		throw new Error('Unable to find a user with the specified email!');
 	}
@@ -74,7 +73,7 @@ export async function getReceivedFriendRequests(user: IUser): Promise<IUser[]> {
 	return receivedRequests;
 }
 
-/** get a specific friend request */
+/** check if a friend request exists */
 export async function friendRequestExists(sourceUser: IUser, destinationUser: IUser): Promise<boolean> {
 	const database = await getDatabase();
 	const requests = <IUser[]> await database.query(
@@ -82,8 +81,9 @@ export async function friendRequestExists(sourceUser: IUser, destinationUser: IU
 	).all();
 	return requests.length > 0;
 }
+
 /** accept a friend request */
-export function acceptFriendRequest(currentUserEmail: string, requestingUserEmail: string) {
+export function acceptFriendRequest(currentUser: IUser, requestingUserEmail: string) {
 
 }
 
