@@ -70,3 +70,21 @@ export async function movieReviewExists(userUUID: string, reviewTitle: string): 
 	return !!movieReview; // force conversion to boolean
 
 }
+
+/** get all of a users' book reviews */
+export async function getUserBookReviews(userUUID: string): Promise<IBookReview[]> {
+	const database = await getDatabase();
+	return <IBookReview[]> await database.select().from(BOOK_REVIEW)
+		.where({
+			reviewAuthorUUID: userUUID
+		}).all();
+}
+
+/** get all of a users' movie reviews */
+export async function getUserMovieReviews(userUUID: string): Promise<IBookReview[]> {
+	const database = await getDatabase();
+	return <IBookReview[]> await database.select().from(MOVIE_REVIEW)
+		.where({
+			reviewAuthorUUID: userUUID
+		}).all();
+}

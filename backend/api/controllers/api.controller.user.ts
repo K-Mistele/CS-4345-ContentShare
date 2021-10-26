@@ -1,10 +1,15 @@
 import {Request, Response, Router, NextFunction} from "express";
 import {userRegistrationSchema, userLoginSchema, userMeSchema} from "../schemas/user.schemas";
 import { IUser } from '../../interfaces/user';
+import { IReview } from '../../interfaces/review';
+import { IBookReview} from "../../interfaces/bookReview";
+import { IMovieReview } from "../../interfaces/movieReview";
 import {validateSchema} from "../services/requestValidation.service";
 import * as userService from "../services/user.service";
 import * as jwtService from '../services/jwt.service';
+import * as reviewService from '../services/review.service';
 import { IAuthUser } from '../../interfaces/user';
+import {getUserFromRequest} from "../services/user.service";
 
 const router: Router = Router();
 
@@ -12,6 +17,7 @@ const router: Router = Router();
 router.post('/register', validateSchema(userRegistrationSchema), registerUser);
 router.post('/login', validateSchema(userLoginSchema), loginUser);
 router.get('/me', validateSchema(userMeSchema), jwtService.requireJWT, getMe);
+router.get('/reviews', jwtService.requireJWT, getUserReviews);
 
 module.exports = router;
 
@@ -77,5 +83,22 @@ async function getMe(request: Request, response: Response, next: NextFunction) {
 	}
 
 
+
+}
+
+/** return all reviews for a user */
+async function getUserReviews(request: Request, response: Response, next: NextFunction) {
+	const user: IUser = await getUserFromRequest(request);
+
+	// create promises to fetch both types of reviews in an array so we can do them async
+	const reviewPromises: Promise<IReview[]>[] = [
+		reviewService.getUserBookReviews(user.uuid),
+		reviewService.getUserMovieReviews(user.uuid)
+	];
+	const reviews: IReview[][] = await Promise.all(reviewPromises);
+	return response.status(200).json({
+		bookReviews: <IBookReview[]> reviews[0],
+		movieReviews: <IMovieReview[]> reviews[1]
+	})
 
 }

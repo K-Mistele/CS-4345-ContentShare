@@ -12,14 +12,14 @@ import {
 } from "../schemas/review.schemas";
 import * as jwtService from '../services/jwt.service';
 import * as reviewService from '../services/review.service';
-import {getUserFromRequest} from "../services/user.service";
-import {IAuthUser, IUser} from "../../interfaces/user";
+import {IAuthUser} from "../../interfaces/user";
 
 const router: Router = Router();
 
 // /review/book
 router.put('/book', validateSchema(bookReviewCreationSchema), jwtService.requireJWT, createBookReview);
 router.delete('/book', validateSchema(bookReviewDeletionSchema), jwtService.requireJWT, deleteBookReview);
+
 // /review/movie
 router.put('/movie', validateSchema(movieReviewCreationSchema), jwtService.requireJWT, createMovieReview);
 router.delete('/movie', validateSchema(movieReviewDeletionSchema), jwtService.requireJWT, deleteMovieReview);
@@ -48,15 +48,14 @@ async function createBookReview(request: Request, response: Response, next: Next
 async function deleteBookReview(request: Request, response: Response, next: NextFunction) {
 
 	const userUUID = (<IAuthUser> request.user).uuid;
-	const numDeleted = await reviewService.deleteBookReview(userUUID, request.body.reviewTitle);
+	const bookDeletionRequest: IBookDeletionRequest = <IBookDeletionRequest> request.body;
+	const numDeleted = await reviewService.deleteBookReview(userUUID, bookDeletionRequest.reviewTitle);
 	if (numDeleted == 0) {
 		return response.sendStatus(404);
 	}
 	return response.status(200).json({
 		message: `Deleted ${numDeleted} records`
 	});
-
-
 }
 
 /** create a book review */
@@ -82,7 +81,8 @@ async function createMovieReview(request: Request, response: Response, next: Nex
 async function deleteMovieReview(request: Request, response: Response, next: NextFunction) {
 
 	const userUUID = (<IAuthUser> request.user).uuid;
-	const numDeleted = await reviewService.deleteMovieReview(userUUID, request.body.reviewTitle);
+	const movieDeletionRequest: IMovieDeletionRequest = <IMovieDeletionRequest> request.body;
+	const numDeleted = await reviewService.deleteMovieReview(userUUID, movieDeletionRequest.reviewTitle);
 	if (numDeleted == 0) {
 		return response.sendStatus(404);
 	}
