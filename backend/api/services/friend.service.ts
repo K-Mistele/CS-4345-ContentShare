@@ -108,14 +108,11 @@ export async function acceptFriendRequest(currentUser: IUser, requestingUser: IU
 
 	const numLinksDeleted = await deleteFriendLink(requestingUser, currentUser);
 	console.log(`Deleted ${numLinksDeleted} friend requests while adding friend`)
-
-
-
 }
 
 /** deny a friend request */
-export async function denyFriendRequest(userUUID: string, requestingUserEmail: string) {
-	// delete the friend request
+export async function denyFriendRequest(sender: IUser, recipient: IUser) {
+	return await deleteFriendLink(sender, recipient);
 }
 
 /** get a list of friends for a user */

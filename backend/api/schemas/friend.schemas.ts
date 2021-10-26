@@ -22,3 +22,11 @@ export const friendRequestAcceptanceSchema = Joi.object({
 	uuid: Joi.string().required(),
 	profilePictureUrl: Joi.string()
 })
+
+export const friendRequestDenialSchema = Joi.object({
+	email: Joi.string().required(),
+	username: Joi.string().required(),
+	fullName: Joi.string().required(),
+	uuid: Joi.string().required(),
+	profilePictureUrl: Joi.string()
+})

@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction, Router} from 'express';
 import {IAuthUser} from '../../interfaces/user';
 import {IFriendRequest} from "../../interfaces/friendRequest";
-import {friendRequestAcceptanceSchema, IUserFriendRequests} from "../schemas/friend.schemas";
+import {friendRequestAcceptanceSchema, friendRequestDenialSchema, IUserFriendRequests} from "../schemas/friend.schemas";
 import {IFriend} from '../../interfaces/friend';
 import {IUser} from '../../interfaces/user';
 import * as userService from '../services/user.service';
@@ -19,6 +19,7 @@ router.get('/request', jwtService.requireJWT, getFriendRequests);
 router.get('/request/sent', jwtService.requireJWT, getSentFriendRequests);
 router.get('/request/received', jwtService.requireJWT, getReceivedFriendRequests);
 router.post('/request/accept', jwtService.requireJWT, validateSchema(friendRequestAcceptanceSchema), acceptFriendRequest);
+router.post('/request/deny', jwtService.requireJWT, validateSchema(friendRequestDenialSchema), denyFriendRequest)
 
 module.exports = router;
 
@@ -90,6 +91,22 @@ async function acceptFriendRequest(request: Request, response: Response, next: N
 
 	try {
 		await friendService.acceptFriendRequest(currentUser, requestUser);
+		return response.sendStatus(200);
+	}
+	catch (err: any) {
+		return response.status(400).json({
+			message: err.message
+		})
+	}
+}
+
+/** deny a received friend request */
+async function denyFriendRequest(request: Request, response: Response, next: NextFunction) {
+	const currentUser: IUser = await getUserFromRequest(request);
+	const requestUser: IUser = <IFriendRequest> request.body;
+
+	try {
+		await friendService.denyFriendRequest(currentUser, requestUser);
 		return response.sendStatus(200);
 	}
 	catch (err: any) {
