@@ -18,6 +18,8 @@ router.post('/register', validateSchema(userRegistrationSchema), registerUser);
 router.post('/login', validateSchema(userLoginSchema), loginUser);
 router.get('/me', validateSchema(userMeSchema), jwtService.requireJWT, getMe);
 router.get('/reviews', jwtService.requireJWT, getUserReviews);
+router.get('/reviews/books', jwtService.requireJWT, getUserBookReviews);
+router.get('/reviews/movies', jwtService.requireJWT, getUserMovieReviews);
 
 module.exports = router;
 
@@ -88,12 +90,12 @@ async function getMe(request: Request, response: Response, next: NextFunction) {
 
 /** return all reviews for a user */
 async function getUserReviews(request: Request, response: Response, next: NextFunction) {
-	const user: IUser = await getUserFromRequest(request);
+	const authUser: IAuthUser = <IAuthUser> request.user;
 
 	// create promises to fetch both types of reviews in an array so we can do them async
 	const reviewPromises: Promise<IReview[]>[] = [
-		reviewService.getUserBookReviews(user.uuid),
-		reviewService.getUserMovieReviews(user.uuid)
+		reviewService.getUserBookReviews(authUser.uuid),
+		reviewService.getUserMovieReviews(authUser.uuid)
 	];
 	const reviews: IReview[][] = await Promise.all(reviewPromises);
 	return response.status(200).json({
@@ -101,4 +103,20 @@ async function getUserReviews(request: Request, response: Response, next: NextFu
 		movieReviews: <IMovieReview[]> reviews[1]
 	})
 
+}
+
+/** return all book reviews for a user */
+async function getUserBookReviews(request: Request, response: Response, next: NextFunction) {
+
+	const authUser: IAuthUser = <IAuthUser> request.user;
+	const bookReviews: IBookReview[] = await reviewService.getUserBookReviews(authUser.uuid);
+	return response.status(200).json(bookReviews);
+}
+
+/** return all movie reviews for a user */
+async function getUserMovieReviews(request: Request, response: Response, next: NextFunction) {
+
+	const authUser: IAuthUser = <IAuthUser> request.user;
+	const movieReviews: IMovieReview[] = await reviewService.getUserMovieReviews(authUser.uuid);
+	return response.status(200).json(movieReviews);
 }

@@ -81,9 +81,9 @@ export async function getUserBookReviews(userUUID: string): Promise<IBookReview[
 }
 
 /** get all of a users' movie reviews */
-export async function getUserMovieReviews(userUUID: string): Promise<IBookReview[]> {
+export async function getUserMovieReviews(userUUID: string): Promise<IMovieReview[]> {
 	const database = await getDatabase();
-	return <IBookReview[]> await database.select().from(MOVIE_REVIEW)
+	return <IMovieReview[]> await database.select().from(MOVIE_REVIEW)
 		.where({
 			reviewAuthorUUID: userUUID
 		}).all();
