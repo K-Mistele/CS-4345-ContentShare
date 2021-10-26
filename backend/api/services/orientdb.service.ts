@@ -16,3 +16,24 @@ const server = OrientDB({
 export async function getDatabase(databaseName: string = 'contentShare') {
 	return server.use(databaseName);
 }
+
+/** type for creating an edge */
+export const EDGE: string = 'EDGE';
+
+/** type for creating a vertex */
+export const VERTEX: string = 'VERTEX';
+
+/** table name for Friend reqeusts */
+export const FRIEND_REQUEST: string = 'FriendRequest';
+
+/** table name for friends */
+export const FRIEND: string = 'Friend';
+
+/** table name for Users */
+export const USER: string = 'User';
+
+/** table name for movie reviews */
+export const MOVIE_REVIEW: string = 'MovieReview';
+
+/** table name for book reviews */
+export const BOOK_REVIEW: string = 'BookReviews';
