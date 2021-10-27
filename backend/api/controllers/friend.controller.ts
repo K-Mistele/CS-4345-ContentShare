@@ -30,7 +30,7 @@ router.post('/request/accept', jwtService.requireJWT, validateSchema(friendReque
 router.post('/request/deny', jwtService.requireJWT, validateSchema(friendRequestDenialSchema), denyFriendRequest)
 module.exports = router;
 
-/** get a use's friends */
+/** get a user's friends */
 async function getFriends(request: Request, response: Response, next: NextFunction) {
 	const user: IUser = await getUserFromRequest(request);
 	const friends = <IUser[]> await friendService.getUserFriends(user);

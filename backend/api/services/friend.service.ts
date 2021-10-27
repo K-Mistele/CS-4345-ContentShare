@@ -106,13 +106,13 @@ export async function acceptFriendRequest(currentUser: IUser, requestingUser: IU
 
 	if (!firstLink || !secondLink) throw new Error('unable to add friend: link could not be created. Are both users valid?');
 
-	const numLinksDeleted = await deleteFriendLink(requestingUser, currentUser);
+	const numLinksDeleted = await deleteFriendRequestLink(requestingUser, currentUser);
 	console.log(`Deleted ${numLinksDeleted} friend requests while adding friend`)
 }
 
 /** deny a friend request */
 export async function denyFriendRequest(sender: IUser, recipient: IUser) {
-	return await deleteFriendLink(sender, recipient);
+	return await deleteFriendRequestLink(sender, recipient);
 }
 
 /** get a list of friends for a user */
@@ -172,7 +172,7 @@ export async function deleteUserFriend(currentUser: IUser, userToUnfriend: IUser
 }
 
 /** helper function to delete a friend link */
-async function deleteFriendLink(sender: IUser, recipient: IUser): Promise<number> {
+async function deleteFriendRequestLink(sender: IUser, recipient: IUser): Promise<number> {
 	const database = await getDatabase();
 	console.log(`deleting requests from ${sender['@rid']} to ${recipient['@rid']}`)
 	return <number> await database.delete(EDGE, FRIEND_REQUEST)
