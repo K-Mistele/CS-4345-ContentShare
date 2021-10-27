@@ -1,9 +1,9 @@
-import {IEdge} from "./_edge";
+import {IVertex} from "./_vertex";
 
-export interface IReview extends IEdge {
-	by: string
-	created: number // timestamp
+export interface IReview extends IVertex {
 	reviewTitle: string
 	reviewText: string
-	rating: number
+	reviewRating: number
+	reviewImgUrl: string
+	reviewAuthorUUID: string
 }

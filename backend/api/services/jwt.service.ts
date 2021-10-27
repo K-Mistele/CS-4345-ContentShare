@@ -22,7 +22,7 @@ export function issueJWT(user: IUser): string {
 export function requireJWT(request: Request, response: Response, next: NextFunction){
 
 
-		const token = request.body.token || request.query.token || request.headers["x-access-token"];
+		const token = request.headers["x-access-token"] || request.body.token || request.query.token;
 
 		if (!token) {
 			response.status(403);
@@ -31,6 +31,7 @@ export function requireJWT(request: Request, response: Response, next: NextFunct
 			})
 		}
 		try {
+
 			request.user = jwt.verify(token, JWT_SECRET);
 		} catch (err) {
 			response.status(401);

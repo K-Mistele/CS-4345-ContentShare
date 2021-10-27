@@ -12,6 +12,12 @@ router.get('/test2', (request: Request, response: Response, next: NextFunction) 
 	})
 })
 
+router.get('/test', (request: Request, response: Response, next: NextFunction) => {
+	return response.json({
+		body: request.body
+	})
+})
+
 
 // IMPORTANT! THIS MUST STAY AT THE BOTTOM OF THE FILE
 module.exports = router;
