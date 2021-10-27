@@ -1,27 +1,33 @@
 import {Request, Response, NextFunction, Router} from 'express';
 import {IAuthUser} from '../../interfaces/user';
 import {IFriendRequest} from "../../interfaces/friendRequest";
-import {friendRequestAcceptanceSchema, friendRequestDenialSchema, IUserFriendRequests} from "../schemas/friend.schemas";
+import {friendRequestAcceptanceSchema,
+	friendRequestDenialSchema,
+	friendRequestCreationSchema,
+	friendRemovalSchema,
+	IUserFriendRequests,
+	IFriendRequestCreation,
+	IFriendRemoval
+} from "../schemas/friend.schemas";
 import {IFriend} from '../../interfaces/friend';
 import {IUser} from '../../interfaces/user';
 import * as userService from '../services/user.service';
 import * as jwtService from '../services/jwt.service';
 import * as friendService from '../services/friend.service';
 import {getUserFromRequest} from '../services/user.service';
-import {friendRequestCreationSchema, IFriendRequestCreation} from "../schemas/friend.schemas";
 import {validateSchema} from "../services/requestValidation.service";
 
 const router: Router = Router();
 
 // /friend
 router.get('/', jwtService.requireJWT, getFriends);
+router.delete('/', jwtService.requireJWT, validateSchema(friendRemovalSchema), removeFriend)
 router.post('/request', validateSchema(friendRequestCreationSchema), jwtService.requireJWT, createFriendRequest);
 router.get('/request', jwtService.requireJWT, getFriendRequests);
 router.get('/request/sent', jwtService.requireJWT, getSentFriendRequests);
 router.get('/request/received', jwtService.requireJWT, getReceivedFriendRequests);
 router.post('/request/accept', jwtService.requireJWT, validateSchema(friendRequestAcceptanceSchema), acceptFriendRequest);
 router.post('/request/deny', jwtService.requireJWT, validateSchema(friendRequestDenialSchema), denyFriendRequest)
-
 module.exports = router;
 
 /** get a use's friends */
@@ -121,6 +127,24 @@ async function denyFriendRequest(request: Request, response: Response, next: Nex
 	catch (err: any) {
 		return response.sendStatus(400).json({
 			message: err.message
+		})
+	}
+}
+
+/** remove a friend */
+async function removeFriend(request: Request, response: Response, next: NextFunction) {
+	const friendRemovalRequest: IFriendRemoval = <IFriendRemoval> request.body;
+	const currentUser: IUser = await getUserFromRequest(request);
+	const userToUnfriend: IUser = await userService.getUserByEmail(friendRemovalRequest.email);
+
+	const numRecordsDeleted: number = await friendService.deleteUserFriend(currentUser, userToUnfriend);
+	if (numRecordsDeleted >= 2) {
+		return response.status(200).json({
+			message: `Friend successfully removed`
+		})
+	} else {
+		return response.status(500).json({
+			message: `May have failed to completely remove friend`
 		})
 	}
 }

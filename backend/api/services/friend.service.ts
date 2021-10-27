@@ -87,7 +87,7 @@ export async function friendRequestExists(sourceUser: IUser, destinationUser: IU
 export async function acceptFriendRequest(currentUser: IUser, requestingUser: IUser) {
 
 	if (! await friendRequestExists(requestingUser, currentUser)) throw new Error('Unable to accept a friend request that does not exist!');
-
+	if (await friendExists(currentUser, requestingUser)) throw new Error("Cannot add a friend that already exists!");
 	const database = await getDatabase();
 	// First, create a friend link from sender to recipient
 	const firstLink: IFriend = <IFriend> await database.create(EDGE, FRIEND)
@@ -126,6 +126,49 @@ export async function getUserFriends(user: IUser): Promise<IUser[]> {
 		delete friends[i].hash;
 	}
 	return friends
+}
+
+/** determine if a friend exists */
+export async function friendExists(currentUser: IUser, userInQuestion: IUser): Promise<boolean> {
+	const database = await getDatabase();
+	const firstLink = await database.query(
+			`Select expand(in) from ${FRIEND} where out = ${currentUser['@rid']} and in = ${userInQuestion['@rid']}`
+		)
+		.all();
+	const secondLink = await database.query(
+			`Select expand(in) from ${FRIEND} where out = ${userInQuestion['@rid']} and in = ${currentUser['@rid']}`
+		)
+		.all();
+
+	const friendExists = !!firstLink && !! secondLink;
+	if (friendExists) {
+		console.log(`Friend exists!`);
+	}
+	else {
+		console.log(`Friend does not exist!`);
+	}
+
+	return !!firstLink && !!secondLink
+}
+
+/** delete a user's friend */
+export async function deleteUserFriend(currentUser: IUser, userToUnfriend: IUser): Promise<number> {
+
+	if (! await friendExists(currentUser, userToUnfriend)) throw new Error('Cannot delete a friend that does not exist!');
+	const database = await getDatabase();
+	let numberDeleted = 0;
+	numberDeleted += await database.delete(EDGE, FRIEND)
+	.where({
+		in: currentUser['@rid'],
+		out: userToUnfriend['@rid']
+	}).one();
+	numberDeleted += await database.delete(EDGE, FRIEND)
+	.where({
+		in: userToUnfriend['@rid'],
+		out: currentUser['@rid']
+	}).one();
+
+	return numberDeleted;
 }
 
 /** helper function to delete a friend link */

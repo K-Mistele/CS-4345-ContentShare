@@ -30,3 +30,10 @@ export const friendRequestDenialSchema = Joi.object({
 	uuid: Joi.string().required(),
 	profilePictureUrl: Joi.string()
 })
+
+export const friendRemovalSchema = Joi.object({
+	email: Joi.string().required()
+});
+export interface IFriendRemoval {
+	email: string
+}
