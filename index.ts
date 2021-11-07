@@ -8,7 +8,7 @@ app.use(express.static('dist/frontend'));
 app.use(bodyParser.json())
 
 
-const port = 8080;
+const port = 80;
 
 const server = new Server(app);
 server.start(port);
