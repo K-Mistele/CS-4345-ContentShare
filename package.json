@@ -4,7 +4,7 @@
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc && node dist/index.js",
+    "build": "cd frontend && npm run build && cp build ../dist/frontend/ -R && cd ../ && tsc && node dist/index.js",
     "dev-backend-server": "nodemon ./index.ts",
     "dev-frontend-server": "cd frontend && yarn start",
     "example": "ts-node backend/example.ts"
