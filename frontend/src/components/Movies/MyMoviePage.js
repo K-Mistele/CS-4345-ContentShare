@@ -13,10 +13,13 @@ import Typography from '@mui/material/Typography';
 import Header from "../Header/Header"
 import NavigationBar from "../NavigationBar/NavigationBar"
 
-import movieReviewsData from "../../temp_data/movieReviewsData"
+// import movieReviewsData from "../../temp_data/movieReviewsData"
+import { movieRepo } from "../../api/movieRepo"
 
 
 class MyMoviePage extends React.Component{
+
+  movieRepository = new movieRepo(); 
 
     constructor(){
         super();
@@ -26,10 +29,14 @@ class MyMoviePage extends React.Component{
     } 
 
     componentDidMount(){
-        this.setState({
-            allMovieReviews: movieReviewsData,
-            openAddMovieDialog: true,
-        })
+      this.movieRepository.getMovies()
+      .then(movies =>{
+        this.setState({allMovieReviews: movies, openAddMovieDialog:true})
+        console.log("movies successfully retreived")
+      })
+      .catch(error=>{
+        console.log("error: ", error)
+      })
     }
 
     render(){
