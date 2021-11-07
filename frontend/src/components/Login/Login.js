@@ -20,6 +20,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import {TestRepository} from '../../api/testRepository'
+import { loginRepo } from "../../api/loginRepo"
+
 
 function Copyright(props) {
     return (
@@ -40,19 +42,30 @@ const theme = createTheme();
 
 export class Login extends React.Component {
   testRepository = new TestRepository();
+  loginRepository = new loginRepo();
 
   state = {
     username: '',
     password: '',
     openDialog: false
-  }
+  };
+
   handleSubmit(){
     console.log('username:'+this.state.username)
     console.log('password:'+this.state.password)
 
-    this.setState({redirect: `/home`})
-    // window.location.href = window.location.href+'homepage';
-  };
+    var user = {
+      username: this.state.username,
+      password: this.state.password
+    }
+
+    this.loginRepository.loginUser(user)
+    .then(()=> this.setState({redirect:`/home`}))
+    .catch((error) => {
+      alert("Incorrect login information")
+    })
+  
+  }
 
   render() {
     if (this.state.redirect) {
