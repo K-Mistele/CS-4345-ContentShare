@@ -4,7 +4,7 @@
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "cd frontend && npm run build && cp build/* ../dist/frontend/ -R && cd ../ && tsc && node dist/index.js",
+    "build": "cd frontend && npm run build && cp -R build/* ../dist/frontend/ && cd ../ && tsc && node dist/index.js",
     "psbuild": "powershell -c \"cd frontend;npm run build;echo copying files;copy-item build/* ../dist/frontend -Recurse -Force;echo copy completed;echo compiling;cd ../;tsc;node dist/index.js\"",
     "dev-backend-server": "nodemon ./index.ts",
     "dev-frontend-server": "cd frontend && yarn start",
