@@ -23,7 +23,7 @@ export const EDGE: string = 'EDGE';
 /** type for creating a vertex */
 export const VERTEX: string = 'VERTEX';
 
-/** table name for Friend reqeusts */
+/** table name for Friend requests
 export const FRIEND_REQUEST: string = 'FriendRequest';
 
 /** table name for friends */
@@ -36,4 +36,4 @@ export const USER: string = 'User';
 export const MOVIE_REVIEW: string = 'MovieReview';
 
 /** table name for book reviews */
-export const BOOK_REVIEW: string = 'BookReviews';
+export const BOOK_REVIEW: string = 'BookReview';
