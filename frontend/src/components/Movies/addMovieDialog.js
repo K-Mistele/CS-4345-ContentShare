@@ -44,7 +44,6 @@ export const AddMovieDialog = props =>
         label="Review Text"
         fullWidth
         variant="standard"
-        defaultValue={props.movie.reviewText}
       /> 
       <TextField
         autoFocus
@@ -53,7 +52,6 @@ export const AddMovieDialog = props =>
         label="Image Url"
         fullWidth
         variant="standard"
-        defaultValue={props.movie.reviewImgUrl}
       />   
       </DialogContent>
     <DialogActions>
