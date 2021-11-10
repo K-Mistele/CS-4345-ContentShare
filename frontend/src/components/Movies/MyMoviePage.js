@@ -7,17 +7,18 @@ import Stack from '@mui/material/Stack';
 import Header from "../Header/Header"
 import NavigationBar from "../NavigationBar/NavigationBar"
 import { MovieList } from "./movieList";
-import movieReviewsData from "../../temp_data/movieReviewsData";
 import { ViewMovieDialog } from "./viewMovieDialog";
 import { EditMovieDialog } from "./editMovieDialog";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { AddMovieDialog } from "./addMovieDialog";
-// import { movieRepo } from "../../api/movieRepo"
 
+import { movieRepo } from "../../api/movieRepo"
+
+// import movieReviewsData from "../../temp_data/movieReviewsData";
 
 class MyMoviePage extends React.Component {
 
-  // movieRepository = new movieRepo(); 
+movieRepository = new movieRepo(); 
 
   constructor() {
     super();
@@ -35,17 +36,17 @@ class MyMoviePage extends React.Component {
   }
 
   componentDidMount() {
-    // this.movieRepository.getMovies()
-    // .then(movies =>{
-    //   this.setState({allMovieReviews: movies, openAddMovieDialog:true})
-    //   console.log("movies successfully retreived")
-    // })
-    // .catch(error=>{
-    //   console.log("error: ", error)
-    // })
-    this.setState({
-      allMovieReviews: movieReviewsData
+     this.movieRepository.getMovies()
+     .then(movies =>{
+       this.setState({allMovieReviews: movies, openAddMovieDialog:true})
+       console.log("movies successfully retreived")
+     })
+     .catch(error=>{
+       console.log("error: ", error)
     })
+    /*this.setState({
+      allMovieReviews: movieReviewsData
+    })*/ 
   }
   onMovieViewClick(movieId) {
     console.log(movieId)
@@ -93,8 +94,18 @@ class MyMoviePage extends React.Component {
   CloseAddDialog() {
     this.setState({ openAddMovieDialog: false })
   }
-  SaveAddMovie() {
+  SaveAddMovie(movieToAdd) {
+    console.log("in save add movie!. movieToAdd in MoviePage",  movieToAdd)
     // do something here to save
+    this.movieRepository.addMovie(movieToAdd)
+    .then(() =>{
+       this.setState({openAddMovieDialog:true})
+       console.log("movie added!!")
+     })
+     .catch(error=>{
+       console.log("error: ", error)
+    })
+
     console.log('Added movie!')
     console.log('Checking if saving add reads full name: '+this.state.tmpAddTitle);
     this.setState({ openAddMovieDialog: false })

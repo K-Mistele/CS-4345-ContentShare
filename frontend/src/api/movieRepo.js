@@ -18,9 +18,27 @@ export class movieRepo{
             console.log("here in movie get")
             console.log(response)
             console.log("data!!!", response.data)
-            //console.log(response.data.token)
-            //localStorage.setItem('jwt_token', response.data.token)
             resolve(response.data)
+            })
+            .catch(error => {
+                console.log(error)
+                reject(error)
+            })
+        })
+    }
+
+    addMovie(movieToAdd){
+        console.log("movie to add in repo", movieToAdd)
+        let config = {
+            headers:{
+                'x-access-token': localStorage.getItem('jwt_token')
+            },
+        }
+        return new Promise((resolve, reject)=>{
+            axios.put(`${this.url}/review/movie`, movieToAdd, config)
+            .then(response=>{
+                resolve(response.data)
+                console.log("success adding movie")
             })
             .catch(error => {
                 console.log(error)
