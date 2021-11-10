@@ -39,16 +39,20 @@ export class AddMovieDialog extends React.Component{
     this.movieRepository.addMovie(this.state)
     .then(() =>{
        console.log("movie added!!")
+       console.log("calling refetch")
+       this.props.RefetchMovies()
      })
      .catch(error=>{
        console.log("error: ", error)
     })
+    this.props.CloseDialog()
+
   }
 
   render(){
     return(
     <Dialog fullWidth={true} open={this.props.open} onClose={() => this.props.CloseDialog()}>
-      <DialogTitle>Add Movie HELLO</DialogTitle>
+      <DialogTitle>Add Movie </DialogTitle>
       <DialogContent>
         <Box
           component="form"

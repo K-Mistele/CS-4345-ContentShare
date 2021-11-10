@@ -28,7 +28,7 @@ export const MovieList = props => <Container maxWidth="md" sx= {{mt:5}}>
                   >
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        {movie.reviewTitle}
+                        {movie.movieTitle}
                       </Typography>
                       <Typography>
                         <Rating name="read-only" value={movie.reviewRating} readOnly />
@@ -41,7 +41,7 @@ export const MovieList = props => <Container maxWidth="md" sx= {{mt:5}}>
                     <CardActions>
                       <Button onClick={()=>props.onViewClick(movie.id)}>View</Button>
                       <Button onClick={()=>props.onEditClick(movie.id)}>Edit</Button>
-                      <Button onClick={()=>props.onDeleteClick(movie.id)} color='error' variant='outlined'>Delete</Button>
+                      <Button onClick={()=>props.onDeleteClick(movie.reviewTitle)} color='error' variant='outlined'>Delete</Button>
                     </CardActions>
                   </Card>
                 </Grid>)

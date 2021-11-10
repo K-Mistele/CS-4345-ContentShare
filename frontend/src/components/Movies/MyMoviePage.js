@@ -33,20 +33,21 @@ movieRepository = new movieRepo();
       openAddMovieDialog: false,
       tmpAddTitle: ''
     }
+
+    this.RefetchMovies = this.RefetchMovies.bind(this) // bind method to class, so I can access this
+    this.onMovieDeleteClick = this.onMovieDeleteClick.bind(this)  
   }
 
   componentDidMount() {
      this.movieRepository.getMovies()
      .then(movies =>{
-       this.setState({allMovieReviews: movies, openAddMovieDialog:true})
+       this.setState({allMovieReviews: movies})
        console.log("movies successfully retreived")
      })
      .catch(error=>{
        console.log("error: ", error)
     })
-    /*this.setState({
-      allMovieReviews: movieReviewsData
-    })*/ 
+
   }
   onMovieViewClick(movieId) {
     console.log(movieId)
@@ -80,9 +81,17 @@ movieRepository = new movieRepo();
   }
 
   // --------- Deleting movie ----------
-  onMovieDeleteClick(movieId) {
-    console.log('Deleting movie:'+movieId)
-    window.location.reload(false); // force refresh to update backend, should work fine
+  onMovieDeleteClick(reviewTitle) {
+    console.log("Deleting a movie")
+    this.movieRepository.deleteMovie(reviewTitle)
+    .then(() =>{
+       console.log("movie deleted!!")
+       console.log("calling refetch")
+       this.RefetchMovies()
+     })
+     .catch(error=>{
+       console.log("error: ", error)
+    })
   }
 
   // --------- Functions for Adding movie ----------
@@ -116,6 +125,19 @@ movieRepository = new movieRepo();
     console.log(title)
     this.setState({ tmpAddTitle: title });
     console.log(this.state.tmpAddTitle);
+  }
+
+  RefetchMovies(){
+    console.log("refetching movies.....")
+    console.log("movie repo", this.movieRepository)  // this.movieRepository is undefined here!!!
+    this.movieRepository.getMovies()
+     .then(movies =>{
+       this.setState({allMovieReviews: movies})
+       console.log("movies successfully retreived")
+     })
+     .catch(error=>{
+       console.log("error: ", error)
+    })
   }
   render() {
     return (
@@ -153,6 +175,7 @@ movieRepository = new movieRepo();
               CloseDialog={() => { this.CloseAddDialog() }}
               SaveAddMovie={movie => this.SaveAddMovie()}
               AddTitle={title => this.AddTitle(title)}
+              RefetchMovies = {this.RefetchMovies}
             />
           </Grid>
         </Container>

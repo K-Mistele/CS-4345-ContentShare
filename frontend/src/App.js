@@ -29,7 +29,7 @@ function App(){
         {ROUTES.map((route, index) => <Route key={index} {...route} />)}
         <Route exact path = "/" component = { Login } />
         <Route exact path = "/movies" component = { MyMoviePage } />
-        <Route exact path = "/home" component = { MyMoviePage } />
+        <Route exact path = "/home" component = { MyMoviePage } /> 
         <Route exact path = "/books" component = { MyBookPage } />
         <Route exact path = "/friends" component = { FriendsList } />
 
