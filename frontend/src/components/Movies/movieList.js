@@ -28,7 +28,7 @@ export const MovieList = props => <Container maxWidth="md" sx= {{mt:5}}>
                   >
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        {movie.reviewTitle}
+                        {movie.movieTitle}
                       </Typography>
                       <Typography>
                         <Rating name="read-only" value={movie.reviewRating} readOnly />
