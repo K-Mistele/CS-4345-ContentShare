@@ -46,5 +46,29 @@ export class movieRepo{
             })
         })
     }
+
+        deleteMovie(reviewTitle){
+            console.log("the title in deleteMovie is", reviewTitle)
+            console.log("in movie repo...deleting")
+            let config = {
+                headers:{
+                    'x-access-token': localStorage.getItem('jwt_token')
+                },
+                data:{
+                    "reviewTitle": reviewTitle
+                }
+            }
+            return new Promise((resolve, reject)=>{
+                axios.delete(`${this.url}/review/movie`, config)
+                .then(response=>{
+                    resolve(response.data)
+                    console.log("success deleting movie")
+                })
+                .catch(error => {
+                    console.log(error)
+                    reject(error)
+                })
+            })
+    }
     
 } // end class 

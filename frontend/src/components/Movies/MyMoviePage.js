@@ -34,7 +34,8 @@ movieRepository = new movieRepo();
       tmpAddTitle: ''
     }
 
-    this.RefetchMovies = this.RefetchMovies.bind(this) // bind method to class, so I can access this 
+    this.RefetchMovies = this.RefetchMovies.bind(this) // bind method to class, so I can access this
+    this.onMovieDeleteClick = this.onMovieDeleteClick.bind(this)  
   }
 
   componentDidMount() {
@@ -80,9 +81,17 @@ movieRepository = new movieRepo();
   }
 
   // --------- Deleting movie ----------
-  onMovieDeleteClick(movieId) {
-    console.log('Deleting movie:'+movieId)
-    window.location.reload(false); // force refresh to update backend, should work fine
+  onMovieDeleteClick(reviewTitle) {
+    console.log("Deleting a movie")
+    this.movieRepository.deleteMovie(reviewTitle)
+    .then(() =>{
+       console.log("movie deleted!!")
+       console.log("calling refetch")
+       this.RefetchMovies()
+     })
+     .catch(error=>{
+       console.log("error: ", error)
+    })
   }
 
   // --------- Functions for Adding movie ----------
