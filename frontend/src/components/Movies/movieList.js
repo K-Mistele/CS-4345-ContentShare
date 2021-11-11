@@ -39,7 +39,7 @@ export const MovieList = props => <Container maxWidth="md" sx= {{mt:5}}>
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button onClick={()=>props.onViewClick(movie.id)}>View</Button>
+                      <Button onClick={()=>props.onViewClick(movie)}>View</Button>
                       <Button onClick={()=>props.onEditClick(movie.id)}>Edit</Button>
                       <Button onClick={()=>props.onDeleteClick(movie.reviewTitle)} color='error' variant='outlined'>Delete</Button>
                     </CardActions>
