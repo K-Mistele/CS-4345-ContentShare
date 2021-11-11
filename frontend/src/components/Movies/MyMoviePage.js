@@ -49,10 +49,12 @@ movieRepository = new movieRepo();
     })
 
   }
-  onMovieViewClick(movieId) {
-    console.log(movieId)
+  onMovieViewClick(movie) {
+    console.log("in movie on clickkkkkk :)")
+    console.log(movie)
     this.setState({ openViewMovieDialog: true })
-    this.setState({ movieToView: this.state.allMovieReviews.filter(x => x.id == movieId)[0] })
+    this.setState({movieToView: movie}); 
+    // this.setState({ movieToView: this.state.allMovieReviews.filter(x => x.id == movieId)[0] })
   }
   CloseViewDialog() {
     this.setState({ openViewMovieDialog: false })
