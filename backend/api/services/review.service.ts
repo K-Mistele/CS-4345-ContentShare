@@ -1,6 +1,7 @@
 import { IBookReview } from '../../interfaces/bookReview';
 import { IMovieReview } from "../../interfaces/movieReview";
 import { getDatabase, BOOK_REVIEW, MOVIE_REVIEW, VERTEX } from './orientdb.service';
+import {IBookReviewUpdateRequest, IMovieReviewUpdateRequest} from "../schemas/review.schemas";
 
 
 /** create a book review */
@@ -81,4 +82,12 @@ export async function getUserMovieReviews(userUUID: string): Promise<IMovieRevie
 		.where({
 			reviewAuthorUUID: userUUID
 		}).all();
+}
+
+/** update a review - functions as a generic since it's just by RID, doesn't care about database*/
+export async function updateReview(reviewRid: string, diff: IMovieReviewUpdateRequest): Promise<number>{
+	const database = await getDatabase();
+	const numberRecordsUpdated =  <number> await database.update(reviewRid).set(diff).one();
+	if (!numberRecordsUpdated) throw new Error(`Failed to update review with RID ${reviewRid}`);
+	else return numberRecordsUpdated;
 }

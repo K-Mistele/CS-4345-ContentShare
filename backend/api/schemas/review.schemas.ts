@@ -37,3 +37,41 @@ export const movieReviewDeletionSchema = Joi.object({
 export interface IMovieDeletionRequest {
 	reviewTitle: string
 }
+
+/** the schema for updating a movie review */
+export const movieReviewUpdateSchema = Joi.object ({
+	movieTitle: Joi.string(),
+	reviewTitle: Joi.string(),
+	reviewText: Joi.string(),
+	reviewRating: Joi.number().min(0).max(5),
+	reviewImgUrl: Joi.string(),
+	'@rid': Joi.string().required()
+})
+export interface IMovieReviewUpdateRequest {
+	movieTitle?: string
+	reviewTitle?: string
+	reviewText?: string
+	reviewRating?: number
+	reviewImgUrl?: string
+	'@rid'?: string
+}
+
+/** The schema for updating a book review */
+export const bookReviewUpdateSchema = Joi.object ({
+	bookTitle: Joi.string(),
+	bookAuthor: Joi.string(),
+	reviewTitle: Joi.string(),
+	reviewText: Joi.string(),
+	reviewRating: Joi.number().min(0).max(5),
+	reviewImgUrl: Joi.string(),
+	'@rid': Joi.string().required()
+})
+export interface IBookReviewUpdateRequest {
+	bookTitle?: string
+	bookAuthor?: string
+	reviewTitle?: string
+	reviewText?: string
+	reviewRating?: number
+	reviewImgUrl?: string
+	'@rid'?: string
+}
