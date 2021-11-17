@@ -17,18 +17,24 @@ export const ViewMovieDialog = props =>
       <Grid container spacing={1} sx={{ mt: 0, mb: 2 }}>
         {/* Chart */}
         <Grid item xs={12} md={6} lg={6}>
-          <Paper
-            component="img"
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 300,
-              width: 250
-            }}
-            src={props.movie.reviewImgUrl}
-          >
-          </Paper>
+          {
+            props.movie.reviewImgUrl && <Paper
+              component="img"
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 300,
+                width: 250
+              }}
+              src={props.movie.reviewImgUrl}
+            >
+            </Paper>
+          }
+          {
+            !props.movie.reviewImgUrl && <Typography>No Image Added.</Typography>
+          }
+
         </Grid>
         {/* Recent Deposits */}
         <Grid item xs={12} md={6} lg={6}>
