@@ -1,0 +1,58 @@
+import * as React from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Rating from '@mui/material/Rating';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
+export const ViewBookDialog = props =>
+  <Dialog fullWidth={true} open={props.open} onClose={() => props.CloseDialog()}>
+    <DialogTitle>{props.book.bookTitle}</DialogTitle>
+    <DialogContent>
+      <Grid container spacing={1} sx={{ mt: 0, mb: 2 }}>
+        {/* Chart */}
+        <Grid item xs={12} md={6} lg={6}>
+          <Paper
+            component="img"
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 300,
+              width: 250
+            }}
+            src={props.book.reviewImgUrl}
+          >
+          </Paper>
+        </Grid>
+        {/* Recent Deposits */}
+        <Grid item xs={12} md={6} lg={6}>
+          <Container
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 300,
+              width: 250
+            }}
+          >
+            <Typography variant="subtitle1">
+              {props.book.reviewTitle}
+            </Typography>
+            <Rating name="read-only" value={props.book.reviewRating} readOnly />
+            <Typography variant="subtitle2">
+              {props.book.reviewText}
+            </Typography>
+          </Container>
+        </Grid>
+      </Grid>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={() => props.CloseDialog()}>Close</Button>
+    </DialogActions>
+  </Dialog>

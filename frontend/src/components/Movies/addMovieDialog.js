@@ -52,7 +52,7 @@ export class AddMovieDialog extends React.Component{
   render(){
     return(
     <Dialog fullWidth={true} open={this.props.open} onClose={() => this.props.CloseDialog()}>
-      <DialogTitle>Add Movie </DialogTitle>
+      <DialogTitle>Add Movie</DialogTitle>
       <DialogContent>
         <Box
           component="form"

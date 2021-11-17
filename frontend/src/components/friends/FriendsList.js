@@ -58,7 +58,7 @@ class FriendsList extends React.Component {
       <div className="changeLATER">
         <Header />
         <NavigationBar page="Friends" />
-        <Container maxWidth="md" sx={{ mt: 5 }}>
+        <Container maxWidth="md">
           <Stack
             sx={{ pt: 2 }}
             direction="row"

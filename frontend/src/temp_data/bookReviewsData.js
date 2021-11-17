@@ -1,21 +1,30 @@
 const bookReviews = [
     {
         id: 1,
+        'bookTitle': 'The Great Gatsby',
+        'bookAuthor': 'author',
         'reviewTitle': "The Great Gatsby",
         'reviewText': "I absolutely LOVE this classic!! The characters are so fully developed. Just wow.",
-        'rating': 5
+        'reviewRating': 5,
+        'reviewImgUrl': ''
     },
     {
         id: 2,
+        'bookTitle': "1984",
+        'bookAuthor': 'author2',
         'reviewTitle': "1984",
         'reviewText': "Creepy. Enough said.",
-        'rating': 3       
+        'reviewRating': 3,
+        'reviewImgUrl': ''     
     },
     {
         id: 3,
+        'bookTitle': "The Dancing Unicorns",
+        'bookAuthor': 'author3',
         'reviewTitle': "The Dancing Unicorns",
         'reviewText': "Corny!",
-        'rating': 2       
+        'reviewRating': 2,
+        'reviewImgUrl': ''      
     }
     
 ]

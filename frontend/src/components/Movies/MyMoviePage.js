@@ -146,7 +146,7 @@ movieRepository = new movieRepo();
       <div>
         <Header />
         <NavigationBar page="Movies" />
-        <Container maxWidth="md" sx={{ mt: 5 }}>
+        <Container maxWidth="md">
           {/* End hero unit */}
           <Stack
             sx={{ pt: 2 }}
