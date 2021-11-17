@@ -20,9 +20,10 @@ export const EditMovieDialog = props =>
         autoComplete="off"
       >
         <div>
-          <TextField id="standard-basic" label="Movie Title" variant="standard" defaultValue={props.movie.movieTitle} onChange={e => props.EditTitle(e.target.value)}/>
-          <TextField id="standard-basic" label="Review Title" variant="standard" defaultValue={props.movie.reviewTitle} />
+          <TextField id="standard-basic" required label="Movie Title" variant="standard" defaultValue={props.movie.movieTitle} onChange={e => props.EditTitle(e.target.value)}/>
+          <TextField id="standard-basic" required label="Review Title" variant="standard" defaultValue={props.movie.reviewTitle} />
           <TextField
+            required
             id="outlined-number"
             label="Rating"
             type="number"
@@ -49,6 +50,7 @@ export const EditMovieDialog = props =>
       >
       <TextField
         autoFocus
+        required
         margin="dense"
         id="revewText"
         label="Review Text"

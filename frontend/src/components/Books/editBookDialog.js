@@ -20,10 +20,11 @@ export const EditBookDialog = props =>
 				autoComplete="off"
 			>
 				<div>
-					<TextField id="standard-basic" label="Book Title" variant="standard" defaultValue={props.book.bookTitle} onChange={e => props.EditTitle(e.target.value)} />
-					<TextField id="standard-basic" label="Review Title" variant="standard" defaultValue={props.book.reviewTitle} />
-					<TextField id="standard-basic" label="Book Author" variant="standard" defaultValue={props.book.bookAuthor} />
+					<TextField id="standard-basic" required label="Book Title" variant="standard" defaultValue={props.book.bookTitle} onChange={e => props.EditTitle(e.target.value)} />
+					<TextField id="standard-basic" required label="Review Title" variant="standard" defaultValue={props.book.reviewTitle} />
+					<TextField id="standard-basic" required label="Book Author" variant="standard" defaultValue={props.book.bookAuthor} />
 					<TextField
+						required
 						id="outlined-number"
 						label="Rating"
 						type="number"
@@ -48,6 +49,7 @@ export const EditBookDialog = props =>
 				autoComplete="off"
 			>
 				<TextField
+					required
 					autoFocus
 					margin="dense"
 					id="revewText"

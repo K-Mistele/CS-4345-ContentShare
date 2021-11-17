@@ -60,10 +60,11 @@ export class AddBookDialog extends React.Component {
             autoComplete="off"
           >
             <div>
-              <TextField id="standard-basic" label="Book Title" variant="standard" name="bookTitle" onChange={this.handleChange} />
-              <TextField id="standard-basic" label="Review Title" variant="standard" name="reviewTitle" onChange={this.handleChange} />
-              <TextField id="standard-basic" label="Book Author" variant="standard" name="bookAuthor" onChange={this.handleChange} />
+              <TextField id="standard-basic" required label="Book Title" variant="standard" name="bookTitle" onChange={this.handleChange} />
+              <TextField id="standard-basic" required label="Review Title" variant="standard" name="reviewTitle" onChange={this.handleChange} />
+              <TextField id="standard-basic" required label="Book Author" variant="standard" name="bookAuthor" onChange={this.handleChange} />
               <TextField
+                required
                 id="outlined-number"
                 label="Rating"
                 type="number"
@@ -85,11 +86,13 @@ export class AddBookDialog extends React.Component {
             sx={{
               '& .MuiTextField-root': { m: 1, width: '58ch' },
             }}
+            required
             noValidate
             autoComplete="off"
           >
             <TextField
               autoFocus
+              required
               margin="dense"
               id="revewText"
               label="Review Text"

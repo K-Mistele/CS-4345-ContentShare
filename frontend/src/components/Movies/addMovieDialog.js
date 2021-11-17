@@ -63,9 +63,10 @@ export class AddMovieDialog extends React.Component {
             autoComplete="off"
           >
             <div>
-              <TextField id="standard-basic" label="Movie Title" variant="standard" name="movieTitle" onChange={this.handleChange} />
-              <TextField id="standard-basic" label="Review Title" variant="standard" name="reviewTitle" onChange={this.handleChange} />
+              <TextField id="standard-basic" required label="Movie Title" variant="standard" name="movieTitle" onChange={this.handleChange} />
+              <TextField id="standard-basic" required label="Review Title" variant="standard" name="reviewTitle" onChange={this.handleChange} />
               <TextField
+                required
                 id="outlined-number"
                 label="Rating"
                 type="number"
@@ -92,6 +93,7 @@ export class AddMovieDialog extends React.Component {
           >
           <TextField
             autoFocus
+            required
             margin="dense"
             id="revewText"
             label="Review Text"
@@ -119,7 +121,7 @@ export class AddMovieDialog extends React.Component {
             name="reviewImageUrl"
             onChange={this.handleChange}
           />
-          </Box>
+          </Box>required 
         </DialogContent>
         <DialogActions>
           <Button onClick={() => this.props.CloseDialog()}>Cancel</Button>
