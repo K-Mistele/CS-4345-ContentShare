@@ -7,16 +7,15 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
-import { movieRepo } from "../../api/movieRepo"
+// import { bookRepo } from "../../api/bookRepo"
 
-export class AddMovieDialog extends React.Component {
+export class AddBookDialog extends React.Component {
 
-  movieRepository = new movieRepo();
+  //   bookRepository = new bookRepo(); 
   constructor(props) {
     super(props);
-    console.log("in addMovie construcotr")
     this.state = {
-      "movieTitle": "",
+      "bookTitle": "",
       "reviewTitle": "",
       "reviewRating": null,
       "reviewText": "",
@@ -25,7 +24,6 @@ export class AddMovieDialog extends React.Component {
   }
 
   handleChange = (event) => {
-
     const name = event.target.name
     const value = event.target.value
     console.log("value: ", value)
@@ -33,26 +31,25 @@ export class AddMovieDialog extends React.Component {
   }
 
   handleSubmit = () => {
-
-    console.log("in save add movie!. movieToAdd in MoviePage", this.state)
+    console.log("in save add book!. bookToAdd in BookPage", this.state)
     // do something here to save
-    this.movieRepository.addMovie(this.state)
-      .then(() => {
-        console.log("movie added!!")
-        console.log("calling refetch")
-        this.props.RefetchMovies()
-      })
-      .catch(error => {
-        console.log("error: ", error)
-      })
-    this.props.CloseDialog()
+    // this.bookRepository.addBook(this.state)
+    // .then(() =>{
+    //    console.log("book added!!")
+    //    console.log("calling refetch")
+    //    this.props.RefetchBooks()
+    //  })
+    //  .catch(error=>{
+    //    console.log("error: ", error)
+    // })
+    // this.props.CloseDialog()
 
   }
 
   render() {
     return (
       <Dialog fullWidth={true} open={this.props.open} onClose={() => this.props.CloseDialog()}>
-        <DialogTitle>Add Movie</DialogTitle>
+        <DialogTitle>Add Book</DialogTitle>
         <DialogContent>
           <Box
             component="form"
@@ -63,8 +60,9 @@ export class AddMovieDialog extends React.Component {
             autoComplete="off"
           >
             <div>
-              <TextField id="standard-basic" required label="Movie Title" variant="standard" name="movieTitle" onChange={this.handleChange} />
+              <TextField id="standard-basic" required label="Book Title" variant="standard" name="bookTitle" onChange={this.handleChange} />
               <TextField id="standard-basic" required label="Review Title" variant="standard" name="reviewTitle" onChange={this.handleChange} />
+              <TextField id="standard-basic" required label="Book Author" variant="standard" name="bookAuthor" onChange={this.handleChange} />
               <TextField
                 required
                 id="outlined-number"
@@ -88,20 +86,21 @@ export class AddMovieDialog extends React.Component {
             sx={{
               '& .MuiTextField-root': { m: 1, width: '58ch' },
             }}
+            required
             noValidate
             autoComplete="off"
           >
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="revewText"
-            label="Review Text"
-            name="reviewText"
-            fullWidth
-            variant="standard"
-            onChange={this.handleChange}
-          />
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="revewText"
+              label="Review Text"
+              name="reviewText"
+              fullWidth
+              variant="standard"
+              onChange={this.handleChange}
+            />
           </Box>
           <Box
             component="form"
@@ -111,17 +110,17 @@ export class AddMovieDialog extends React.Component {
             noValidate
             autoComplete="off"
           >
-          <TextField
-            autoFocus
-            margin="dense"
-            id="img"
-            label="Image Url"
-            fullWidth
-            variant="standard"
-            name="reviewImageUrl"
-            onChange={this.handleChange}
-          />
-          </Box>required 
+            <TextField
+              autoFocus
+              margin="dense"
+              id="img"
+              label="Image Url"
+              fullWidth
+              variant="standard"
+              name="reviewImageUrl"
+              onChange={this.handleChange}
+            />
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => this.props.CloseDialog()}>Cancel</Button>

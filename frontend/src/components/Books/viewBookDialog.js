@@ -10,31 +10,31 @@ import Rating from '@mui/material/Rating';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-export const ViewMovieDialog = props =>
+export const ViewBookDialog = props =>
   <Dialog fullWidth={true} open={props.open} onClose={() => props.CloseDialog()}>
-    <DialogTitle>{props.movie.movieTitle}</DialogTitle>
+    <DialogTitle>{props.book.bookTitle}</DialogTitle>
     <DialogContent>
       <Grid container spacing={1} sx={{ mt: 0, mb: 2 }}>
         {/* Chart */}
         <Grid item xs={12} md={6} lg={6}>
-          {
-            props.movie.reviewImgUrl && <Paper
-              component="img"
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 300,
-                width: 250
-              }}
-              src={props.movie.reviewImgUrl}
-            >
-            </Paper>
-          }
-          {
-            !props.movie.reviewImgUrl && <Typography>No Image Added.</Typography>
-          }
-
+            {
+                props.book.reviewImgUrl &&<Paper
+                component="img"
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 300,
+                  width: 250
+                }}
+                src={props.book.reviewImgUrl}
+              >
+              </Paper>
+            }
+            {
+                !props.book.reviewImgUrl && <Typography>No Image Added.</Typography>
+            }
+          
         </Grid>
         {/* Recent Deposits */}
         <Grid item xs={12} md={6} lg={6}>
@@ -48,12 +48,11 @@ export const ViewMovieDialog = props =>
             }}
           >
             <Typography variant="subtitle1">
-              {props.movie.reviewTitle}
+              {props.book.reviewTitle}
             </Typography>
-            <Rating name="read-only" value={props.movie.reviewRating} readOnly />
-
+            <Rating name="read-only" value={props.book.reviewRating} readOnly />
             <Typography variant="subtitle2">
-              {props.movie.reviewText}
+              {props.book.reviewText}
             </Typography>
           </Container>
         </Grid>

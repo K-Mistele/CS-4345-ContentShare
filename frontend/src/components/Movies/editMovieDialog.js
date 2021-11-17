@@ -20,12 +20,14 @@ export const EditMovieDialog = props =>
         autoComplete="off"
       >
         <div>
-          <TextField id="standard-basic" label="Movie Title" variant="standard" defaultValue={props.movie.movieTitle} onChange={e => props.EditTitle(e.target.value)}/>
-          <TextField id="standard-basic" label="Review Title" variant="standard" defaultValue={props.movie.reviewTitle} />
+          <TextField id="standard-basic" required label="Movie Title" variant="standard" defaultValue={props.movie.movieTitle} onChange={e => props.EditTitle(e.target.value)}/>
+          <TextField id="standard-basic" required label="Review Title" variant="standard" defaultValue={props.movie.reviewTitle} />
           <TextField
+            required
             id="outlined-number"
             label="Rating"
             type="number"
+            variant="standard" 
             InputLabelProps={{
               shrink: true,
             }}
@@ -38,8 +40,17 @@ export const EditMovieDialog = props =>
           />
         </div>
       </Box>
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '58ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
       <TextField
         autoFocus
+        required
         margin="dense"
         id="revewText"
         label="Review Text"
@@ -47,6 +58,15 @@ export const EditMovieDialog = props =>
         variant="standard"
         defaultValue={props.movie.reviewText}
       /> 
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '58ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
       <TextField
         autoFocus
         margin="dense"
@@ -56,6 +76,7 @@ export const EditMovieDialog = props =>
         variant="standard"
         defaultValue={props.movie.reviewImgUrl}
       />   
+      </Box>
       </DialogContent>
     <DialogActions>
       <Button onClick={() => props.CloseDialog()}>Cancel</Button>
