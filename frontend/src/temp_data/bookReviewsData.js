@@ -4,7 +4,7 @@ const bookReviews = [
         'bookTitle': 'The Great Gatsby',
         'bookAuthor': 'author',
         'reviewTitle': "The Great Gatsby",
-        'reviewText': "I absolutely LOVE this classic!! The characters are so fully developed. Just wow.",
+        'reviewText': "I absolutely LOVE this classic!! The characters are so fully developed. Just wow. The characters are so fully developed. Just wow. The characters are so fully developed. Just wow. The characters are so fully developed. Just wow.",
         'reviewRating': 5,
         'reviewImgUrl': ''
     },

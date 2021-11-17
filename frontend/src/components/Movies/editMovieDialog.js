@@ -26,6 +26,7 @@ export const EditMovieDialog = props =>
             id="outlined-number"
             label="Rating"
             type="number"
+            variant="standard" 
             InputLabelProps={{
               shrink: true,
             }}
@@ -38,6 +39,14 @@ export const EditMovieDialog = props =>
           />
         </div>
       </Box>
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '58ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
       <TextField
         autoFocus
         margin="dense"
@@ -47,6 +56,15 @@ export const EditMovieDialog = props =>
         variant="standard"
         defaultValue={props.movie.reviewText}
       /> 
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '58ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
       <TextField
         autoFocus
         margin="dense"
@@ -56,6 +74,7 @@ export const EditMovieDialog = props =>
         variant="standard"
         defaultValue={props.movie.reviewImgUrl}
       />   
+      </Box>
       </DialogContent>
     <DialogActions>
       <Button onClick={() => props.CloseDialog()}>Cancel</Button>
