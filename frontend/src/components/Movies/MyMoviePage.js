@@ -60,11 +60,15 @@ class MyMoviePage extends React.Component {
     this.setState({ openViewMovieDialog: false })
   }
   // --------- Functions for editing movie ----------
-  onMovieEditClick(movieId) {
-    console.log(movieId)
+  onMovieEditClick(movie) {
+    console.log("in movide edit click :)")
+    //console.log(movieId)
+    this.setState({movieToEdit: movie})
     this.setState({ openEditMovieDialog: true })
-    this.setState({ movieToEdit: this.state.allMovieReviews.filter(x => x.id == movieId)[0] })
+    // this.setState({movieToEdit: movie})
+    //this.setState({ movieToEdit: this.state.allMovieReviews.filter(x => x.id == movieId)[0] })
   }
+
   CloseEditDialog() {
     this.setState({ openEditMovieDialog: false })
   }
@@ -106,6 +110,7 @@ class MyMoviePage extends React.Component {
     this.setState({ openAddMovieDialog: false })
   }
   SaveAddMovie(movieToAdd) {
+    console.log("LOOK HERE...SAVE ADD MOVIE IN MY MOVIE PAGE")
     console.log("in save add movie!. movieToAdd in MoviePage", movieToAdd)
     // do something here to save
     this.movieRepository.addMovie(movieToAdd)
@@ -169,8 +174,9 @@ class MyMoviePage extends React.Component {
             <EditMovieDialog movie={this.state.movieToEdit}
               open={this.state.openEditMovieDialog}
               CloseDialog={() => { this.CloseEditDialog() }}
-              SaveEditMovie={movie => this.SaveEditMovie(movie)}
+              // SaveEditMovie={movie => this.SaveEditMovie(movie)}
               EditTitle={title => this.ChangeTitle(title)}
+              RefetchMovies = { this.RefetchMovies } 
             />
             <AddMovieDialog movie={this.state.movieToEdit}
               open={this.state.openAddMovieDialog}
