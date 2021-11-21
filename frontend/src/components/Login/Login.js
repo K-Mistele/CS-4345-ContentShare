@@ -19,23 +19,23 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import {TestRepository} from '../../api/testRepository'
+import { TestRepository } from '../../api/testRepository'
 import { loginRepo } from "../../api/loginRepo"
 
 
 function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-          Your Website
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
-  
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
 
 const theme = createTheme();
 
@@ -50,9 +50,9 @@ export class Login extends React.Component {
     openDialog: false
   };
 
-  handleSubmit(){
-    console.log('username:'+this.state.username)
-    console.log('password:'+this.state.password)
+  handleSubmit() {
+    console.log('username:' + this.state.username)
+    console.log('password:' + this.state.password)
 
     var user = {
       username: this.state.username,
@@ -60,11 +60,11 @@ export class Login extends React.Component {
     }
 
     this.loginRepository.loginUser(user)
-    .then(()=> this.setState({redirect:`/home`}))
-    .catch((error) => {
-      alert("Incorrect login information")
-    })
-  
+      .then(() => this.setState({ redirect: `/home` }))
+      .catch((error) => {
+        alert("Incorrect login information")
+      })
+
   }
 
   render() {
@@ -72,106 +72,158 @@ export class Login extends React.Component {
       return <Redirect to={this.state.redirect}></Redirect>;
     }
     return <>
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            ContentShare
-          </Typography>
-          <Box component="form"  noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-              variant="standard"
-              onChange={(e) => 
-                this.setState({ username: e.target.value })
-              }
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              variant="standard"
-              onChange={(e) => 
-                this.setState({ password: e.target.value })
-              }
-            />
-            <Button
-              // type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={() => {this.handleSubmit()}}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              ContentShare
+            </Typography>
+            <Box component="form" noValidate sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                variant="standard"
+                onChange={(e) =>
+                  this.setState({ username: e.target.value })
+                }
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                variant="standard"
+                onChange={(e) =>
+                  this.setState({ password: e.target.value })
+                }
+              />
+              <Button
+                // type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={() => { this.handleSubmit() }}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                </Grid>
+                <Grid item>
+                  <Link onClick={() => { this.setState({ openDialog: true }) }} variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                  <Dialog open={this.state.openDialog} onClose={() => { this.setState({ openDialog: false }) }}>
+                    <DialogTitle>Sign up</DialogTitle>
+                    <DialogContent>
+                      <Box
+                        component="form"
+                        sx={{
+                          '& .MuiTextField-root': { m: 1, width: '29ch' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                      >
+                        <TextField
+                          autoFocus
+                          margin="dense"
+                          id="newUsername"
+                          label="Username"
+                          fullWidth required
+                          variant="standard"
+                        />
+                        <TextField
+                          autoFocus
+                          margin="dense"
+                          label="Full Name"
+                          fullWidth required
+                          variant="standard"
+                        />
+                      </Box>
+                      <Box
+                        component="form"
+                        sx={{
+                          '& .MuiTextField-root': { m: 1, width: '29ch' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                      >
+                        <TextField
+                          autoFocus
+                          margin="dense"
+                          id="newPassword"
+                          label="Password"
+                          fullWidth required
+                          variant="standard"
+                        />
+                        <TextField
+                          autoFocus
+                          margin="dense"
+                          label="Confirm Password"
+                          fullWidth required
+                          variant="standard"
+                        />
+                      </Box>
+                      <Box
+                        component="form"
+                        sx={{
+                          '& .MuiTextField-root': { m: 1, width: '60ch' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                      >
+                        <TextField
+                          autoFocus
+                          margin="dense"
+                          label="Email"
+                          fullWidth required
+                          variant="standard"
+                        />
+                        <TextField
+                          autoFocus
+                          margin="dense"
+                          label="Profile Image"
+                          fullWidth
+                          variant="standard"
+                        />
+                      </Box>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={() => { this.setState({ openDialog: false }) }}>Cancel</Button>
+                      <Button onClick={() => { this.setState({ openDialog: false }) }}>Sign Up</Button>
+                    </DialogActions>
+                  </Dialog>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link onClick={() => {this.setState({openDialog: true})}} variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-                <Dialog open={this.state.openDialog} onClose={() => {this.setState({openDialog: false})}}>
-                  <DialogTitle>Sign up</DialogTitle>
-                  <DialogContent>
-
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="newUsername"
-                      label="Username"
-                      type="newUsername"
-                      fullWidth
-                      variant="standard"
-                    />
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="newPassword"
-                      label="Password"
-                      type="newPassword"
-                      fullWidth
-                      variant="standard"
-                    />
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={() => {this.setState({openDialog: false})}}>Cancel</Button>
-                    <Button onClick={() => {this.setState({openDialog: false})}}>Sign Up</Button>
-                  </DialogActions>
-                </Dialog>
-              </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }}/>
-      </Container>
-    </ThemeProvider>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
+      </ThemeProvider>
     </>
   }
-  
+
   componentDidMount() {
     // error
     // this.testRepository.helloWorld()
