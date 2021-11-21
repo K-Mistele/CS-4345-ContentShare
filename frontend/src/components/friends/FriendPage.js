@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import NavigationBar from "../NavigationBar/NavigationBar"
+import { NavigationBar } from "../NavigationBar/NavigationBar"
 import Header from "../Header/Header"
 import Container from '@mui/material/Container';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
@@ -65,7 +65,7 @@ class FriendPage extends React.Component {
 		return (
 			<div className="changeLATER">
 				<Header />
-				<NavigationBar page="Friends" />
+				<NavigationBar page="/friends" />
 				<Container maxWidth="md">
 					<Stack
 						sx={{ pt: 2 }}

@@ -20,6 +20,7 @@ import { FriendInvites } from "./FriendRequest"
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
+import { Redirect } from 'react-router-dom';
 
 class FriendsList extends React.Component {
 
@@ -38,26 +39,16 @@ class FriendsList extends React.Component {
     })
   }
 
-  // -------- Functions for add friend --------
-  CloseFriendRequestDialog() {
-    this.setState({ openFriendRequestsDialog: false })
-    // also reload window to save changes?
-  }
-  AddFriend(id) {
-    // connect to backend
-    // reload window
-  }
-  DeclineFriend(id) {
-    // connect to backend
-    // reload window
-  }
 
-
-  handleClick(id) {
-    console.log('asdf')
+  handleClick(username) {
+    console.log(username)
+    this.setState({redirect:`/friend/movies/`+username})
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect}></Redirect>;
+    }
     return (
       <div className="changeLATER">
         <Typography sx={{ fontSize: 20, mt: 4 }} color="text.primary" gutterBottom variant="h1">
@@ -78,7 +69,7 @@ class FriendsList extends React.Component {
               {this.state.friends.map((friend) => (
                 <TableRow
                   key={friend.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }} hover onClick={this.handleClick(friend.id)} style={{cursor: 'pointer'}}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }} hover onClick={() => this.handleClick(friend.username)} style={{cursor: 'pointer'}}
                 >
                   <TableCell component="th" scope="row">
                     <Avatar alt="Remy Sharp" src={friend.profileUrl} />

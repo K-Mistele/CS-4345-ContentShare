@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
 import Header from "../Header/Header"
-import NavigationBar from "../NavigationBar/NavigationBar"
+import { NavigationBar } from "../NavigationBar/NavigationBar"
 import { MovieList } from "./movieList";
 import { ViewMovieDialog } from "./viewMovieDialog";
 import { EditMovieDialog } from "./editMovieDialog";
@@ -150,7 +150,7 @@ class MyMoviePage extends React.Component {
     return (
       <div>
         <Header />
-        <NavigationBar page="Movies" />
+        <NavigationBar page="/movies" />
         <Container maxWidth="md">
           {/* End hero unit */}
           <Stack
