@@ -9,7 +9,8 @@ import { Login } from "./components/Login/Login"
 import { HomePage } from "./HomePage"
 import MyMoviePage from "./components/Movies/MyMoviePage";
 import MyBookPage from "./components/Books/MyBookPage";
-import FriendsList from "./components/friends/FriendsList"
+import FriendsList from "./components/friends/FriendsList";
+import FriendPage from "./components/friends/FriendPage";
 import ViewMovie from "./components/Movies/ViewMovie";
 import ViewBook from "./components/Books/ViewBook";
 
@@ -31,7 +32,7 @@ function App(){
         <Route exact path = "/movies" component = { MyMoviePage } />
         <Route exact path = "/home" component = { MyMoviePage } /> 
         <Route exact path = "/books" component = { MyBookPage } />
-        <Route exact path = "/friends" component = { FriendsList } />
+        <Route exact path = "/friends" component = { FriendPage } />
 
         <Route exact path = "/movies/:id" component = { ViewMovie } />
         <Route exact path = "/books/:id" component = { ViewBook } />
