@@ -11,14 +11,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Toolbar from '@mui/material/Toolbar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
-import { ProfileDialog } from "./ProfileDialog";
+import HomeIcon from '@mui/icons-material/Home';
 class Header extends React.Component{
 
     constructor(){
         super();
         this.state = {
-            redirect: null,
-            openDialog: false
+            redirect: null
         }
         this.handlePageChange = this.handlePageChange.bind(this); 
     }
@@ -26,12 +25,7 @@ class Header extends React.Component{
     handlePageChange(pageName){
         this.setState({redirect: pageName})
     }
-    handleOnClick() {
-      this.setState({openDialog: true})
-    }
-    CloseDialog() {
-      this.setState({openDialog: false})
-    }
+
     render(){
         return (
         
@@ -39,17 +33,11 @@ class Header extends React.Component{
 
         <AppBar sx={{ mb: 6}} position="relative">
             <Toolbar>
-            {/* <CameraIcon sx={{ mr: 2 }} /> */}
             <Typography variant="h6" color="inherit" style={{ flex: 1 }} noWrap>
-            <Button variant="contained" startIcon={<AccountCircleIcon/>} style={{boxShadow: "none"}} onClick = {() => this.handleOnClick()}>
-                Profile
-            </Button>
-            <ProfileDialog open={this.state.openDialog}
-              CloseDialog={() => { this.CloseDialog() }}/>
             </Typography>
-            <Button onClick={() => this.handlePageChange("/")}
-                    variant="contained" startIcon={<LogoutIcon/>} style={{boxShadow: "none"}}>
-                Logout
+            <Button onClick={() => this.handlePageChange("/friends")}
+                    variant="contained" startIcon={<HomeIcon/>} style={{boxShadow: "none"}}>
+                Return to home
             </Button>
             </Toolbar>
         </AppBar>

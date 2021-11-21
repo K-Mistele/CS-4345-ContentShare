@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-import NavigationBar from "../NavigationBar/NavigationBar"
+import { NavigationBar } from "../NavigationBar/NavigationBar"
 import Header from "../Header/Header"
 import { BookList } from "./bookList";
 import { ViewBookDialog } from "./viewBookDialog";
@@ -135,43 +135,10 @@ class MyBookPage extends React.Component {
   }
   render() {
 
-    const BookReviews = this.state.allBookReviews.map((review) => {
-      return (
-        <Grid item key={review.id} xs={12} sm={6} md={4}>
-          <Card
-            sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-          >
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography gutterBottom variant="h5" component="h2">
-                {review.reviewTitle}
-              </Typography>
-              <Typography>
-                {review.rating} / 5
-              </Typography>
-              <Typography variant="body2">
-                {review.reviewText}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button component={Link} size="small" to={{
-                pathname: `/books/${review.id}`,
-                state: {
-                  title: review.reviewTitle,
-                  rating: review.reviewRating,
-                  text: review.reviewText
-                },
-              }}>View
-              </Button>
-              <Button size="small">Edit</Button>
-            </CardActions>
-          </Card>
-        </Grid>)
-    })
-
     return (
       <div>
         <Header />
-        <NavigationBar page="Books" />
+        <NavigationBar page="/books" />
         <Container maxWidth="md">
           {/* End hero unit */}
           <Stack

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import NavigationBar from "./components/NavigationBar/NavigationBar";
+import { NavigationBar } from "./components/NavigationBar/NavigationBar";
 
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
