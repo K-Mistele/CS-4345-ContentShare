@@ -1,8 +1,7 @@
-import { IAuthUser, IUser } from "../../interfaces/user";
+import { IUser } from "../../interfaces/user";
 import { getDatabase, FRIEND, FRIEND_REQUEST, VERTEX, EDGE} from "./orientdb.service";
 import { IFriend } from '../../interfaces/friend';
 import { IFriendRequest} from "../../interfaces/friendRequest";
-import * as userService from './user.service';
 import { IUserFriendRequests } from "../schemas/friend.schemas";
 
 /** Create a friend request from source user to request user */
