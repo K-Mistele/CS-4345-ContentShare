@@ -18,10 +18,14 @@ import { BookList } from "./bookList";
 import { ViewBookDialog } from "./viewBookDialog";
 import { EditBookDialog } from "./editBookDialog";
 import { AddBookDialog } from "./addBookDialog";
-import bookReviewsData from "../../temp_data/bookReviewsData"
+import bookReviewsData from "../../temp_data/bookReviewsData";
+
+import { bookRepo } from "../../api/bookRepo"; 
 
 
 class MyBookPage extends React.Component {
+
+  bookRepository = new bookRepo();
 
   constructor() {
     super();
@@ -38,9 +42,13 @@ class MyBookPage extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      allBookReviews: bookReviewsData,
-      // openAddBookDialog: true,
+    this.bookRepository.getBooks()
+     .then(books =>{
+       this.setState({allBookReviews: books})
+       console.log("books successfully retreived")
+     })
+     .catch(error=>{
+       console.log("error: ", error)
     })
   }
 
