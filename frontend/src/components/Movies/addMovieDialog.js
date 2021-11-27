@@ -121,7 +121,7 @@ export class AddMovieDialog extends React.Component {
             name="reviewImageUrl"
             onChange={this.handleChange}
           />
-          </Box>required 
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => this.props.CloseDialog()}>Cancel</Button>
