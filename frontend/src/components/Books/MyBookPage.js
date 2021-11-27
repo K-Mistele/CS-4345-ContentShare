@@ -41,6 +41,7 @@ class MyBookPage extends React.Component {
     }
 
     this.RefetchBooks = this.RefetchBooks.bind(this); 
+    this.onBookDeleteClick = this.onBookDeleteClick.bind(this); 
   }
 
   componentDidMount() {
@@ -107,15 +108,15 @@ class MyBookPage extends React.Component {
   // --------- Deleting book ----------
   onBookDeleteClick(reviewTitle) {
     console.log("Deleting a book")
-    // this.bookRepository.deleteBook(reviewTitle)
-    // .then(() =>{
-    //    console.log("book deleted!!")
-    //    console.log("calling refetch")
-    //    this.RefetchBooks()
-    //  })
-    //  .catch(error=>{
-    //    console.log("error: ", error)
-    // })
+    
+    this.bookRepository.deleteBook(reviewTitle)
+      .then(()=>{
+        console.log("book deleted....calling refetch");
+        this.RefetchBooks()
+      })
+      .catch(error => {
+        console.log("error: ", error)
+      })
   }
 
   // --------- Functions for Adding book ----------

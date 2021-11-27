@@ -47,6 +47,30 @@ export class bookRepo{
         })
     }
 
+    deleteBook(reviewTitle){
+        console.log("the title in deleteBook is", reviewTitle)
+        console.log("in book repo...deleting")
+        let config = {
+            headers:{
+                'x-access-token': localStorage.getItem('jwt_token')
+            },
+            data:{
+                "reviewTitle": reviewTitle
+            }
+        }
+        return new Promise((resolve, reject)=>{
+            axios.delete(`${this.url}/review/book`, config)
+            .then(response=>{
+                resolve(response.data)
+                console.log("success deleting book")
+            })
+            .catch(error => {
+                console.log(error)
+                reject(error)
+            })
+        })
+    }
+
 
 
 } // end class 
