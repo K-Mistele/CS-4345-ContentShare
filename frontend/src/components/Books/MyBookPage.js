@@ -83,10 +83,10 @@ class MyBookPage extends React.Component {
     this.setState({ openViewBookDialog: false })
   }
   // --------- Functions for editing book ----------
-  onBookEditClick(bookId) {
-    console.log(bookId)
+  onBookEditClick(book) {
+    console.log(book)
     this.setState({ openEditBookDialog: true })
-    this.setState({ bookToEdit: this.state.allBookReviews.filter(x => x.id == bookId)[0] })
+    this.setState({ bookToEdit: book })
   }
   CloseEditDialog() {
     this.setState({ openEditBookDialog: false })
@@ -178,6 +178,7 @@ class MyBookPage extends React.Component {
               CloseDialog={() => { this.CloseEditDialog() }}
               SaveEditBook={book => this.SaveEditBook(book)}
               EditTitle={title => this.ChangeTitle(title)}
+              RefetchBooks = { this.RefetchBooks } 
             />
             <AddBookDialog book={this.state.bookToEdit}
               open={this.state.openAddBookDialog}

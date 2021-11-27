@@ -40,7 +40,7 @@ export const BookList = props => <Container maxWidth="md" sx= {{mt:5}}>
                     </CardContent>
                     <CardActions>
                       <Button onClick={()=>props.onViewClick(book)}>View</Button>
-                      <Button onClick={()=>props.onEditClick(book.id)}>Edit</Button>
+                      <Button onClick={()=>props.onEditClick(book)}>Edit</Button>
                       <Button onClick={()=>props.onDeleteClick(book.reviewTitle)} color='error' variant='outlined'>Delete</Button>
                     </CardActions>
                   </Card>

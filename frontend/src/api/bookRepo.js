@@ -71,6 +71,24 @@ export class bookRepo{
         })
     }
 
-
+    editBook(book){
+        console.log("in edit...book to edit in repo", book)
+        let config = {
+            headers:{
+                'x-access-token': localStorage.getItem('jwt_token')
+            },
+        }
+        return new Promise((resolve, reject)=>{
+            axios.patch(`${this.url}/review/book`, book, config)
+            .then(response=>{
+                resolve(response.data)
+                console.log("success adding book")
+            })
+            .catch(error => {
+                console.log(error)
+                reject(error)
+            })
+        })
+    }
 
 } // end class 
