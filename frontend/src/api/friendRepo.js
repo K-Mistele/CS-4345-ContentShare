@@ -23,6 +23,29 @@ export class friendRepo{
             })
         })
     }
+
+    getFriends(){
+
+        console.log("getting friends of a user")
+        let config = {
+            headers:{
+                'x-access-token': localStorage.getItem('jwt_token')
+            }
+        }
+        return new Promise((resolve, reject)=>{
+            axios.get(`${this.url}/friend`, config)
+                .then(response=>{
+                console.log("here in friends get")
+                console.log(response)
+                console.log("data!!!", response.data)
+                resolve(response.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                    reject(error)
+                })
+        })
+    }
     
 
     /*

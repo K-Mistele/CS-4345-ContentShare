@@ -22,7 +22,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FriendsList from "./FriendsList";
 import { AddNewFriend } from "./addNewFriend";
 
+import { friendRepo } from "../../api/friendRepo"  
+
 class FriendPage extends React.Component {
+
+	friendRepository = new friendRepo();
 
 	constructor() {
 		super();
@@ -34,9 +38,15 @@ class FriendPage extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setState({
-			friends: friendData
-		})
+		 this.friendRepository.getFriends()
+			.then(friends =>{
+			this.setState({friends: friends})
+			console.log("friends successfully retreived")
+			})
+			.catch(error=>{
+			console.log("error: ", error)
+			})
+			
 	}
 
 	// -------- Functions for add new friends --------
@@ -84,7 +94,7 @@ class FriendPage extends React.Component {
 							AcceptFriend={id => { this.AcceptFriend(id) }}
 							DeclineFriend={id => { this.DeclineFriend(id) }} />
 					</Stack>
-					<FriendsList />
+					<FriendsList friends = { this.state.friends } />
 				</Container>
 			</div>
 		)

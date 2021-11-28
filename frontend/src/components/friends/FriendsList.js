@@ -22,21 +22,23 @@ import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
 import { Redirect } from 'react-router-dom';
 
+// import { friendRepo } from "../../api/friendRepo" 
+
 class FriendsList extends React.Component {
 
-  constructor() {
-    super();
+  // friendRepository = new friendRepo();
+
+  constructor(props) {
+    super(props);
     this.state = {
-      friends: [],
+      // friends: [],
       openAddFriendDialog: false,
       openFriendRequestsDialog: false
     }
   }
 
   componentDidMount() {
-    this.setState({
-      friends: friendData
-    })
+    
   }
 
 
@@ -66,7 +68,7 @@ class FriendsList extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.friends.map((friend) => (
+              {this.props.friends.map((friend) => (
                 <TableRow
                   key={friend.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }} hover onClick={() => this.handleClick(friend.username)} style={{cursor: 'pointer'}}
