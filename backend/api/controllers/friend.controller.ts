@@ -1,13 +1,15 @@
 import {Request, Response, NextFunction, Router} from 'express';
-import {IAuthUser} from '../../interfaces/user';
 import {IFriendRequest} from "../../interfaces/friendRequest";
-import {friendRequestAcceptanceSchema,
+import {
+	friendRequestAcceptanceSchema,
 	friendRequestDenialSchema,
 	friendRequestCreationSchema,
 	friendRemovalSchema,
 	IUserFriendRequests,
 	IFriendRequestCreation,
-	IFriendRemoval
+	IFriendRemoval,
+	IFriendRequestAcceptance,
+	IFriendRequestDenial
 } from "../schemas/friend.schemas";
 import {IFriend} from '../../interfaces/friend';
 import {IUser} from '../../interfaces/user';
@@ -101,8 +103,10 @@ async function getReceivedFriendRequests(request: Request, response: Response, n
 
 /** accept a received friend request */
 async function acceptFriendRequest(request: Request, response: Response, next: NextFunction) {
+
+	const friendRequestAcceptance: IFriendRequestAcceptance = <IFriendRequestAcceptance> request.body;
 	const currentUser: IUser = await getUserFromRequest(request);
-	const requestUser: IUser = <IFriendRequest> request.body;
+	const requestUser: IUser = await userService.getUserByUUID(friendRequestAcceptance.uuid);
 
 	try {
 		await friendService.acceptFriendRequest(currentUser, requestUser);
@@ -117,8 +121,9 @@ async function acceptFriendRequest(request: Request, response: Response, next: N
 
 /** deny a received friend request */
 async function denyFriendRequest(request: Request, response: Response, next: NextFunction) {
+	const friendRequestDenial: IFriendRequestDenial = <IFriendRequestDenial> request.body
 	const currentUser: IUser = await getUserFromRequest(request);
-	const requestUser: IUser = <IFriendRequest> request.body;
+	const requestUser: IUser = await userService.getUserByUUID(friendRequestDenial.uuid);
 
 	try {
 		await friendService.denyFriendRequest(currentUser, requestUser);

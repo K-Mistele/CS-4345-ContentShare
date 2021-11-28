@@ -1,5 +1,4 @@
 import * as Joi from 'joi';
-import { IUser} from "../../interfaces/user";
 import { IFriendRequest } from '../../interfaces/friendRequest'
 
 export const friendRequestCreationSchema = Joi.object({
@@ -16,20 +15,18 @@ export interface IUserFriendRequests {
 }
 
 export const friendRequestAcceptanceSchema = Joi.object({
-	email: Joi.string().required(),
-	username: Joi.string().required(),
-	fullName: Joi.string().required(),
-	uuid: Joi.string().required(),
-	profilePictureUrl: Joi.string()
+	uuid: Joi.string().required()
 })
 
+export interface IFriendRequestAcceptance {
+	uuid: string
+}
+
 export const friendRequestDenialSchema = Joi.object({
-	email: Joi.string().required(),
-	username: Joi.string().required(),
-	fullName: Joi.string().required(),
-	uuid: Joi.string().required(),
-	profilePictureUrl: Joi.string()
+	uuid: Joi.string().required()
 })
+
+export interface IFriendRequestDenial extends IFriendRequestAcceptance {}
 
 export const friendRemovalSchema = Joi.object({
 	email: Joi.string().required()

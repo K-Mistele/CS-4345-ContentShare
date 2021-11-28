@@ -1,8 +1,7 @@
-import { IAuthUser, IUser } from "../../interfaces/user";
+import { IUser } from "../../interfaces/user";
 import { getDatabase, FRIEND, FRIEND_REQUEST, VERTEX, EDGE} from "./orientdb.service";
 import { IFriend } from '../../interfaces/friend';
 import { IFriendRequest} from "../../interfaces/friendRequest";
-import * as userService from './user.service';
 import { IUserFriendRequests } from "../schemas/friend.schemas";
 
 /** Create a friend request from source user to request user */
@@ -140,15 +139,19 @@ export async function friendExists(currentUser: IUser, userInQuestion: IUser): P
 		)
 		.all();
 
-	const friendExists = !!firstLink && !! secondLink;
+	const friendExists = (firstLink.length > 0) && (secondLink.length > 0);
 	if (friendExists) {
 		console.log(`Friend exists!`);
+		console.log(`First link:`);
+		console.log(firstLink);
+		console.log(`Second link:`);
+		console.log(secondLink);
 	}
 	else {
 		console.log(`Friend does not exist!`);
 	}
 
-	return !!firstLink && !!secondLink
+	return friendExists;
 }
 
 /** delete a user's friend */
