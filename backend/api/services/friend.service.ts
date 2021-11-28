@@ -184,3 +184,21 @@ async function deleteFriendRequestLink(sender: IUser, recipient: IUser): Promise
 			in: recipient['@rid']
 		}).all();
 }
+
+/** Check if a user is a friend */
+export async function userIsFriend(currentUser: IUser, secondUser: IUser): Promise<boolean> {
+	const database = await getDatabase();
+
+	/// Get all of the current user's friends
+	const currentUsersFriends: IUser[] = await database.query(
+		`select expand(in) from Friend where out = ${currentUser['@rid']};`
+	);
+
+	/// Check if any of the friends have the second user's rid.
+	for (let friend of currentUsersFriends) {
+		if (friend['uuid'] === secondUser['uuid']) {
+			return true;
+		}
+	}
+	return false;
+}
