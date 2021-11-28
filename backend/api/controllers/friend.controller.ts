@@ -9,13 +9,14 @@ import {
 	IFriendRequestCreation,
 	IFriendRemoval,
 	IFriendRequestAcceptance,
-	IFriendRequestDenial
+	IFriendRequestDenial, IViewFriendsReviews, viewFriendsReviewsSchema
 } from "../schemas/friend.schemas";
 import {IFriend} from '../../interfaces/friend';
 import {IUser} from '../../interfaces/user';
 import * as userService from '../services/user.service';
 import * as jwtService from '../services/jwt.service';
 import * as friendService from '../services/friend.service';
+import * as reviewService from '../services/review.service';
 import {getUserFromRequest} from '../services/user.service';
 import {validateSchema} from "../services/requestValidation.service";
 
@@ -29,7 +30,8 @@ router.get('/request', jwtService.requireJWT, getFriendRequests);
 router.get('/request/sent', jwtService.requireJWT, getSentFriendRequests);
 router.get('/request/received', jwtService.requireJWT, getReceivedFriendRequests);
 router.post('/request/accept', jwtService.requireJWT, validateSchema(friendRequestAcceptanceSchema), acceptFriendRequest);
-router.post('/request/deny', jwtService.requireJWT, validateSchema(friendRequestDenialSchema), denyFriendRequest)
+router.post('/request/deny', jwtService.requireJWT, validateSchema(friendRequestDenialSchema), denyFriendRequest);
+router.get('/reviews', jwtService.requireJWT, validateSchema(viewFriendsReviewsSchema), getFriendsReviews);
 module.exports = router;
 
 /** get a user's friends */
@@ -152,4 +154,23 @@ async function removeFriend(request: Request, response: Response, next: NextFunc
 			message: `May have failed to completely remove friend`
 		})
 	}
+}
+
+/** get a friend's reviews */
+async function getFriendsReviews(request: Request, response: Response, next: NextFunction) {
+	const getFriendsReviewsRequest: IViewFriendsReviews = <IViewFriendsReviews> request.body;
+	const currentUser: IUser = await getUserFromRequest(request);
+	const secondUser: IUser = await userService.getUserByUUID(getFriendsReviewsRequest.uuid);
+	console.log(secondUser);
+
+	// validate that the user is a friend
+	if (! await friendService.userIsFriend(currentUser, secondUser)) {
+		return response.status(403).json({message: `You can only view a friend's reviews!`});
+	}
+
+	// return their reviews
+	return response.status(200).json({
+		movieReviews: await reviewService.getUserMovieReviews(secondUser.uuid),
+		bookReviews: await reviewService.getUserBookReviews(secondUser.uuid)
+	})
 }
