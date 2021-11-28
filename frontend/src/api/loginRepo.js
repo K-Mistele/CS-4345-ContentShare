@@ -24,5 +24,22 @@ export class loginRepo{
             })
         })
     }
+
+    register(newUser){
+        console.log("trying to sign in")
+        return new Promise((resolve, reject)=>{
+            axios.post(`${this.url}/user/register`, newUser)
+                .then(response=>{
+                    console.log("here")
+                    console.log(response)
+                    resolve()
+                    })
+                .catch(error => {
+                    console.log(error)
+                    reject(error)
+                })
+        })
+
+    }
     
 } // end class 

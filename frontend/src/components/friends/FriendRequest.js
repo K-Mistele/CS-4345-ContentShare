@@ -10,15 +10,35 @@ import searchFriendData from '../../temp_data/searchFriendData';
 import RequestList from './RequestList'
 import { Typography } from '@mui/material';
 
+import { friendRepo } from "../../api/friendRepo"  
+
+
 export class FriendRequest extends React.Component {
-  state={
-    requests: []
+
+  friendRepository = new friendRepo();
+
+  constructor(props){
+      super(props); 
+      this.state = {
+        requests: []
+      }
   }
+  
 
   componentDidMount() {
-    this.setState({
-      requests: searchFriendData
+
+    this.friendRepository.getUserRequests()
+     .then(requests =>{
+       this.setState({requests: requests})
+       console.log("requests successfully retreived")
+       console.log("requests: ", requests)
+     })
+     .catch(error=>{
+       console.log("error: ", error)
     })
+  }
+  updateRequests = () => {
+
   }
   
   render() {
@@ -30,7 +50,7 @@ export class FriendRequest extends React.Component {
             this.state.requests.length == 0 && <Typography>No new request. </Typography>
           }
           {
-            this.state.requests.length > 0 && <RequestList requests={this.state.requests}/>
+            this.state.requests.length > 0 && <RequestList requests={this.state.requests} updateRequests = { this.updateRequests } updateFriends = {() => { this.props.RefetchFriends() }} />
 
           }
           {/* <Button color='success'>Accept</Button>
