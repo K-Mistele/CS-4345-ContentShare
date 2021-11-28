@@ -12,13 +12,18 @@ import SearchIcon from '@mui/icons-material/Search';
 import searchFriendData from '../../temp_data/searchFriendData';
 import SearchList from './SearchList';
 
+import { friendRepo } from "../../api/friendRepo" 
+
 export class AddNewFriend extends React.Component {
 
-  constructor() {
-    super();
+  friendRepository = new friendRepo(); 
+
+  constructor(props) {
+    super(props);
     this.state = {
       users: [],
-      clicked: false
+      clicked: false,
+      newFriend: ""
     }
   }
 
@@ -26,6 +31,26 @@ export class AddNewFriend extends React.Component {
     this.setState({
       users: searchFriendData
     })
+  }
+
+  addFriend = () => {
+    // console.log("in save add book!. bookToAdd in BookPage", this.state)
+    console.log("in add friend!!!")
+    var friendToAdd = {
+      "destinationUserEmail": this.state.newFriend
+    }
+
+    this.friendRepository.addFriend(friendToAdd)
+      .then(() => {
+        console.log("friend added!");
+        // console.log("calling refetch");
+        // this.props.RefetchBooks()
+      })
+      .catch(error => {
+        console.log("error: ", error);
+      })
+      this.props.CloseDialog() 
+
   }
 
   handleClick() {
@@ -44,28 +69,25 @@ export class AddNewFriend extends React.Component {
       <Dialog fullWidth={true} open={this.props.open} onClose={() => this.props.CloseDialog()}>
         <DialogTitle>Add a New Friend</DialogTitle>
         <DialogContent>
-          <TextField
-            label="Search a user"
-            variant='standard'
-            fullWidth
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                {/* <IconButton onClick={()=> this.handleClick()}>
-                  <SearchIcon />
-                </IconButton> */}
-                <Button onClick={()=> this.handleClick()}><SearchIcon/></Button>
-              </InputAdornment>
-            )
-          }}
-          />
-
-          {
-            this.state.clicked && <SearchList users={this.state.users} />
-          }
+        
+        <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="Email"
+                autoComplete="Email"
+                autoFocus
+                variant="standard"
+                onChange={(e) =>
+                  this.setState({ newFriend: e.target.value })
+                }
+              />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => {this.clearResults(); this.props.CloseDialog()}}>Close</Button>
+          <Button onClick={ this.addFriend }>Add Friend</Button>
         </DialogActions>
       </Dialog>
     </>
