@@ -50,7 +50,8 @@ export class FriendRequest extends React.Component {
             this.state.requests.length == 0 && <Typography>No new request. </Typography>
           }
           {
-            this.state.requests.length > 0 && <RequestList requests={this.state.requests} updateRequests = { this.updateRequests } updateFriends = {() => { this.props.RefetchFriends() }} />
+            this.state.requests.length > 0 && <RequestList requests={this.state.requests} updateRequests = { this.updateRequests } updateFriends = {() => { 
+              console.log("in this.updateRequests"); this.props.RefetchFriends() }} />
 
           }
           {/* <Button color='success'>Accept</Button>
