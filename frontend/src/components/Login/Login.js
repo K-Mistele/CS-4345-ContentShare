@@ -75,7 +75,6 @@ export class Login extends React.Component {
       .catch((error) => {
         alert("Incorrect login information")
       })
-
   }
 
   handleRegister = () => {

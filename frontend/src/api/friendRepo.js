@@ -69,6 +69,26 @@ export class friendRepo{
         })
 
     }
+
+    acceptFriendRequest(uuid){
+        console.log("in accepting friend req")
+        let config = {
+            headers:{
+                'x-access-token': localStorage.getItem('jwt_token')
+            },
+        }
+        return new Promise((resolve, reject)=>{
+            axios.post(`${this.url}/friend/request/accept`, uuid, config)
+            .then(response=>{
+                resolve(response.data)
+                console.log("success accepting friend!")
+            })
+            .catch(error => {
+                console.log(error)
+                reject(error)
+            })
+        })
+    }
     
 
     /*

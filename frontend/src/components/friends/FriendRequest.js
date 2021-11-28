@@ -37,6 +37,9 @@ export class FriendRequest extends React.Component {
        console.log("error: ", error)
     })
   }
+  updateRequests = () => {
+
+  }
   
   render() {
     return <>
@@ -47,7 +50,7 @@ export class FriendRequest extends React.Component {
             this.state.requests.length == 0 && <Typography>No new request. </Typography>
           }
           {
-            this.state.requests.length > 0 && <RequestList requests={this.state.requests}/>
+            this.state.requests.length > 0 && <RequestList requests={this.state.requests} updateRequests = { this.updateRequests } updateFriends = {() => { this.props.RefetchFriends() }} />
 
           }
           {/* <Button color='success'>Accept</Button>

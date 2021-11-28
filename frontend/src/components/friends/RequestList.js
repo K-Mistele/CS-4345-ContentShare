@@ -10,16 +10,33 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 
+import { friendRepo } from "../../api/friendRepo" 
+
 class RequestList extends React.Component {
 
-  handleAccept() {
-    if (window.confirm("Are you sure you want to accept?")) {
-      alert("request accepted!")
-      console.log('request accepted!')
-    }
+  friendRepository = new friendRepo();
+
+  constructor(props){
+    super(props); 
+    this.state = {}
   }
 
-  handleDecline() {
+  handleAccept = requestUUID => {
+
+    var accept = {
+      uuid: requestUUID,
+    }
+
+    this.friendRepository.acceptFriendRequest(accept)
+      .then(() => {
+        console.log("success")
+      }) 
+      .catch((error) => {
+        console.log("error: ", error)
+      })
+  }
+
+  handleDecline = () => {
     if (window.confirm("Are you sure you want to decline?")) {
       alert("request declined!")
     }
@@ -56,7 +73,7 @@ class RequestList extends React.Component {
                     {request.email}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                  <Button color="success" onClick={() => this.handleAccept()}>Accept</Button>
+                  <Button color="success" onClick={() => this.handleAccept(request.uuid)}>Accept</Button>
                   <Button color="error" onClick={() => this.handleDecline()}>Decline</Button>
                   </TableCell>
                 </TableRow>
