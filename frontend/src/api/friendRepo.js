@@ -46,6 +46,29 @@ export class friendRepo{
                 })
         })
     }
+
+    getUserRequests(){
+
+        console.log("getting friend ~requests~ of a user")
+        let config = {
+            headers:{
+                'x-access-token': localStorage.getItem('jwt_token')
+            }
+        }
+        return new Promise((resolve, reject)=>{
+            axios.get(`${this.url}/friend/request/received`, config)
+                .then(response=>{
+                    console.log("here in requests get")
+                    console.log("data!!!", response.data)
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                    reject(error)
+                })
+        })
+
+    }
     
 
     /*
