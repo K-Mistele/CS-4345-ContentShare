@@ -18,10 +18,14 @@ import { BookList } from "./bookList";
 import { ViewBookDialog } from "./viewBookDialog";
 import { EditBookDialog } from "./editBookDialog";
 import { AddBookDialog } from "./addBookDialog";
-import bookReviewsData from "../../temp_data/bookReviewsData"
+import bookReviewsData from "../../temp_data/bookReviewsData";
+
+import { bookRepo } from "../../api/bookRepo"; 
 
 
 class MyBookPage extends React.Component {
+
+  bookRepository = new bookRepo();
 
   constructor() {
     super();
@@ -35,13 +39,40 @@ class MyBookPage extends React.Component {
       openAddBookDialog: false,
       tmpAddTitle: ''
     }
+
+    this.RefetchBooks = this.RefetchBooks.bind(this); 
+    this.onBookDeleteClick = this.onBookDeleteClick.bind(this); 
   }
 
   componentDidMount() {
-    this.setState({
-      allBookReviews: bookReviewsData,
-      // openAddBookDialog: true,
+    this.bookRepository.getBooks()
+     .then(books =>{
+       this.setState({allBookReviews: books})
+       console.log("books successfully retreived")
+     })
+     .catch(error=>{
+       console.log("error: ", error)
     })
+  }
+
+  // add book review 
+  SaveAddBook(bookToAdd) {
+    console.log("LOOK HERE...SAVE ADD BOOK IN MY BOOk PAGE")
+    console.log("in save add book!. bookToAdd in BookPage", bookToAdd)
+    // do something here to save
+    this.bookRepository.addBook(bookToAdd)
+      .then(() => {
+        this.setState({ openAddBookDialog: true })
+        console.log("book added!!")
+      })
+      .catch(error => {
+        console.log("error: ", error)
+      })
+
+    console.log('Added book!')
+    console.log('Checking if saving add reads full name: ' + this.state.tmpAddTitle);
+    this.setState({ openAddMovieDialog: false })
+    window.location.reload(false); // force refresh to update backend, should work fine
   }
 
   onBookViewClick(book) {
@@ -52,10 +83,10 @@ class MyBookPage extends React.Component {
     this.setState({ openViewBookDialog: false })
   }
   // --------- Functions for editing book ----------
-  onBookEditClick(bookId) {
-    console.log(bookId)
+  onBookEditClick(book) {
+    console.log(book)
     this.setState({ openEditBookDialog: true })
-    this.setState({ bookToEdit: this.state.allBookReviews.filter(x => x.id == bookId)[0] })
+    this.setState({ bookToEdit: book })
   }
   CloseEditDialog() {
     this.setState({ openEditBookDialog: false })
@@ -77,15 +108,15 @@ class MyBookPage extends React.Component {
   // --------- Deleting book ----------
   onBookDeleteClick(reviewTitle) {
     console.log("Deleting a book")
-    // this.bookRepository.deleteBook(reviewTitle)
-    // .then(() =>{
-    //    console.log("book deleted!!")
-    //    console.log("calling refetch")
-    //    this.RefetchBooks()
-    //  })
-    //  .catch(error=>{
-    //    console.log("error: ", error)
-    // })
+    
+    this.bookRepository.deleteBook(reviewTitle)
+      .then(()=>{
+        console.log("book deleted....calling refetch");
+        this.RefetchBooks()
+      })
+      .catch(error => {
+        console.log("error: ", error)
+      })
   }
 
   // --------- Functions for Adding book ----------
@@ -97,23 +128,6 @@ class MyBookPage extends React.Component {
   CloseAddDialog() {
     this.setState({ openAddBookDialog: false })
   }
-  SaveAddBook(bookToAdd) {
-    console.log("in save add book!. bookToAdd in BookPage", bookToAdd)
-    // do something here to save
-    // this.bookRepository.addBook(bookToAdd)
-    //   .then(() => {
-    //     this.setState({ openAddBookDialog: true })
-    //     console.log("book added!!")
-    //   })
-    //   .catch(error => {
-    //     console.log("error: ", error)
-    //   })
-
-    console.log('Added book!')
-    console.log('Checking if saving add reads full name: ' + this.state.tmpAddTitle);
-    this.setState({ openAddBookDialog: false })
-    window.location.reload(false); // force refresh to update backend, should work fine
-  }
   AddTitle(title) {
     // temporarily save the changing value; once the save button is clicked; call SaveEditBook()
     console.log(title)
@@ -121,18 +135,20 @@ class MyBookPage extends React.Component {
     console.log(this.state.tmpAddTitle);
   }
 
+  // call getBooks and reset state 
   RefetchBooks() {
     console.log("refetching books.....")
-    // console.log("book repo", this.bookRepository)  // this.bookRepository is undefined here!!!
-    // this.bookRepository.getBooks()
-    //   .then(books => {
-    //     this.setState({ allBookReviews: books })
-    //     console.log("books successfully retreived")
-    //   })
-    //   .catch(error => {
-    //     console.log("error: ", error)
-    //   })
+    this.bookRepository.getBooks()
+      .then(books=>{
+        this.setState({allBookReviews: books})
+        console.log("books successfully retreived");
+      })
+      .catch(error =>{
+        console.log("error: ", error);
+      })
   }
+
+
   render() {
 
     return (
@@ -162,11 +178,12 @@ class MyBookPage extends React.Component {
               CloseDialog={() => { this.CloseEditDialog() }}
               SaveEditBook={book => this.SaveEditBook(book)}
               EditTitle={title => this.ChangeTitle(title)}
+              RefetchBooks = { this.RefetchBooks } 
             />
             <AddBookDialog book={this.state.bookToEdit}
               open={this.state.openAddBookDialog}
               CloseDialog={() => { this.CloseAddDialog() }}
-              SaveAddBook={book => this.SaveAddBook()}
+              // SaveAddBook={book => this.SaveAddBook()}
               AddTitle={title => this.AddTitle(title)}
               RefetchBooks={this.RefetchBooks}
             />

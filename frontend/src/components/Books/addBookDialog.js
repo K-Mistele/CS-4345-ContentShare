@@ -7,15 +7,16 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
-// import { bookRepo } from "../../api/bookRepo"
+import { bookRepo } from "../../api/bookRepo"
 
 export class AddBookDialog extends React.Component {
 
-  //   bookRepository = new bookRepo(); 
+  bookRepository = new bookRepo(); 
   constructor(props) {
     super(props);
     this.state = {
       "bookTitle": "",
+      "bookAuthor": "",
       "reviewTitle": "",
       "reviewRating": null,
       "reviewText": "",
@@ -32,17 +33,17 @@ export class AddBookDialog extends React.Component {
 
   handleSubmit = () => {
     console.log("in save add book!. bookToAdd in BookPage", this.state)
-    // do something here to save
-    // this.bookRepository.addBook(this.state)
-    // .then(() =>{
-    //    console.log("book added!!")
-    //    console.log("calling refetch")
-    //    this.props.RefetchBooks()
-    //  })
-    //  .catch(error=>{
-    //    console.log("error: ", error)
-    // })
-    // this.props.CloseDialog()
+    
+    this.bookRepository.addBook(this.state)
+      .then(() => {
+        console.log("book added!");
+        console.log("calling refetch");
+        this.props.RefetchBooks()
+      })
+      .catch(error => {
+        console.log("error: ", error);
+      })
+      this.props.CloseDialog() 
 
   }
 
