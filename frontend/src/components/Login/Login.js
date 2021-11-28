@@ -44,13 +44,24 @@ export class Login extends React.Component {
   testRepository = new TestRepository();
   loginRepository = new loginRepo();
 
-  state = {
-    username: '',
-    password: '',
-    openDialog: false
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      openDialog: false,
+      fullName: "", 
+      email: "",
+      signUpUsername: "",
+      signUpPassword: "",
+      signUpConfirmPassword: ""
+    };
 
-  handleSubmit() {
+
+
+  }
+
+  handleSubmit = () => {
     console.log('username:' + this.state.username)
     console.log('password:' + this.state.password)
 
@@ -65,6 +76,26 @@ export class Login extends React.Component {
         alert("Incorrect login information")
       })
 
+  }
+
+  handleRegister = () => {
+
+    var newUser = {
+      "fullName": this.state.fullName,
+      "email": this.state.email,
+      "username": this.state.signUpUsername,
+      "password": this.state.signUpPassword,
+      "confirmPassword": this.state.signUpConfirmPassword
+    }
+
+    this.loginRepository.register(newUser)
+      .then(() => {
+        alert("You have been registered!")
+      })
+      .catch((error) =>{
+        console.log("error: ", error)
+      })
+      this.setState({ openDialog: false })
   }
 
   render() {
@@ -152,6 +183,9 @@ export class Login extends React.Component {
                           label="Username"
                           fullWidth required
                           variant="standard"
+                          onChange={(e) =>
+                            this.setState({ signUpUsername: e.target.value })
+                          }
                         />
                         <TextField
                           autoFocus
@@ -159,6 +193,9 @@ export class Login extends React.Component {
                           label="Full Name"
                           fullWidth required
                           variant="standard"
+                          onChange={(e) =>
+                            this.setState({ fullName: e.target.value })
+                          }
                         />
                       </Box>
                       <Box
@@ -176,6 +213,9 @@ export class Login extends React.Component {
                           label="Password"
                           fullWidth required
                           variant="standard"
+                          onChange={(e) =>
+                            this.setState({ signUpPassword: e.target.value })
+                          }
                         />
                         <TextField
                           autoFocus
@@ -183,6 +223,9 @@ export class Login extends React.Component {
                           label="Confirm Password"
                           fullWidth required
                           variant="standard"
+                          onChange={(e) =>
+                            this.setState({ signUpConfirmPassword: e.target.value })
+                          }
                         />
                       </Box>
                       <Box
@@ -199,6 +242,9 @@ export class Login extends React.Component {
                           label="Email"
                           fullWidth required
                           variant="standard"
+                          onChange={(e) =>
+                            this.setState({ email: e.target.value })
+                          }
                         />
                         <TextField
                           autoFocus
@@ -211,7 +257,7 @@ export class Login extends React.Component {
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={() => { this.setState({ openDialog: false }) }}>Cancel</Button>
-                      <Button onClick={() => { this.setState({ openDialog: false }) }}>Sign Up</Button>
+                      <Button onClick={ this.handleRegister }>Sign Up</Button>
                     </DialogActions>
                   </Dialog>
                 </Grid>
