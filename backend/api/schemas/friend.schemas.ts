@@ -34,3 +34,10 @@ export const friendRemovalSchema = Joi.object({
 export interface IFriendRemoval {
 	email: string
 }
+
+export const viewFriendsReviewsSchema = Joi.object({
+	uuid: Joi.string().required()
+})
+export interface IViewFriendsReviews {
+	uuid: string
+}

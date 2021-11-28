@@ -139,15 +139,19 @@ export async function friendExists(currentUser: IUser, userInQuestion: IUser): P
 		)
 		.all();
 
-	const friendExists = !!firstLink && !! secondLink;
+	const friendExists = (firstLink.length > 0) && (secondLink.length > 0);
 	if (friendExists) {
 		console.log(`Friend exists!`);
+		console.log(`First link:`);
+		console.log(firstLink);
+		console.log(`Second link:`);
+		console.log(secondLink);
 	}
 	else {
 		console.log(`Friend does not exist!`);
 	}
 
-	return !!firstLink && !!secondLink
+	return friendExists;
 }
 
 /** delete a user's friend */
@@ -179,4 +183,22 @@ async function deleteFriendRequestLink(sender: IUser, recipient: IUser): Promise
 			out: sender['@rid'],
 			in: recipient['@rid']
 		}).all();
+}
+
+/** Check if a user is a friend */
+export async function userIsFriend(currentUser: IUser, secondUser: IUser): Promise<boolean> {
+	const database = await getDatabase();
+
+	/// Get all of the current user's friends
+	const currentUsersFriends: IUser[] = await database.query(
+		`select expand(in) from Friend where out = ${currentUser['@rid']};`
+	);
+
+	/// Check if any of the friends have the second user's rid.
+	for (let friend of currentUsersFriends) {
+		if (friend['uuid'] === secondUser['uuid']) {
+			return true;
+		}
+	}
+	return false;
 }
