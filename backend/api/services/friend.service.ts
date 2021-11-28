@@ -139,15 +139,19 @@ export async function friendExists(currentUser: IUser, userInQuestion: IUser): P
 		)
 		.all();
 
-	const friendExists = !!firstLink && !! secondLink;
+	const friendExists = (firstLink.length > 0) && (secondLink.length > 0);
 	if (friendExists) {
 		console.log(`Friend exists!`);
+		console.log(`First link:`);
+		console.log(firstLink);
+		console.log(`Second link:`);
+		console.log(secondLink);
 	}
 	else {
 		console.log(`Friend does not exist!`);
 	}
 
-	return !!firstLink && !!secondLink
+	return friendExists;
 }
 
 /** delete a user's friend */
