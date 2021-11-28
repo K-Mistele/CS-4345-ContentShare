@@ -49,6 +49,18 @@ class FriendPage extends React.Component {
 			
 	}
 
+	Refetch = () => {
+		console.log("refetching friends in Refetch function!!!"); 
+		this.friendRepository.getFriends()
+			.then(friends =>{
+			this.setState({friends: friends})
+			console.log("friends successfully retreived")
+			})
+			.catch(error=>{
+			console.log("error: ", error)
+			})
+	}
+
 	// -------- Functions for add new friends --------
 	CloseAddNewFriendDialog() {
 		this.setState({openAddFriendDialog: false})
@@ -92,7 +104,8 @@ class FriendPage extends React.Component {
 						<FriendRequest open={this.state.openFriendRequestsDialog}
 							CloseDialog={() => { this.CloseFriendRequestDialog() }}
 							AcceptFriend={id => { this.AcceptFriend(id) }}
-							DeclineFriend={id => { this.DeclineFriend(id) }} />
+							DeclineFriend={id => { this.DeclineFriend(id) }}
+							RefetchFriends = { this.Refetch } />
 					</Stack>
 					<FriendsList friends = { this.state.friends } />
 				</Container>
