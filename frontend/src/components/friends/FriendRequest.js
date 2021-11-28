@@ -31,15 +31,11 @@ export class FriendRequest extends React.Component {
      .then(requests =>{
        this.setState({requests: requests})
        console.log("requests successfully retreived")
+       console.log("requests: ", requests)
      })
      .catch(error=>{
        console.log("error: ", error)
     })
-    /* this.setState({
-      requests: searchFriendData
-    })
-
-    */
   }
   
   render() {

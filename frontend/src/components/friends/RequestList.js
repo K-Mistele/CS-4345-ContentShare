@@ -12,7 +12,7 @@ import Avatar from '@mui/material/Avatar';
 
 class RequestList extends React.Component {
 
-  handleAccpet() {
+  handleAccept() {
     if (window.confirm("Are you sure you want to accept?")) {
       alert("request accepted!")
       console.log('request accepted!')
@@ -56,7 +56,7 @@ class RequestList extends React.Component {
                     {request.email}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                  <Button color="success" onClick={() => this.handleAccpet()}>Accept</Button>
+                  <Button color="success" onClick={() => this.handleAccept()}>Accept</Button>
                   <Button color="error" onClick={() => this.handleDecline()}>Decline</Button>
                   </TableCell>
                 </TableRow>
