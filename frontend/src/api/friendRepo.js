@@ -114,6 +114,31 @@ export class friendRepo{
                 })
         })
     }
+
+    getAFriendsBooks(uuid){
+        console.log("getting friend's books...in friend")
+        console.log("uuid is: ", uuid)
+        let config = {
+            headers:{
+                'x-access-token': localStorage.getItem('jwt_token')
+            }
+        }
+        let body = {
+            "uuid": uuid
+        } 
+        return new Promise((resolve, reject)=>{
+            axios.post(`${this.url}/friend/reviews`, body, config)
+                .then(response=>{
+                    console.log("here in requests get")
+                    console.log("data!!!", response.data)
+                    resolve(response.data.bookReviews)
+                })
+                .catch(error => {
+                    console.log(error)
+                    reject(error)
+                })
+        })
+    }
     
 
     /*
