@@ -26,10 +26,7 @@ import { loginRepo } from "../../api/loginRepo"
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
+      {'Copyright © ContentShare '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -106,6 +103,7 @@ export class Login extends React.Component {
       })
       .catch((error) => {
         console.log("error: ", error)
+        alert('Register user failed.')
       })
     this.setState({ openDialog: false })
   }

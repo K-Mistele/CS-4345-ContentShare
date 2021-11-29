@@ -90,6 +90,26 @@ export class friendRepo{
         })
     }
 
+    denyFriendRequest(uuid){
+        console.log("in denying friend req")
+        let config = {
+            headers:{
+                'x-access-token': localStorage.getItem('jwt_token')
+            },
+        }
+        return new Promise((resolve, reject)=>{
+            axios.post(`${this.url}/friend/request/deny`, uuid, config)
+            .then(response=>{
+                resolve(response.data)
+                console.log("success denying friend!")
+            })
+            .catch(error => {
+                console.log(error)
+                reject(error)
+            })
+        })
+    }
+
     getAFriendsMovies(uuid){
         console.log("getting friend's movies...in friend")
         console.log("uuid is: ", uuid)

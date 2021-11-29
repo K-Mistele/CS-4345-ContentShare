@@ -40,9 +40,20 @@ class RequestList extends React.Component {
 
   }
 
-  handleDecline = () => {
+  handleDecline = requestUUID => {
+    var deny = {
+      'uuid': requestUUID,
+    }
     if (window.confirm("Are you sure you want to decline?")) {
-      alert("request declined!")
+      this.friendRepository.denyFriendRequest(deny)
+      .then(() => {
+        console.log("success")
+        alert('Friend declined!')
+        window.location.reload(false)
+      }) 
+      .catch((error) => {
+        console.log("error: ", error)
+      })
     }
   }
 
@@ -78,7 +89,7 @@ class RequestList extends React.Component {
                   </TableCell>
                   <TableCell component="th" scope="row">
                   <Button color="success" onClick={() => this.handleAccept(request.uuid)}>Accept</Button>
-                  <Button color="error" onClick={() => this.handleDecline()}>Decline</Button>
+                  <Button color="error" onClick={() => this.handleDecline(request.uuid)}>Decline</Button>
                   </TableCell>
                 </TableRow>
               ))}
