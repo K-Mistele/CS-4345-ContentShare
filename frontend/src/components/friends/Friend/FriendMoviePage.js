@@ -57,7 +57,7 @@ class FriendMoviePage extends React.Component {
     return (
       <div>
         <Header />
-        <NavigationBar page="/friend/movies" uuid={this.props.match.params.uuid}/>
+        <NavigationBar page="/movies" uuid={this.props.match.params.uuid}/>
         <Container maxWidth="md">
           {/* End hero unit */}
           <Stack
