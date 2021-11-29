@@ -14,6 +14,8 @@ import FriendPage from "./components/friends/FriendPage";
 import ViewMovie from "./components/Movies/ViewMovie";
 import ViewBook from "./components/Books/ViewBook";
 
+import FriendMoviePage from "./components/friends/Friend/FriendMoviePage" // viewing friends movies 
+
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -36,6 +38,8 @@ function App(){
 
         <Route exact path = "/movies/:id" component = { ViewMovie } />
         <Route exact path = "/books/:id" component = { ViewBook } />
+
+        <Route exact path = "/friend/movies/:uuid" component = { FriendMoviePage } />
         
         </Switch> 
       </Router>

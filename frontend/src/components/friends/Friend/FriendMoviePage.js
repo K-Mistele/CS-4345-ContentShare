@@ -9,35 +9,36 @@ import NavigationBar from "../../NavigationBar/FriendNavigationBar"
 import { MovieList } from "./movieList";
 import { ViewMovieDialog } from "./viewMovieDialog";
 
+import { friendRepo } from "../../../api/friendRepo"
 
-// import { movieRepo } from "../../api/movieRepo"
 
-import movieReviewsData from "../../../temp_data/movieReviewsData";
+// import movieReviewsData from "../../../temp_data/movieReviewsData";
 
 class FriendMoviePage extends React.Component {
 
-  // movieRepository = new movieRepo();
+  friendRepository = new friendRepo();
 
   constructor() {
     super();
+
     this.state = {
       allMovieReviews: [],
       contentToShow: "",
       openViewMovieDialog: false,
-      movieToView: {}
+      movieToView: {},
     }
+
   }
 
   componentDidMount() {
-    //  this.movieRepository.getMovies()
-    //  .then(movies =>{
-    //    this.setState({allMovieReviews: movies})
-    //    console.log("movies successfully retreived")
-    //  })
-    //  .catch(error=>{
-    //    console.log("error: ", error)
-    // })
-    this.setState({allMovieReviews: movieReviewsData})
+    this.friendRepository.getAFriendsMovies(this.props.match.params.uuid)
+     .then(movies =>{
+       this.setState({allMovieReviews: movies})
+       console.log("movies successfully retreived in friend movies page")
+     })
+     .catch(error=>{
+       console.log("error: ", error)
+    })
   }
   onMovieViewClick(movie) {
     console.log("in movie on clickkkkkk :)")

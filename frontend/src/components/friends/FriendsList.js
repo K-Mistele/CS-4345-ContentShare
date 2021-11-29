@@ -42,9 +42,9 @@ class FriendsList extends React.Component {
   }
 
 
-  handleClick(username) {
-    console.log(username)
-    this.setState({redirect:`/friend/movies/`+username})
+  handleClick(frienduuid) {
+    console.log(frienduuid)
+    this.setState({redirect:`/friend/movies/`+frienduuid})
   }
 
   render() {
@@ -71,7 +71,7 @@ class FriendsList extends React.Component {
               {this.props.friends.map((friend) => (
                 <TableRow
                   key={friend.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }} hover onClick={() => this.handleClick(friend.username)} style={{cursor: 'pointer'}}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }} hover onClick={() => this.handleClick(friend.uuid)} style={{cursor: 'pointer'}}
                 >
                   <TableCell component="th" scope="row">
                     <Avatar alt="Remy Sharp" src={friend.profileUrl} />

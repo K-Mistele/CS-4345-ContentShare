@@ -89,6 +89,30 @@ export class friendRepo{
             })
         })
     }
+
+    getAFriendsMovies(uuid){
+        console.log("getting friend's movies...in friend")
+        let config = {
+            headers:{
+                'x-access-token': localStorage.getItem('jwt_token')
+            }
+        }
+        let body = {
+            "uuid": uuid
+        } 
+        return new Promise((resolve, reject)=>{
+            axios.get(`${this.url}/friend/reviews`, body, config)
+                .then(response=>{
+                    console.log("here in requests get")
+                    console.log("data!!!", response.data)
+                    resolve(response.data.movieReviews)
+                })
+                .catch(error => {
+                    console.log(error)
+                    reject(error)
+                })
+        })
+    }
     
 
     /*
