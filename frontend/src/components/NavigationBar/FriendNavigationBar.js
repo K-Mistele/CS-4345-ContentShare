@@ -9,7 +9,7 @@ class NavigationBar extends React.Component {
 
   handlePageChange(page, pageName) {
     // solves when already in movie page and clicked on movie button, button stack disappears
-    if (page != pageName) {
+    if (page[1] != pageName[8]) {
       this.setState({ redirect: pageName })
     }    
   }
@@ -27,8 +27,8 @@ class NavigationBar extends React.Component {
       >
 
         { /** <p> UUID is: { this.props.uuid} </p> **/ } 
-        <Button variant={this.props.page === "/friend/movies/" + this.props.uuid ? "contained" : "outlined"} onClick={() => this.handlePageChange(this.props.page, "/friend/movies/"+this.props.uuid)}>Movies</Button>
-        <Button variant={this.props.page === "/friend/books/" + this.props.uuid ? "contained" : "outlined"} onClick={() => this.handlePageChange(this.props.page, "/friend/books/"+this.props.uuid)} >Books</Button>
+        <Button variant={this.props.page === "/movies" ? "contained" : "outlined"} onClick={() => this.handlePageChange(this.props.page, "/friend/movies/"+this.props.uuid)}>Movies</Button>
+        <Button variant={this.props.page === "/books" ? "contained" : "outlined"} onClick={() => this.handlePageChange(this.props.page, "/friend/books/"+this.props.uuid)} >Books</Button>
       </Stack>
     )
 
