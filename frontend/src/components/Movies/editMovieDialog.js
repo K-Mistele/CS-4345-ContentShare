@@ -30,8 +30,6 @@ export class EditMovieDialog extends React.Component{
 
   componentDidUpdate(prevProps, prevState, snapshot){
 
-
-    // console.log("in component Did Update in editMovieDialog")
     if (this.props.movie.movieTitle !== prevProps.movie.movieTitle){
       this.setState({
         "@rid": this.props.movie["@rid"],
@@ -49,17 +47,46 @@ export class EditMovieDialog extends React.Component{
     const name = event.target.name
     const value = event.target.value
     this.setState({[name]: value})
-    //console.log(value)
   }
 
   handleSubmit = () => {
-
-    //console.log("in edit movie!. movie we are editing...", this.state)
+    // sanity checks
+    var ratings = ['1','2','3','4','5']
+    if (typeof this.state.reviewRating == 'number') {
+      this.state.reviewRating = this.state.reviewRating.toString()
+    }
+    if (this.state.movieTitle == '' || this.state.reviewTitle == '' || this.state.reviewRating == null || this.state.reviewText == '') {
+      alert('Required fields cannot be blank!')
+      // clear the states
+      this.setState({
+        "@rid": this.props.movie["@rid"],
+        "movieTitle": this.props.movie.movieTitle,
+        "reviewTitle": this.props.movie.reviewTitle,
+        "reviewRating": this.props.movie.reviewRating,
+        "reviewText": this.props.movie.reviewText,
+        "reviewImageUrl": this.props.reviewImageUrl 
+      })
+      this.props.CloseDialog()
+      return
+    }  
+    else if (!ratings.includes(this.state.reviewRating)){
+      alert('Ratings should be 1,2,3,4,5')
+      this.setState({
+        "@rid": this.props.movie["@rid"],
+        "movieTitle": this.props.movie.movieTitle,
+        "reviewTitle": this.props.movie.reviewTitle,
+        "reviewRating": this.props.movie.reviewRating,
+        "reviewText": this.props.movie.reviewText,
+        "reviewImageUrl": this.props.reviewImageUrl 
+      })
+      this.props.CloseDialog()
+      return
+    }  
+    
     // do something here to save
     this.movieRepository.editMovie(this.state)
       .then(() => {
-        console.log("movie editted!!")
-        console.log("calling refetch")
+        alert('Changes updated!')
         this.props.RefetchMovies()
       })
       .catch(error => {
@@ -67,6 +94,17 @@ export class EditMovieDialog extends React.Component{
       })
     this.props.CloseDialog()
 
+  }
+
+  revertChanges() {
+    this.setState({
+      "@rid": this.props.movie["@rid"],
+      "movieTitle": this.props.movie.movieTitle,
+      "reviewTitle": this.props.movie.reviewTitle,
+      "reviewRating": this.props.movie.reviewRating,
+      "reviewText": this.props.movie.reviewText,
+      "reviewImageUrl": this.props.reviewImageUrl 
+    })
   }
 
   render(){
@@ -153,7 +191,7 @@ export class EditMovieDialog extends React.Component{
           </Box>
           </DialogContent>
         <DialogActions>
-          <Button onClick={() => this.props.CloseDialog()}>Cancel</Button>
+          <Button onClick={() => {this.props.CloseDialog(); this.revertChanges();}}>Cancel</Button>
           <Button onClick={this.handleSubmit}>Save</Button>
         </DialogActions>
       </Dialog>

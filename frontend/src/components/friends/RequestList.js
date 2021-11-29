@@ -30,7 +30,9 @@ class RequestList extends React.Component {
     this.friendRepository.acceptFriendRequest(accept)
       .then(() => {
         console.log("success")
+        alert('Friend added!')
         this.props.updateFriends()
+        window.location.reload(false)
       }) 
       .catch((error) => {
         console.log("error: ", error)

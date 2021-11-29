@@ -44,13 +44,13 @@ export class Login extends React.Component {
   testRepository = new TestRepository();
   loginRepository = new loginRepo();
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       username: '',
       password: '',
       openDialog: false,
-      fullName: "", 
+      fullName: "",
       email: "",
       signUpUsername: "",
       signUpPassword: "",
@@ -86,15 +86,28 @@ export class Login extends React.Component {
       "password": this.state.signUpPassword,
       "confirmPassword": this.state.signUpConfirmPassword
     }
+    // sanity check
+    if (this.state.fullName == '' || this.state.email == '' || this.state.signUpUsername == '' || this.state.signUpPassword == '' || this.state.signUpConfirmPassword == '') {
+      alert('Please fill in all the required fields!')
+      this.setState({
+        fullName: "",
+        email: "",
+        signUpUsername: "",
+        signUpPassword: "",
+        signUpConfirmPassword: ""
+      })
+      this.setState({ openDialog: false })
+      return
+    }
 
     this.loginRepository.register(newUser)
       .then(() => {
         alert("You have been registered!")
       })
-      .catch((error) =>{
+      .catch((error) => {
         console.log("error: ", error)
       })
-      this.setState({ openDialog: false })
+    this.setState({ openDialog: false })
   }
 
   render() {
@@ -256,7 +269,7 @@ export class Login extends React.Component {
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={() => { this.setState({ openDialog: false }) }}>Cancel</Button>
-                      <Button onClick={ this.handleRegister }>Sign Up</Button>
+                      <Button onClick={this.handleRegister}>Sign Up</Button>
                     </DialogActions>
                   </Dialog>
                 </Grid>
