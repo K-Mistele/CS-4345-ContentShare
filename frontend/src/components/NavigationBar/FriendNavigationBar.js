@@ -26,8 +26,8 @@ class NavigationBar extends React.Component {
         justifyContent="center"
       >
 
-        <Button variant={this.props.page === "/friend/movies/:uuid" ? "contained" : "outlined"} onClick={() => this.handlePageChange(this.props.page, "/friend/movies/"+this.props.uuid)}>Movies</Button>
-        <Button variant={this.props.page === "/books" ? "contained" : "outlined"} onClick={() => this.handlePageChange(this.props.page, "/friend/books/"+this.props.username)} >Books</Button>
+        <Button variant={this.props.page === "/friend/movies/" + this.props.uuid ? "contained" : "outlined"} onClick={() => this.handlePageChange(this.props.page, "/friend/movies/"+this.props.uuid)}>Movies</Button>
+        <Button variant={this.props.page === "/friend/books/" + this.props.uuid ? "contained" : "outlined"} onClick={() => this.handlePageChange(this.props.page, "/friend/books/"+this.props.username)} >Books</Button>
       </Stack>
     )
 

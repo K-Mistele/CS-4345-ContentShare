@@ -92,6 +92,7 @@ export class friendRepo{
 
     getAFriendsMovies(uuid){
         console.log("getting friend's movies...in friend")
+        console.log("uuid is: ", uuid)
         let config = {
             headers:{
                 'x-access-token': localStorage.getItem('jwt_token')
@@ -101,7 +102,7 @@ export class friendRepo{
             "uuid": uuid
         } 
         return new Promise((resolve, reject)=>{
-            axios.get(`${this.url}/friend/reviews`, body, config)
+            axios.post(`${this.url}/friend/reviews`, body, config)
                 .then(response=>{
                     console.log("here in requests get")
                     console.log("data!!!", response.data)

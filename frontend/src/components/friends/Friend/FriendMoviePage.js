@@ -18,8 +18,8 @@ class FriendMoviePage extends React.Component {
 
   friendRepository = new friendRepo();
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       allMovieReviews: [],
@@ -31,6 +31,8 @@ class FriendMoviePage extends React.Component {
   }
 
   componentDidMount() {
+    console.log("in friendMoviePage... param uuid is: ", this.props.match.params.uuid)
+    console.log("props period: ", this.props)
     this.friendRepository.getAFriendsMovies(this.props.match.params.uuid)
      .then(movies =>{
        this.setState({allMovieReviews: movies})
@@ -55,7 +57,7 @@ class FriendMoviePage extends React.Component {
     return (
       <div>
         <Header />
-        <NavigationBar page="/movies" username={this.props.match.params.username}/>
+        <NavigationBar page="/friend/movies" uuid={this.props.match.params.uuid}/>
         <Container maxWidth="md">
           {/* End hero unit */}
           <Stack
