@@ -128,7 +128,7 @@ async function denyFriendRequest(request: Request, response: Response, next: Nex
 	const requestUser: IUser = await userService.getUserByUUID(friendRequestDenial.uuid);
 
 	try {
-		await friendService.denyFriendRequest(currentUser, requestUser);
+		await friendService.denyFriendRequest(requestUser, currentUser);
 		return response.sendStatus(200);
 	}
 	catch (err: any) {
