@@ -27,17 +27,35 @@ export class AddBookDialog extends React.Component {
   handleChange = (event) => {
     const name = event.target.name
     const value = event.target.value
-    console.log("value: ", value)
     this.setState({ [name]: value })
   }
 
   handleSubmit = () => {
-    console.log("in save add book!. bookToAdd in BookPage", this.state)
+     // sanity checks
+     var ratings = ['1', '2', '3', '4', '5']
+     if (this.state.bookTitle == '' || this.state.bookAuthor == '' || this.state.reviewRating == null || this.state.reviewText == '' || this.state.reviewTitle == '') {
+       alert('Please fill in the required fields!')
+       this.props.CloseDialog()
+       return
+     }
+     else if (!ratings.includes(this.state.reviewRating)) {
+       alert('Ratings should be 1,2,3,4,5')
+       this.props.CloseDialog()
+       return
+     }
     
     this.bookRepository.addBook(this.state)
       .then(() => {
-        console.log("book added!");
-        console.log("calling refetch");
+        alert('Book added successfully!')
+        // clear fields
+        this.setState({
+          "bookTitle": "",
+          "bookAuthor": "",
+          "reviewTitle": "",
+          "reviewRating": null,
+          "reviewText": "",
+          "reviewImageUrl": ""
+        })
         this.props.RefetchBooks()
       })
       .catch(error => {

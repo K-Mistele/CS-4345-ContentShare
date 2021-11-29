@@ -20,7 +20,7 @@ import { EditBookDialog } from "./editBookDialog";
 import { AddBookDialog } from "./addBookDialog";
 import bookReviewsData from "../../temp_data/bookReviewsData";
 
-import { bookRepo } from "../../api/bookRepo"; 
+import { bookRepo } from "../../api/bookRepo";
 
 
 class MyBookPage extends React.Component {
@@ -40,25 +40,23 @@ class MyBookPage extends React.Component {
       tmpAddTitle: ''
     }
 
-    this.RefetchBooks = this.RefetchBooks.bind(this); 
-    this.onBookDeleteClick = this.onBookDeleteClick.bind(this); 
+    this.RefetchBooks = this.RefetchBooks.bind(this);
+    this.onBookDeleteClick = this.onBookDeleteClick.bind(this);
   }
 
   componentDidMount() {
     this.bookRepository.getBooks()
-     .then(books =>{
-       this.setState({allBookReviews: books})
-       console.log("books successfully retreived")
-     })
-     .catch(error=>{
-       console.log("error: ", error)
-    })
+      .then(books => {
+        this.setState({ allBookReviews: books })
+        console.log("books successfully retreived")
+      })
+      .catch(error => {
+        console.log("error: ", error)
+      })
   }
 
   // add book review 
   SaveAddBook(bookToAdd) {
-    console.log("LOOK HERE...SAVE ADD BOOK IN MY BOOk PAGE")
-    console.log("in save add book!. bookToAdd in BookPage", bookToAdd)
     // do something here to save
     this.bookRepository.addBook(bookToAdd)
       .then(() => {
@@ -107,16 +105,16 @@ class MyBookPage extends React.Component {
 
   // --------- Deleting book ----------
   onBookDeleteClick(reviewTitle) {
-    console.log("Deleting a book")
-    
-    this.bookRepository.deleteBook(reviewTitle)
-      .then(()=>{
-        console.log("book deleted....calling refetch");
-        this.RefetchBooks()
-      })
-      .catch(error => {
-        console.log("error: ", error)
-      })
+    if (window.confirm('Are you sure to delete this book?')) {
+      this.bookRepository.deleteBook(reviewTitle)
+        .then(() => {
+          console.log("book deleted....calling refetch");
+          this.RefetchBooks()
+        })
+        .catch(error => {
+          console.log("error: ", error)
+        })
+    }
   }
 
   // --------- Functions for Adding book ----------
@@ -139,11 +137,11 @@ class MyBookPage extends React.Component {
   RefetchBooks() {
     console.log("refetching books.....")
     this.bookRepository.getBooks()
-      .then(books=>{
-        this.setState({allBookReviews: books})
+      .then(books => {
+        this.setState({ allBookReviews: books })
         console.log("books successfully retreived");
       })
-      .catch(error =>{
+      .catch(error => {
         console.log("error: ", error);
       })
   }
@@ -178,7 +176,7 @@ class MyBookPage extends React.Component {
               CloseDialog={() => { this.CloseEditDialog() }}
               SaveEditBook={book => this.SaveEditBook(book)}
               EditTitle={title => this.ChangeTitle(title)}
-              RefetchBooks = { this.RefetchBooks } 
+              RefetchBooks={this.RefetchBooks}
             />
             <AddBookDialog book={this.state.bookToEdit}
               open={this.state.openAddBookDialog}

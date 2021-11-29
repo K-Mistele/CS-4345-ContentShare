@@ -39,19 +39,17 @@ class MyMoviePage extends React.Component {
   }
 
   componentDidMount() {
-     this.movieRepository.getMovies()
-     .then(movies =>{
-       this.setState({allMovieReviews: movies})
-       console.log("movies successfully retreived")
-     })
-     .catch(error=>{
-       console.log("error: ", error)
-    })
+    this.movieRepository.getMovies()
+      .then(movies => {
+        this.setState({ allMovieReviews: movies })
+        console.log("movies successfully retreived")
+      })
+      .catch(error => {
+        console.log("error: ", error)
+      })
 
   }
   onMovieViewClick(movie) {
-    console.log("in movie on clickkkkkk :)")
-    console.log(movie)
     this.setState({ openViewMovieDialog: true })
     this.setState({ movieToView: movie });
     // this.setState({ movieToView: this.state.allMovieReviews.filter(x => x.id == movieId)[0] })
@@ -61,9 +59,8 @@ class MyMoviePage extends React.Component {
   }
   // --------- Functions for editing movie ----------
   onMovieEditClick(movie) {
-    console.log("in movide edit click :)")
     //console.log(movieId)
-    this.setState({movieToEdit: movie})
+    this.setState({ movieToEdit: movie })
     this.setState({ openEditMovieDialog: true })
     // this.setState({movieToEdit: movie})
     //this.setState({ movieToEdit: this.state.allMovieReviews.filter(x => x.id == movieId)[0] })
@@ -74,56 +71,45 @@ class MyMoviePage extends React.Component {
   }
   SaveEditMovie(movie) {
     // do something here to save
-    console.log('movie id:' + movie)
-    console.log('changes saved!')
     this.setState({ openEditMovieDialog: false })
     window.location.reload(false); // force refresh to update backend, should work fine
   }
   ChangeTitle(title) {
     // temporarily save the changing value; once the save button is clicked; call SaveEditMovie()
-    console.log(title)
     this.setState({ tmpEditTitle: title });
-    console.log(this.state.tmpEditTitle);
   }
 
   // --------- Deleting movie ----------
   onMovieDeleteClick(reviewTitle) {
-    console.log("Deleting a movie")
-    this.movieRepository.deleteMovie(reviewTitle)
-      .then(() => {
-        console.log("movie deleted!!")
-        console.log("calling refetch")
-        this.RefetchMovies()
-      })
-      .catch(error => {
-        console.log("error: ", error)
-      })
+    if (window.confirm('Are you sure to delete this movie?')) {
+      this.movieRepository.deleteMovie(reviewTitle)
+        .then(() => {
+          alert('Movie deleted!')
+          this.RefetchMovies()
+        })
+        .catch(error => {
+          console.log("error: ", error)
+        })
+    }
   }
 
   // --------- Functions for Adding movie ----------
 
   onMovieAddClick() {
-    console.log('Adding movie')
     this.setState({ openAddMovieDialog: true })
   }
   CloseAddDialog() {
     this.setState({ openAddMovieDialog: false })
   }
   SaveAddMovie(movieToAdd) {
-    console.log("LOOK HERE...SAVE ADD MOVIE IN MY MOVIE PAGE")
-    console.log("in save add movie!. movieToAdd in MoviePage", movieToAdd)
     // do something here to save
     this.movieRepository.addMovie(movieToAdd)
       .then(() => {
         this.setState({ openAddMovieDialog: true })
-        console.log("movie added!!")
       })
       .catch(error => {
         console.log("error: ", error)
       })
-
-    console.log('Added movie!')
-    console.log('Checking if saving add reads full name: ' + this.state.tmpAddTitle);
     this.setState({ openAddMovieDialog: false })
     window.location.reload(false); // force refresh to update backend, should work fine
   }
@@ -176,7 +162,7 @@ class MyMoviePage extends React.Component {
               CloseDialog={() => { this.CloseEditDialog() }}
               // SaveEditMovie={movie => this.SaveEditMovie(movie)}
               EditTitle={title => this.ChangeTitle(title)}
-              RefetchMovies = { this.RefetchMovies } 
+              RefetchMovies={this.RefetchMovies}
             />
             <AddMovieDialog movie={this.state.movieToEdit}
               open={this.state.openAddMovieDialog}
