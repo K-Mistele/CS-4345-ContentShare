@@ -57,9 +57,9 @@ export class HomePage extends React.Component {
         <Toolbar>
           {/* <CameraIcon sx={{ mr: 2 }} /> */}
           <Typography variant="h6" color="inherit" style={{ flex: 1 }} noWrap>
-          <Button variant="contained" startIcon={<AccountCircleIcon/>} style={{boxShadow: "none"}}>
+          {/* <Button variant="contained" startIcon={<AccountCircleIcon/>} style={{boxShadow: "none"}}>
             Profile
-          </Button>
+          </Button> */}
           </Typography>
           <Button onClick={() => {this.logOut()}} 
                   variant="contained" startIcon={<LogoutIcon/>} style={{boxShadow: "none"}}>
