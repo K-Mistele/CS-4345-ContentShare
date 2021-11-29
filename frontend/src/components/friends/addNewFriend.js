@@ -47,6 +47,7 @@ export class AddNewFriend extends React.Component {
         // this.props.RefetchBooks()
       })
       .catch(error => {
+        alert('Friend does not exist, try again!')
         console.log("error: ", error);
       })
       this.props.CloseDialog() 
