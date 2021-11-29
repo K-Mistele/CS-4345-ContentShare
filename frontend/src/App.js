@@ -1,6 +1,6 @@
 import React from "react"
 import { ROUTES } from './routes';
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 
 // import MovieReviewsList from "./components/movies/MovieReviewsList"
 // import BookReviewsList from "./components/books/BookReviewsList"
