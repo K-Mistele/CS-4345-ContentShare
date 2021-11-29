@@ -16,10 +16,15 @@ import NavigationBar from "../../NavigationBar/FriendNavigationBar"
 import Header from "../../Header/FriendHeader"
 import { BookList } from "./bookList";
 import { ViewBookDialog } from "./viewBookDialog";
-import bookReviewsData from "../../../temp_data/bookReviewsData"
+
+import { friendRepo } from "../../../api/friendRepo"
+
+// import bookReviewsData from "../../../temp_data/bookReviewsData"
 
 
 class FriendBookPage extends React.Component {
+
+  friendRepository = new friendRepo();
 
   constructor() {
     super();
@@ -31,8 +36,17 @@ class FriendBookPage extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      allBookReviews: bookReviewsData    })
+    
+    console.log("in friendBookPage... param uuid is: ", this.props.match.params.uuid)
+    console.log("props period: ", this.props)
+    this.friendRepository.getAFriendsBooks(this.props.match.params.uuid)
+     .then(books =>{
+       this.setState({allBookReviews: books})
+       console.log("books successfully retreived in friend movies page")
+     })
+     .catch(error=>{
+       console.log("error: ", error)
+    })
   }
 
   onBookViewClick(book) {
@@ -48,7 +62,7 @@ class FriendBookPage extends React.Component {
     return (
       <div>
         <Header />
-        <NavigationBar page="/books" username={this.props.match.params.username} />
+        <NavigationBar page="/friend/books" uuid={this.props.match.params.uuid} />
         <Container maxWidth="md">
           {/* End hero unit */}
           <Stack

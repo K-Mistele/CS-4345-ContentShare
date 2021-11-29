@@ -31,7 +31,7 @@ router.get('/request/sent', jwtService.requireJWT, getSentFriendRequests);
 router.get('/request/received', jwtService.requireJWT, getReceivedFriendRequests);
 router.post('/request/accept', jwtService.requireJWT, validateSchema(friendRequestAcceptanceSchema), acceptFriendRequest);
 router.post('/request/deny', jwtService.requireJWT, validateSchema(friendRequestDenialSchema), denyFriendRequest);
-router.get('/reviews', jwtService.requireJWT, validateSchema(viewFriendsReviewsSchema), getFriendsReviews);
+router.post('/reviews', jwtService.requireJWT, validateSchema(viewFriendsReviewsSchema), getFriendsReviews);
 module.exports = router;
 
 /** get a user's friends */
