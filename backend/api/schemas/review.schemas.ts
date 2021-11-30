@@ -7,7 +7,7 @@ export const bookReviewCreationSchema = Joi.object({
 	reviewTitle: Joi.string().required(),
 	reviewText: Joi.string().required(),
 	reviewRating: Joi.number().min(0).max(5).required(),
-	reviewImgUrl: Joi.string()
+	reviewImgUrl: Joi.string().allow(null).allow("").optional()
 	//reviewAuthorUUID: Joi.string().required() // uuid
 });
 
@@ -17,7 +17,7 @@ export const movieReviewCreationSchema = Joi.object({
 	reviewTitle: Joi.string().required(),
 	reviewText: Joi.string().required(),
 	reviewRating: Joi.number().min(0).max(5).required(),
-	reviewImgUrl: Joi.string()
+	reviewImgUrl: Joi.string().allow(null).allow("").optional()
 	//reviewAuthorUUID: Joi.string().required()
 });
 
@@ -44,7 +44,7 @@ export const movieReviewUpdateSchema = Joi.object ({
 	reviewTitle: Joi.string(),
 	reviewText: Joi.string(),
 	reviewRating: Joi.number().min(0).max(5),
-	reviewImgUrl: Joi.string(),
+	reviewImgUrl: Joi.string().allow(null).allow("").optional(),
 	'@rid': Joi.string().required()
 })
 export interface IMovieReviewUpdateRequest {
@@ -63,7 +63,7 @@ export const bookReviewUpdateSchema = Joi.object ({
 	reviewTitle: Joi.string(),
 	reviewText: Joi.string(),
 	reviewRating: Joi.number().min(0).max(5),
-	reviewImgUrl: Joi.string(),
+	reviewImgUrl: Joi.string().allow(null).allow("").optional(),
 	'@rid': Joi.string().required()
 })
 export interface IBookReviewUpdateRequest {
