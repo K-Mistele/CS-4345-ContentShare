@@ -81,7 +81,7 @@ export const ViewBookDialog = props =>
             }}
           >
             <Typography variant="subtitle1">
-              {props.book.reviewTitle}
+              {props.book.bookTitle}
             </Typography>
             <Typography variant="subtitle2" align="right">
               {props.book.bookAuthor}
