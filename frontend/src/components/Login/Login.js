@@ -26,10 +26,10 @@ import { loginRepo } from "../../api/loginRepo"
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      {'Copyright © ContentShare '}
+      {/* <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{' '} */}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
