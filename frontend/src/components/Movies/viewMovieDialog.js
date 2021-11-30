@@ -38,7 +38,7 @@ export const ViewMovieDialog = props =>
           }}
         >
           <Typography variant="subtitle1">
-            Movie: {props.movie.movieTitle}
+            {props.movie.movieTitle}
           </Typography>
           <Divider sx={{ mb: 1, mt: 1 }} />
           <Typography variant="body1">
@@ -77,7 +77,7 @@ export const ViewMovieDialog = props =>
               }}
             >
               <Typography variant="subtitle1">
-                Movie: {props.movie.movieTitle}
+                {props.movie.movieTitle}
               </Typography>
               <Divider sx={{ mb: 1, mt: 1 }} />
               <Typography variant="body1">

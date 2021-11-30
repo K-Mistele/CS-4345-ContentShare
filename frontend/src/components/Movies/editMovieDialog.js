@@ -37,7 +37,7 @@ export class EditMovieDialog extends React.Component{
         "reviewTitle": this.props.movie.reviewTitle,
         "reviewRating": this.props.movie.reviewRating,
         "reviewText": this.props.movie.reviewText,
-        "reviewImgUrl": this.props.reviewImgUrl 
+        "reviewImgUrl": this.props.movie.reviewImgUrl 
         
       })
     }
