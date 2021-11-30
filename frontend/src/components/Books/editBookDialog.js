@@ -35,7 +35,7 @@ export class EditBookDialog extends React.Component {
         "reviewTitle": this.props.book.reviewTitle,
         "reviewRating": this.props.book.reviewRating,
         "reviewText": this.props.book.reviewText,
-        "reviewImgUrl": this.props.reviewImgUrl
+        "reviewImgUrl": this.props.book.reviewImgUrl
 
       })
     }
