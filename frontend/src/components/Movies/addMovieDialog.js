@@ -19,7 +19,7 @@ export class AddMovieDialog extends React.Component {
       "reviewTitle": "",
       "reviewRating": null,
       "reviewText": "",
-      "reviewImageUrl": ""
+      "reviewImgUrl": ""
     }
   }
 
@@ -40,7 +40,7 @@ export class AddMovieDialog extends React.Component {
         "reviewTitle": "",
         "reviewRating": null,
         "reviewText": "",
-        "reviewImageUrl": ""
+        "reviewImgUrl": ""
       })
       this.props.CloseDialog()
       return
@@ -53,7 +53,7 @@ export class AddMovieDialog extends React.Component {
         "reviewTitle": "",
         "reviewRating": null,
         "reviewText": "",
-        "reviewImageUrl": ""
+        "reviewImgUrl": ""
       })
       this.props.CloseDialog()
       return
@@ -68,7 +68,7 @@ export class AddMovieDialog extends React.Component {
           "reviewTitle": "",
           "reviewRating": null,
           "reviewText": "",
-          "reviewImageUrl": ""
+          "reviewImgUrl": ""
         })
         this.props.RefetchMovies()
       })
@@ -148,7 +148,7 @@ export class AddMovieDialog extends React.Component {
               label="Image Url"
               fullWidth
               variant="standard"
-              name="reviewImageUrl"
+              name="reviewImgUrl"
               onChange={this.handleChange}
             />
           </Box>

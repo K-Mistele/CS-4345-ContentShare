@@ -22,7 +22,7 @@ export class EditBookDialog extends React.Component {
       "reviewTitle": this.props.book.reviewTitle,
       "reviewRating": this.props.book.reviewRating,
       "reviewText": this.props.book.reviewText,
-      "reviewImageUrl": this.props.reviewImageUrl
+      "reviewImgUrl": this.props.reviewImgUrl
     }
   }
 
@@ -35,7 +35,7 @@ export class EditBookDialog extends React.Component {
         "reviewTitle": this.props.book.reviewTitle,
         "reviewRating": this.props.book.reviewRating,
         "reviewText": this.props.book.reviewText,
-        "reviewImageUrl": this.props.reviewImageUrl
+        "reviewImgUrl": this.props.reviewImgUrl
 
       })
     }

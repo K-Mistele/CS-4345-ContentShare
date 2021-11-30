@@ -21,7 +21,7 @@ export class EditMovieDialog extends React.Component{
       "reviewTitle": this.props.movie.reviewTitle,
       "reviewRating": this.props.movie.reviewRating,
       "reviewText": this.props.movie.reviewText,
-      "reviewImageUrl": this.props.reviewImageUrl 
+      "reviewImgUrl": this.props.reviewImgUrl 
     }
     console.log(this.state.movieTitle); 
 
@@ -37,7 +37,7 @@ export class EditMovieDialog extends React.Component{
         "reviewTitle": this.props.movie.reviewTitle,
         "reviewRating": this.props.movie.reviewRating,
         "reviewText": this.props.movie.reviewText,
-        "reviewImageUrl": this.props.reviewImageUrl 
+        "reviewImgUrl": this.props.reviewImgUrl 
         
       })
     }
@@ -64,7 +64,7 @@ export class EditMovieDialog extends React.Component{
         "reviewTitle": this.props.movie.reviewTitle,
         "reviewRating": this.props.movie.reviewRating,
         "reviewText": this.props.movie.reviewText,
-        "reviewImageUrl": this.props.reviewImageUrl 
+        "reviewImgUrl": this.props.reviewImgUrl 
       })
       this.props.CloseDialog()
       return
@@ -77,7 +77,7 @@ export class EditMovieDialog extends React.Component{
         "reviewTitle": this.props.movie.reviewTitle,
         "reviewRating": this.props.movie.reviewRating,
         "reviewText": this.props.movie.reviewText,
-        "reviewImageUrl": this.props.reviewImageUrl 
+        "reviewImgUrl": this.props.reviewImgUrl 
       })
       this.props.CloseDialog()
       return
@@ -103,7 +103,7 @@ export class EditMovieDialog extends React.Component{
       "reviewTitle": this.props.movie.reviewTitle,
       "reviewRating": this.props.movie.reviewRating,
       "reviewText": this.props.movie.reviewText,
-      "reviewImageUrl": this.props.reviewImageUrl 
+      "reviewImgUrl": this.props.reviewImgUrl 
     })
   }
 
@@ -184,8 +184,8 @@ export class EditMovieDialog extends React.Component{
             label="Image Url"
             fullWidth
             variant="standard"
-            value={this.state.reviewImageUrl}
-            name = "reviewImageUrl"
+            value={this.state.reviewImgUrl}
+            name = "reviewImgUrl"
             onChange = { this.handleChange }
           />   
           </Box>

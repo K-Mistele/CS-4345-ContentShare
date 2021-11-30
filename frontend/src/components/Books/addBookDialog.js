@@ -20,7 +20,7 @@ export class AddBookDialog extends React.Component {
       "reviewTitle": "",
       "reviewRating": null,
       "reviewText": "",
-      "reviewImageUrl": ""
+      "reviewImgUrl": ""
     }
   }
 
@@ -54,7 +54,7 @@ export class AddBookDialog extends React.Component {
           "reviewTitle": "",
           "reviewRating": null,
           "reviewText": "",
-          "reviewImageUrl": ""
+          "reviewImgUrl": ""
         })
         this.props.RefetchBooks()
       })
@@ -136,7 +136,7 @@ export class AddBookDialog extends React.Component {
               label="Image Url"
               fullWidth
               variant="standard"
-              name="reviewImageUrl"
+              name="reviewImgUrl"
               onChange={this.handleChange}
             />
           </Box>
