@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export class friendRepo{
 
-    url = "http://localhost:80"
+    // url = "http://localhost:80"
 
     addFriend(newFriend){
         console.log("friend to add in repo", newFriend)
@@ -12,7 +12,7 @@ export class friendRepo{
             },
         }
         return new Promise((resolve, reject)=>{
-            axios.post(`${this.url}/friend/request`, newFriend, config)
+            axios.post(`/friend/request`, newFriend, config)
             .then(response=>{
                 resolve(response.data)
                 console.log("success requesting friend!")
@@ -33,11 +33,11 @@ export class friendRepo{
             }
         }
         return new Promise((resolve, reject)=>{
-            axios.get(`${this.url}/friend`, config)
+            axios.get(`/friend`, config)
                 .then(response=>{
-                console.log("here in friends get")
-                console.log(response)
-                console.log("data!!!", response.data)
+                //console.log("here in friends get")
+                //console.log(response)
+                //console.log("data!!!", response.data)
                 resolve(response.data)
                 })
                 .catch(error => {
@@ -56,10 +56,10 @@ export class friendRepo{
             }
         }
         return new Promise((resolve, reject)=>{
-            axios.get(`${this.url}/friend/request/received`, config)
+            axios.get(`/friend/request/received`, config)
                 .then(response=>{
-                    console.log("here in requests get")
-                    console.log("data!!!", response.data)
+                    //console.log("here in requests get")
+                    //console.log("data!!!", response.data)
                     resolve(response.data)
                 })
                 .catch(error => {
@@ -78,7 +78,7 @@ export class friendRepo{
             },
         }
         return new Promise((resolve, reject)=>{
-            axios.post(`${this.url}/friend/request/accept`, uuid, config)
+            axios.post(`/friend/request/accept`, uuid, config)
             .then(response=>{
                 resolve(response.data)
                 console.log("success accepting friend!")
@@ -98,7 +98,7 @@ export class friendRepo{
             },
         }
         return new Promise((resolve, reject)=>{
-            axios.post(`${this.url}/friend/request/deny`, uuid, config)
+            axios.post(`/friend/request/deny`, uuid, config)
             .then(response=>{
                 resolve(response.data)
                 console.log("success denying friend!")
@@ -111,8 +111,8 @@ export class friendRepo{
     }
 
     getAFriendsMovies(uuid){
-        console.log("getting friend's movies...in friend")
-        console.log("uuid is: ", uuid)
+        //console.log("getting friend's movies...in friend")
+        //console.log("uuid is: ", uuid)
         let config = {
             headers:{
                 'x-access-token': localStorage.getItem('jwt_token')
@@ -122,10 +122,10 @@ export class friendRepo{
             "uuid": uuid
         } 
         return new Promise((resolve, reject)=>{
-            axios.post(`${this.url}/friend/reviews`, body, config)
+            axios.post(`/friend/reviews`, body, config)
                 .then(response=>{
-                    console.log("here in requests get")
-                    console.log("data!!!", response.data)
+                    //console.log("here in requests get")
+                    //console.log("data!!!", response.data)
                     resolve(response.data.movieReviews)
                 })
                 .catch(error => {
@@ -136,8 +136,8 @@ export class friendRepo{
     }
 
     getAFriendsBooks(uuid){
-        console.log("getting friend's books...in friend")
-        console.log("uuid is: ", uuid)
+        //console.log("getting friend's books...in friend")
+        //console.log("uuid is: ", uuid)
         let config = {
             headers:{
                 'x-access-token': localStorage.getItem('jwt_token')
@@ -147,10 +147,10 @@ export class friendRepo{
             "uuid": uuid
         } 
         return new Promise((resolve, reject)=>{
-            axios.post(`${this.url}/friend/reviews`, body, config)
+            axios.post(`/friend/reviews`, body, config)
                 .then(response=>{
-                    console.log("here in requests get")
-                    console.log("data!!!", response.data)
+                    //console.log("here in requests get")
+                    //console.log("data!!!", response.data)
                     resolve(response.data.bookReviews)
                 })
                 .catch(error => {
@@ -160,94 +160,5 @@ export class friendRepo{
         })
     }
     
-
-    /*
-    getBooks(){
-        console.log("getting book reviews for a user")
-        let config = {
-            headers:{
-                'x-access-token': localStorage.getItem('jwt_token')
-            }
-        }
-        return new Promise((resolve, reject)=>{
-            axios.get(`${this.url}/user/reviews/books`, config)
-            .then(response=>{
-            console.log("here in book get")
-            console.log(response)
-            console.log("data!!!", response.data)
-            resolve(response.data)
-            })
-            .catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        })
-    }
-
-    addBook(bookToAdd){
-        console.log("book to add in repo", bookToAdd)
-        let config = {
-            headers:{
-                'x-access-token': localStorage.getItem('jwt_token')
-            },
-        }
-        return new Promise((resolve, reject)=>{
-            axios.put(`${this.url}/review/book`, bookToAdd, config)
-            .then(response=>{
-                resolve(response.data)
-                console.log("success adding book")
-            })
-            .catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        })
-    }
-
-    deleteBook(reviewTitle){
-        console.log("the title in deleteBook is", reviewTitle)
-        console.log("in book repo...deleting")
-        let config = {
-            headers:{
-                'x-access-token': localStorage.getItem('jwt_token')
-            },
-            data:{
-                "reviewTitle": reviewTitle
-            }
-        }
-        return new Promise((resolve, reject)=>{
-            axios.delete(`${this.url}/review/book`, config)
-            .then(response=>{
-                resolve(response.data)
-                console.log("success deleting book")
-            })
-            .catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        })
-    }
-
-    editBook(book){
-        console.log("in edit...book to edit in repo", book)
-        let config = {
-            headers:{
-                'x-access-token': localStorage.getItem('jwt_token')
-            },
-        }
-        return new Promise((resolve, reject)=>{
-            axios.patch(`${this.url}/review/book`, book, config)
-            .then(response=>{
-                resolve(response.data)
-                console.log("success adding book")
-            })
-            .catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        })
-    }
-
-    */ 
 
 } // end class 

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export class loginRepo{
 
-    url = "http://localhost:80"
+    //url = "http://localhost:80"
     config = {
 
     };
@@ -10,13 +10,13 @@ export class loginRepo{
     loginUser(user){
         console.log("trying to sign in")
         return new Promise((resolve, reject)=>{
-            axios.post(`${this.url}/user/login`, user)
+            axios.post(`/user/login`, user)
             .then(response=>{
-            console.log("here")
-            console.log(response)
-            console.log(response.data.token)
-            localStorage.setItem('jwt_token', response.data.token)
-            resolve()
+                //console.log("here")
+                //console.log(response)
+                //console.log(response.data.token)
+                localStorage.setItem('jwt_token', response.data.token)
+                resolve()
             })
             .catch(error => {
                 console.log(error)
@@ -28,10 +28,10 @@ export class loginRepo{
     register(newUser){
         console.log("trying to sign in")
         return new Promise((resolve, reject)=>{
-            axios.post(`${this.url}/user/register`, newUser)
+            axios.post(`/user/register`, newUser)
                 .then(response=>{
-                    console.log("here")
-                    console.log(response)
+                    //console.log("here")
+                    //console.log(response)
                     resolve()
                     })
                 .catch(error => {
