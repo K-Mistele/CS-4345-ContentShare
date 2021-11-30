@@ -221,6 +221,7 @@ export class Login extends React.Component {
                           margin="dense"
                           id="newPassword"
                           label="Password"
+                          type="password"
                           fullWidth required
                           variant="standard"
                           onChange={(e) =>
@@ -231,6 +232,7 @@ export class Login extends React.Component {
                           autoFocus
                           margin="dense"
                           label="Confirm Password"
+                          type="password"
                           fullWidth required
                           variant="standard"
                           onChange={(e) =>
