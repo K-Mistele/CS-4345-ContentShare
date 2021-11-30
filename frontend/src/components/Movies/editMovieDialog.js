@@ -67,6 +67,7 @@ export class EditMovieDialog extends React.Component{
         "reviewImgUrl": this.props.reviewImgUrl 
       })
       this.props.CloseDialog()
+      window.location.reload(false)
       return
     }  
     else if (!ratings.includes(this.state.reviewRating)){
@@ -80,6 +81,7 @@ export class EditMovieDialog extends React.Component{
         "reviewImgUrl": this.props.reviewImgUrl 
       })
       this.props.CloseDialog()
+      window.location.reload(false)
       return
     }  
     

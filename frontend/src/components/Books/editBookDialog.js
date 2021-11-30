@@ -55,11 +55,33 @@ export class EditBookDialog extends React.Component {
     }
     if (this.state.bookTitle == '' || this.state.bookAuthor == '' || this.state.reviewRating == null || this.state.reviewText == '' || this.state.reviewTitle == '') {
       alert('Please fill in the required fields!')
+      // clear the states
+      this.setState({
+        "@rid": this.props.book["@rid"],
+        "bookTitle": this.props.book.bookTitle,
+        "bookAuthor": this.props.book.bookAuthor,
+        "reviewTitle": this.props.book.reviewTitle,
+        "reviewRating": this.props.book.reviewRating,
+        "reviewText": this.props.book.reviewText,
+        "reviewImgUrl": this.props.book.reviewImgUrl
+      })
       this.props.CloseDialog()
+      window.location.reload(false)
       return
     }
     else if (!ratings.includes(this.state.reviewRating)) {
       alert('Ratings should be 1,2,3,4,5')
+      // clear the states
+      this.setState({
+        "@rid": this.props.book["@rid"],
+        "bookTitle": this.props.book.bookTitle,
+        "bookAuthor": this.props.book.bookAuthor,
+        "reviewTitle": this.props.book.reviewTitle,
+        "reviewRating": this.props.book.reviewRating,
+        "reviewText": this.props.book.reviewText,
+        "reviewImgUrl": this.props.book.reviewImgUrl
+      })
+      window.location.reload(false)
       this.props.CloseDialog()
       return
     }
